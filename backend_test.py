@@ -172,6 +172,79 @@ class GolfMallorcaAPITester:
             self.log_test("Contact Form API", False, str(e))
             return False
 
+    def test_catalunya_courses_api(self):
+        """Test Catalunya courses API endpoint specifically"""
+        try:
+            response = requests.get(f"{self.api_url}/catalunya-courses", timeout=10)
+            success = response.status_code == 200
+            details = f"Status: {response.status_code}"
+            
+            if success:
+                courses = response.json()
+                details += f", Count: {len(courses)}"
+                
+                # Validate we have exactly 12 courses
+                if len(courses) == 12:
+                    # Check required fields for Catalunya courses
+                    sample_course = courses[0]
+                    required_fields = ['id', 'name', 'description', 'image', 'holes', 'par', 'price_from', 'location', 'features', 'booking_url', 'full_address', 'phone', 'active', 'display_order']
+                    missing_fields = [field for field in required_fields if field not in sample_course]
+                    
+                    if not missing_fields:
+                        # Check multi-language descriptions (en, es, ca)
+                        if isinstance(sample_course.get('description'), dict):
+                            desc_langs = set(sample_course['description'].keys())
+                            expected_langs = {'en', 'es', 'ca'}
+                            if expected_langs.issubset(desc_langs):
+                                # Check if courses are sorted by display_order
+                                display_orders = [course.get('display_order', 0) for course in courses]
+                                is_sorted = display_orders == sorted(display_orders)
+                                
+                                if is_sorted:
+                                    # Verify specific courses exist
+                                    course_ids = [course['id'] for course in courses]
+                                    expected_courses = [
+                                        'pga-catalunya-stadium', 'pga-catalunya-tour', 'real-club-golf-el-prat',
+                                        'club-golf-terramar', 'club-golf-llavaneras', 'golf-montanya',
+                                        'club-golf-peralada', 'club-golf-emporda', 'golf-daro-mas-nou',
+                                        'golf-girona', 'club-golf-costa-brava', 'real-club-golf-cerdanya'
+                                    ]
+                                    
+                                    missing_courses = [cid for cid in expected_courses if cid not in course_ids]
+                                    if not missing_courses:
+                                        # Check features array exists
+                                        features_valid = all(isinstance(course.get('features'), list) for course in courses)
+                                        if features_valid:
+                                            details += f", All 12 Catalunya courses present and properly structured"
+                                        else:
+                                            success = False
+                                            details += ", Some courses missing features array"
+                                    else:
+                                        success = False
+                                        details += f", Missing expected courses: {missing_courses}"
+                                else:
+                                    success = False
+                                    details += ", Courses not sorted by display_order"
+                            else:
+                                success = False
+                                missing_langs = expected_langs - desc_langs
+                                details += f", Missing description languages: {missing_langs}"
+                        else:
+                            success = False
+                            details += ", Description not in multi-language format"
+                    else:
+                        success = False
+                        details += f", Missing required fields: {missing_fields}"
+                else:
+                    success = False
+                    details += f", Expected exactly 12 Catalunya courses, got {len(courses)}"
+                    
+            self.log_test("Catalunya Courses API", success, details)
+            return success, response.json() if success else []
+        except Exception as e:
+            self.log_test("Catalunya Courses API", False, str(e))
+            return False, []
+
     def test_cors_headers(self):
         """Test CORS headers are present"""
         try:
@@ -205,7 +278,8 @@ class GolfMallorcaAPITester:
             print("\n❌ API is not available. Stopping tests.")
             return False
             
-        # Run all tests
+        # Run all tests - prioritize Catalunya courses as per test_result.md
+        self.test_catalunya_courses_api()
         self.test_golf_courses_api()
         self.test_partner_offers_api()
         self.test_contact_api()

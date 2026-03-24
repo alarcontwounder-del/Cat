@@ -31,6 +31,7 @@ const PaymentPage = React.lazy(() => import('./components/PaymentPage'));
 const BlogPostPage = React.lazy(() => import('./components/BlogPostPage'));
 const TermsPage = React.lazy(() => import('./components/TermsPage'));
 const PrivacyPage = React.lazy(() => import('./components/PrivacyPage'));
+const GolfgateCatalunyaPage = React.lazy(() => import('./components/GolfgateCatalunyaPage'));
 import axios from 'axios';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
@@ -201,6 +202,11 @@ function AppRouter() {
       <Route path="/terms" element={
         <React.Suspense fallback={<div className="min-h-screen bg-brand-cream flex items-center justify-center"><div className="w-8 h-8 border-4 border-stone-300 border-t-stone-600 rounded-full animate-spin" /></div>}>
           <TermsPage />
+        </React.Suspense>
+      } />
+      <Route path="/golfgate-catalunya" element={
+        <React.Suspense fallback={<div className="min-h-screen bg-brand-cream flex items-center justify-center"><div className="w-8 h-8 border-4 border-stone-300 border-t-stone-600 rounded-full animate-spin" /></div>}>
+          <GolfgateCatalunyaPage />
         </React.Suspense>
       } />
       <Route path="/privacy" element={

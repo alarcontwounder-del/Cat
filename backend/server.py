@@ -268,6 +268,7 @@ class UserReview(BaseModel):
 # Data imports - extracted from server.py for maintainability
 from data.reviews import REVIEWS_DATA
 from data.courses import GOLF_COURSES
+from data.catalunya_courses import CATALUNYA_COURSES
 from data.partners import PARTNER_OFFERS, BLOG_POSTS
 
 
@@ -546,6 +547,17 @@ async def logout(request: Request, response: Response):
 @api_router.get("/")
 async def root():
     return {"message": "Mallorca Golf Exclusive API"}
+
+@api_router.get("/catalunya-courses", response_model=List[dict])
+async def get_catalunya_courses():
+    """Get all Catalunya golf courses for GOLFGATE CATALUNYA"""
+    # Try MongoDB first
+    cursor = db.catalunya_courses.find({"active": True}, {"_id": 0}).sort("display_order", 1)
+    courses = await cursor.to_list(length=100)
+    if not courses:
+        return CATALUNYA_COURSES
+    return courses
+
 
 @api_router.get("/golf-courses", response_model=List[dict])
 async def get_golf_courses(include_inactive: bool = False):
