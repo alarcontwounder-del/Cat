@@ -1,238 +1,49 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { BrowserRouter, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import '@/App.css';
-import { LanguageProvider } from './context/LanguageContext';
-import { DataProvider } from './context/DataContext';
-import { Navbar } from './components/Navbar';
-import { Hero } from './components/Hero';
-import { About } from './components/About';
-import { GolfCourses } from './components/GolfCourses';
-import { HotelPartners } from './components/HotelPartners';
-import { RestaurantPartners } from './components/RestaurantPartners';
-import { BeachClubPartners } from './components/BeachClubPartners';
-import { CafeBarsPartners } from './components/CafeBarsPartners';
-import { CompactReviewsCarousel } from './components/CompactReviewsCarousel';
-import { Blog } from './components/Blog';
-import { Newsletter } from './components/Newsletter';
-import { Contact } from './components/Contact';
-import { Footer } from './components/Footer';
-import { AdminDashboard } from './components/AdminDashboard';
-import { AuthCallback } from './components/AuthCallback';
-import { Toaster } from './components/ui/sonner';
-import { CookieConsent } from './components/CookieConsent';
-import { FloatingSearch } from './components/FloatingSearch';
-import { SectionNavigator } from './components/SectionNavigator';
-import { TripPlanner } from './components/TripPlanner';
-import DesignPreview from './pages/DesignPreview';
-const GolfCoursePage = React.lazy(() => import('./components/GolfCourseLanding'));
-const GolfHolidaysPage = React.lazy(() => import('./components/GolfHolidaysPage'));
-const BookTeeTimesPage = React.lazy(() => import('./components/BookTeeTimesPage'));
-const PaymentPage = React.lazy(() => import('./components/PaymentPage'));
-const BlogPostPage = React.lazy(() => import('./components/BlogPostPage'));
+
+const GolfgateCatalunyaPage = React.lazy(() => import('./components/GolfgateCatalunyaPage'));
 const TermsPage = React.lazy(() => import('./components/TermsPage'));
 const PrivacyPage = React.lazy(() => import('./components/PrivacyPage'));
-const GolfgateCatalunyaPage = React.lazy(() => import('./components/GolfgateCatalunyaPage'));
-import axios from 'axios';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-
-// Main content component
-function MainContent() {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const [showAdmin, setShowAdmin] = useState(false);
-  const [user, setUser] = useState(null);
-  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
-  const [showTripPlanner, setShowTripPlanner] = useState(false);
-  const searchRef = useRef(null);
-
-  useEffect(() => {
-    // Check if user was passed from AuthCallback
-    if (location.state?.user) {
-      setUser(location.state.user);
-      if (location.state.showAdmin) {
-        setShowAdmin(true);
-      }
-      // Clear the state
-      navigate('/', { replace: true, state: {} });
-      setIsCheckingAuth(false);
-      return;
-    }
-
-    // Handle scroll-to-section when navigating from other pages
-    if (location.state?.scrollTo) {
-      const sectionId = location.state.scrollTo;
-      navigate('/', { replace: true, state: {} });
-      // Use requestAnimationFrame loop for instant scroll before paint
-      const tryScroll = (attempts = 0) => {
-        const el = document.getElementById(sectionId);
-        if (el) {
-          el.scrollIntoView({ behavior: 'instant' });
-        } else if (attempts < 50) {
-          requestAnimationFrame(() => tryScroll(attempts + 1));
-        }
-      };
-      requestAnimationFrame(tryScroll);
-      return;
-    }
-
-    // Check if already authenticated
-    const checkAuth = async () => {
-      try {
-        const response = await axios.get(`${BACKEND_URL}/api/auth/me`, {
-          withCredentials: true
-        });
-        setUser(response.data);
-      } catch (error) {
-        // Not authenticated - that's fine
-        setUser(null);
-      } finally {
-        setIsCheckingAuth(false);
-      }
-    };
-
-    checkAuth();
-  }, [location.state, navigate]);
-
-  const handleAdminLogin = () => {
-    // REMINDER: DO NOT HARDCODE THE URL, OR ADD ANY FALLBACKS OR REDIRECT URLS, THIS BREAKS THE AUTH
-    const redirectUrl = window.location.origin + '/';
-    window.location.href = `https://auth.emergentagent.com/?redirect=${encodeURIComponent(redirectUrl)}`;
-  };
-
-  const handleOpenAdmin = () => {
-    if (user) {
-      setShowAdmin(true);
-    } else {
-      handleAdminLogin();
-    }
-  };
-
+function LoadingSpinner() {
   return (
-    <div className="min-h-screen bg-brand-cream">
-      <Navbar 
-        onAdminClick={handleOpenAdmin} 
-        isAuthenticated={!!user} 
-        isCheckingAuth={isCheckingAuth}
-        onSearchClick={() => searchRef.current?.open()}
-        onPlanTrip={() => setShowTripPlanner(true)}
-      />
-      
-      {/* Hero */}
-      <Hero onPlanTrip={() => setShowTripPlanner(true)} />
-      
-      {/* About */}
-      <About />
-      
-      {/* Main content - clean layout */}
-      <main>
-        <GolfCourses />
-        <HotelPartners />
-        <RestaurantPartners />
-        <CafeBarsPartners />
-        <BeachClubPartners />
-        <Blog />
-        <Contact />
-        <Newsletter />
-        
-        {/* Compact Reviews Carousel - just before footer */}
-        <CompactReviewsCarousel />
-        
-        <Footer />
-      </main>
-      
-      <Toaster position="bottom-right" />
-      
-      {/* Floating Search Mockup */}
-      <FloatingSearch ref={searchRef} showButton={false} />
-      
-      {/* Section Navigator - dots on right side */}
-      <SectionNavigator />
-      
-      {/* Trip Planner Modal */}
-      <TripPlanner isOpen={showTripPlanner} onClose={() => setShowTripPlanner(false)} />
-      
-      {showAdmin && user && (
-        <AdminDashboard 
-          onClose={() => setShowAdmin(false)} 
-          user={user}
-        />
-      )}
+    <div className="min-h-screen bg-brand-cream flex items-center justify-center">
+      <div className="w-8 h-8 border-4 border-stone-300 border-t-[#f53d7d] rounded-full animate-spin" />
     </div>
-  );
-}
-
-// App Router component to handle session_id detection
-function AppRouter() {
-  const location = useLocation();
-  
-  // Check URL hash for session_id (synchronous detection before render)
-  if (location.hash?.includes('session_id=')) {
-    return <AuthCallback />;
-  }
-  
-  return (
-    <Routes>
-      <Route path="/" element={
-        <React.Suspense fallback={<div className="min-h-screen bg-brand-cream flex items-center justify-center"><div className="w-8 h-8 border-4 border-stone-300 border-t-stone-600 rounded-full animate-spin" /></div>}>
-          <GolfgateCatalunyaPage />
-        </React.Suspense>
-      } />
-      <Route path="/preview" element={<DesignPreview />} />
-      <Route path="/golf-courses/:courseId" element={
-        <React.Suspense fallback={<div className="min-h-screen bg-brand-cream flex items-center justify-center"><div className="w-8 h-8 border-4 border-stone-300 border-t-stone-600 rounded-full animate-spin" /></div>}>
-          <GolfCoursePage />
-        </React.Suspense>
-      } />
-      <Route path="/golf-holidays-mallorca" element={
-        <React.Suspense fallback={<div className="min-h-screen bg-brand-cream flex items-center justify-center"><div className="w-8 h-8 border-4 border-stone-300 border-t-stone-600 rounded-full animate-spin" /></div>}>
-          <GolfHolidaysPage />
-        </React.Suspense>
-      } />
-      <Route path="/book-tee-times" element={
-        <React.Suspense fallback={<div className="min-h-screen bg-brand-cream flex items-center justify-center"><div className="w-8 h-8 border-4 border-stone-300 border-t-stone-600 rounded-full animate-spin" /></div>}>
-          <BookTeeTimesPage />
-        </React.Suspense>
-      } />
-      <Route path="/blog/:slug" element={
-        <React.Suspense fallback={<div className="min-h-screen bg-brand-cream flex items-center justify-center"><div className="w-8 h-8 border-4 border-stone-300 border-t-stone-600 rounded-full animate-spin" /></div>}>
-          <BlogPostPage />
-        </React.Suspense>
-      } />
-      <Route path="/pay/:paymentId" element={
-        <React.Suspense fallback={<div className="min-h-screen bg-stone-50 flex items-center justify-center"><div className="w-8 h-8 border-4 border-stone-300 border-t-stone-600 rounded-full animate-spin" /></div>}>
-          <PaymentPage />
-        </React.Suspense>
-      } />
-      <Route path="/terms" element={
-        <React.Suspense fallback={<div className="min-h-screen bg-brand-cream flex items-center justify-center"><div className="w-8 h-8 border-4 border-stone-300 border-t-stone-600 rounded-full animate-spin" /></div>}>
-          <TermsPage />
-        </React.Suspense>
-      } />
-      <Route path="/golfgate-catalunya" element={
-        <React.Suspense fallback={<div className="min-h-screen bg-brand-cream flex items-center justify-center"><div className="w-8 h-8 border-4 border-stone-300 border-t-stone-600 rounded-full animate-spin" /></div>}>
-          <GolfgateCatalunyaPage />
-        </React.Suspense>
-      } />
-      <Route path="/privacy" element={
-        <React.Suspense fallback={<div className="min-h-screen bg-brand-cream flex items-center justify-center"><div className="w-8 h-8 border-4 border-stone-300 border-t-stone-600 rounded-full animate-spin" /></div>}>
-          <PrivacyPage />
-        </React.Suspense>
-      } />
-      <Route path="/*" element={<MainContent />} />
-    </Routes>
   );
 }
 
 function App() {
   return (
     <BrowserRouter>
-      <LanguageProvider>
-        <DataProvider>
-          <AppRouter />
-          <CookieConsent />
-        </DataProvider>
-      </LanguageProvider>
+      <Routes>
+        <Route path="/" element={
+          <React.Suspense fallback={<LoadingSpinner />}>
+            <GolfgateCatalunyaPage />
+          </React.Suspense>
+        } />
+        <Route path="/golfgate-catalunya" element={
+          <React.Suspense fallback={<LoadingSpinner />}>
+            <GolfgateCatalunyaPage />
+          </React.Suspense>
+        } />
+        <Route path="/privacy" element={
+          <React.Suspense fallback={<LoadingSpinner />}>
+            <PrivacyPage />
+          </React.Suspense>
+        } />
+        <Route path="/terms" element={
+          <React.Suspense fallback={<LoadingSpinner />}>
+            <TermsPage />
+          </React.Suspense>
+        } />
+        <Route path="*" element={
+          <React.Suspense fallback={<LoadingSpinner />}>
+            <GolfgateCatalunyaPage />
+          </React.Suspense>
+        } />
+      </Routes>
     </BrowserRouter>
   );
 }
