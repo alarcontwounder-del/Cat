@@ -6,6 +6,7 @@ import { CatalunyaCourseCard } from './CatalunyaCourseCard';
 import { CatalunyaQuickView } from './CatalunyaQuickView';
 
 var API = process.env.REACT_APP_BACKEND_URL;
+var LOGO = 'https://customer-assets.emergentagent.com/job_booking-landing/artifacts/ot2drdmb_with_padding.png';
 var HERO_BG = 'https://res.cloudinary.com/greenfee365/image/upload/w_1920,h_900,c_fill/courses/camiral-golf-wellness-stadium/camiral-golf-wellness-stadium';
 
 function XIcon() {
@@ -16,24 +17,17 @@ function XIcon() {
   );
 }
 
-function TextLogo(props) {
+function LogoImage(props) {
   var size = props.size || 'nav';
   var isNav = size === 'nav';
+  var cls = isNav ? 'h-14 md:h-18 w-auto' : 'h-14 w-auto';
   return (
-    <div className="flex flex-col items-center leading-none select-none">
-      <span
-        className={isNav ? 'text-3xl md:text-4xl font-black tracking-tight' : 'text-5xl md:text-7xl font-black tracking-tight'}
-        style={{ color: '#F23598', fontFamily: 'Impact, Haettenschweiler, Arial Narrow Bold, sans-serif', letterSpacing: '0.02em' }}
-      >
-        GOLFGATE
-      </span>
-      <span
-        className={isNav ? 'text-sm md:text-base font-bold tracking-[0.3em]' : 'text-xl md:text-2xl font-bold tracking-[0.3em]'}
-        style={{ color: '#38A711' }}
-      >
-        CATALUNYA
-      </span>
-    </div>
+    <img
+      src={LOGO}
+      alt="GOLFGATE Catalunya"
+      className={cls}
+      style={{ mixBlendMode: 'multiply', filter: 'brightness(1.08) contrast(1.1)' }}
+    />
   );
 }
 
@@ -95,7 +89,7 @@ export default function GolfgateCatalunyaPage() {
       <nav className="sticky top-0 z-40 shadow-md" style={{ backgroundColor: '#CCFF00' }}>
         <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
           <Link to="/" className="flex items-center">
-            <TextLogo size="nav" />
+            <LogoImage size="nav" />
           </Link>
           <div className="hidden md:flex items-center gap-8 text-sm font-bold text-black/80">
             <a href="#courses" className="hover:text-[#38A711] transition-colors">Courses</a>
@@ -206,7 +200,7 @@ export default function GolfgateCatalunyaPage() {
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
             <div className="lg:col-span-2">
-              <TextLogo size="nav" />
+              <img src={LOGO} alt="GOLFGATE Catalunya" className="h-14 w-auto" style={{ filter: 'brightness(10) contrast(1.5)' }} />
               <p className="text-white/60 max-w-md mt-4 mb-6 text-sm leading-relaxed">
                 The premier tee time booking service for golf courses across Catalunya, Spain. From Barcelona to the Costa Brava and the Pyrenees.
               </p>
