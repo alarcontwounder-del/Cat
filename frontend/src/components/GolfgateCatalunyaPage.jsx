@@ -1,32 +1,46 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { ChevronRight, ExternalLink, Globe, Clock, Shield, Mail, Phone, MapPin } from 'lucide-react';
+import { ChevronRight, ExternalLink, Globe, Clock, Shield, Mail, Phone, MapPin, Instagram, Facebook } from 'lucide-react';
 import { CatalunyaCourseCard } from './CatalunyaCourseCard';
 import { CatalunyaQuickView } from './CatalunyaQuickView';
 
-const API = process.env.REACT_APP_BACKEND_URL;
-const LOGO = 'https://customer-assets.emergentagent.com/job_booking-landing/artifacts/ot2drdmb_with_padding.png';
-const HERO_BG = 'https://images.unsplash.com/photo-1602523234690-254793b8dd40?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxODl8MHwxfHNlYXJjaHwyfHxnb2xmJTIwY291cnNlJTIwU3BhaW58ZW58MHx8fHwxNzc0Mzc3NTUzfDA&ixlib=rb-4.1.0&q=85&w=1920&h=900&fit=crop';
+var API = process.env.REACT_APP_BACKEND_URL;
+var LOGO = 'https://customer-assets.emergentagent.com/job_booking-landing/artifacts/ot2drdmb_with_padding.png';
+var HERO_BG = 'https://images.unsplash.com/photo-1602523234690-254793b8dd40?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxODl8MHwxfHNlYXJjaHwyfHxnb2xmJTIwY291cnNlJTIwU3BhaW58ZW58MHx8fHwxNzc0Mzc3NTUzfDA&ixlib=rb-4.1.0&q=85&w=1920&h=900&fit=crop';
+
+function XIcon() {
+  return (
+    <svg className="w-5 h-5 text-white/80 group-hover:text-white" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+    </svg>
+  );
+}
 
 export default function GolfgateCatalunyaPage() {
-  const [courses, setCourses] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [quickViewItem, setQuickViewItem] = useState(null);
+  var coursesState = useState([]);
+  var courses = coursesState[0];
+  var setCourses = coursesState[1];
+  var loadingState = useState(true);
+  var loading = loadingState[0];
+  var setLoading = loadingState[1];
+  var quickViewState = useState(null);
+  var quickViewItem = quickViewState[0];
+  var setQuickViewItem = quickViewState[1];
 
-  useEffect(() => {
+  useEffect(function() {
     window.scrollTo(0, 0);
     document.title = 'GOLFGATE Catalunya | Book Tee Times at 12 Premium Golf Courses';
 
-    const setMeta = (attr, name, content) => {
-      let el = document.querySelector('meta[' + attr + '="' + name + '"]');
+    var setMeta = function(attr, name, content) {
+      var el = document.querySelector('meta[' + attr + '="' + name + '"]');
       if (!el) { el = document.createElement('meta'); el.setAttribute(attr, name); document.head.appendChild(el); }
       el.setAttribute('content', content);
     };
-    setMeta('name', 'description', 'Book tee times at 12 premier golf courses in Catalunya Spain. PGA Catalunya Resort to Costa Brava coastal courses. Green fees from EUR45. Instant confirmation.');
+    setMeta('name', 'description', 'Book tee times at 12 premier golf courses in Catalunya Spain. PGA Catalunya Resort to Costa Brava. Green fees from EUR45.');
     setMeta('name', 'keywords', 'golf Catalunya, tee times Catalunya, golf courses Barcelona, PGA Catalunya, golf Costa Brava, golf Girona, book tee times Spain');
-    setMeta('property', 'og:title', 'GOLFGATE Catalunya | Book Tee Times at Premium Golf Courses');
-    setMeta('property', 'og:description', 'Book tee times at 12 premier golf courses across Catalunya. Instant confirmation best rates.');
+    setMeta('property', 'og:title', 'GOLFGATE Catalunya | Book Tee Times');
+    setMeta('property', 'og:description', 'Book tee times at 12 premier golf courses across Catalunya.');
     setMeta('property', 'og:type', 'website');
     setMeta('property', 'og:image', LOGO);
 
@@ -38,17 +52,8 @@ export default function GolfgateCatalunyaPage() {
       name: 'GOLFGATE Catalunya',
       description: 'Book tee times at 12 premier golf courses in Catalunya Spain.',
       url: window.location.href,
-      provider: {
-        '@type': 'Organization',
-        name: 'GOLFGATE Catalunya'
-      },
-      offers: {
-        '@type': 'AggregateOffer',
-        priceCurrency: 'EUR',
-        lowPrice: '45',
-        highPrice: '120',
-        offerCount: '12'
-      }
+      provider: { '@type': 'Organization', name: 'GOLFGATE Catalunya' },
+      offers: { '@type': 'AggregateOffer', priceCurrency: 'EUR', lowPrice: '45', highPrice: '120', offerCount: '12' }
     });
 
     axios.get(API + '/api/catalunya-courses')
@@ -62,38 +67,47 @@ export default function GolfgateCatalunyaPage() {
     };
   }, []);
 
-  return (
-    <div className="min-h-screen bg-brand-cream" data-testid="golfgate-catalunya-page">
+  var currentYear = new Date().getFullYear();
 
-      {/* Navbar */}
-      <nav className="bg-[#fdee6c] sticky top-0 z-40 shadow-sm">
-        <div className="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between">
-          <Link to="/golfgate-catalunya" className="flex items-center gap-3">
-            <img src={LOGO} alt="GOLFGATE Catalunya" className="h-12 w-auto" />
+  return (
+    <div className="min-h-screen" style={{ backgroundColor: '#f0ffe0' }} data-testid="golfgate-catalunya-page">
+
+      {/* Navbar - taller, logo left & larger, transparent logo */}
+      <nav className="sticky top-0 z-40 shadow-sm" style={{ backgroundColor: '#CCFF00' }}>
+        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+          <Link to="/" className="flex items-center">
+            <img
+              src={LOGO}
+              alt="GOLFGATE Catalunya"
+              className="h-16 md:h-20 w-auto"
+              style={{ mixBlendMode: 'multiply' }}
+            />
           </Link>
-          <div className="hidden md:flex items-center gap-8 text-sm font-semibold text-[#f53d7d]">
-            <a href="#courses" className="hover:opacity-70 transition-opacity">Courses</a>
-            <a href="#about" className="hover:opacity-70 transition-opacity">About</a>
-            <a href="#contact" className="hover:opacity-70 transition-opacity">Contact</a>
+          <div className="hidden md:flex items-center gap-8 text-sm font-semibold text-black">
+            <a href="#courses" className="hover:text-[#38A711] transition-colors">Courses</a>
+            <a href="#about" className="hover:text-[#38A711] transition-colors">About</a>
+            <a href="#contact" className="hover:text-[#38A711] transition-colors">Contact</a>
           </div>
-          <a href="#courses" className="bg-[#f53d7d] text-white px-5 py-2 rounded-full text-sm font-semibold hover:bg-[#e0356f] transition-all shadow-sm">
+          <a href="#courses" className="bg-black text-[#CCFF00] px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-black/80 transition-all shadow-sm">
             Book Now
           </a>
         </div>
       </nav>
 
-      {/* Hero */}
+      {/* Hero - clean, no logo banner */}
       <section className="relative overflow-hidden" data-testid="golfgate-hero">
         <div className="absolute inset-0">
           <img src={HERO_BG} alt="Golf Course Catalunya" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/60" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60" />
         </div>
-        <div className="relative max-w-6xl mx-auto px-6 py-24 md:py-36 text-center">
-          <img src={LOGO} alt="GOLFGATE Catalunya" className="h-28 md:h-40 w-auto mx-auto mb-6 drop-shadow-2xl" />
-          <p className="text-white/90 text-lg md:text-xl font-body max-w-2xl mx-auto mb-8 drop-shadow-lg">
-            Book tee times at Catalunya's finest golf courses. From championship layouts near Barcelona to stunning coastal courses on the Costa Brava.
+        <div className="relative max-w-6xl mx-auto px-6 py-28 md:py-40 text-center">
+          <h1 className="font-heading text-4xl md:text-6xl lg:text-7xl text-white mb-6 drop-shadow-2xl">
+            Book Golf Tee Times<br />in Catalunya
+          </h1>
+          <p className="text-white/90 text-lg md:text-xl font-body max-w-2xl mx-auto mb-10 drop-shadow-lg">
+            From championship layouts near Barcelona to stunning coastal courses on the Costa Brava.
           </p>
-          <a href="#courses" className="inline-flex items-center gap-2 bg-[#f53d7d] text-white px-8 py-4 rounded-full font-semibold text-base hover:bg-[#e0356f] transition-all shadow-lg hover:shadow-xl">
+          <a href="#courses" className="inline-flex items-center gap-2 bg-[#CCFF00] text-black px-8 py-4 rounded-full font-semibold text-base hover:bg-[#DFFF00] transition-all shadow-lg hover:shadow-xl">
             Explore Courses &amp; Book <ChevronRight className="w-5 h-5" />
           </a>
         </div>
@@ -103,8 +117,8 @@ export default function GolfgateCatalunyaPage() {
       <section id="about" className="max-w-5xl mx-auto px-6 md:px-12 py-16 md:py-20" data-testid="golfgate-about">
         <div className="text-center mb-12">
           <h2 className="font-heading text-3xl md:text-4xl text-stone-900 mb-4">Your Gateway to Golf in Catalunya</h2>
-          <div className="w-16 h-1 bg-[#f53d7d] mx-auto rounded-full mb-6" />
-          <p className="text-stone-500 text-lg max-w-3xl mx-auto leading-relaxed">
+          <div className="w-16 h-1 bg-[#38A711] mx-auto rounded-full mb-6" />
+          <p className="text-stone-600 text-lg max-w-3xl mx-auto leading-relaxed">
             Catalunya is home to some of Europe's most spectacular golf courses, from the world-renowned PGA Catalunya Resort to hidden gems nestled along the Costa Brava coastline. With 12 premier courses spanning Barcelona, Girona, and the Pyrenees, we make booking your perfect round effortless.
           </p>
         </div>
@@ -116,18 +130,18 @@ export default function GolfgateCatalunyaPage() {
       </section>
 
       {/* Courses */}
-      <section id="courses" className="bg-white py-16 md:py-20" data-testid="golfgate-courses">
-        <div className="max-w-6xl mx-auto px-6 md:px-12">
+      <section id="courses" className="py-16 md:py-20" style={{ backgroundColor: '#ffffff' }} data-testid="golfgate-courses">
+        <div className="max-w-7xl mx-auto px-6 md:px-12">
           <div className="text-center mb-12">
             <h2 className="font-heading text-3xl md:text-4xl text-stone-900 mb-4">Golf Courses in Catalunya</h2>
-            <div className="w-16 h-1 bg-[#f53d7d] mx-auto rounded-full mb-6" />
+            <div className="w-16 h-1 bg-[#38A711] mx-auto rounded-full mb-6" />
             <p className="text-stone-500 text-lg max-w-2xl mx-auto">
               From Barcelona to the Pyrenees, discover and book tee times at the finest courses in the region. Hover the cards for details and booking links.
             </p>
           </div>
           {loading ? (
             <div className="flex items-center justify-center py-20">
-              <div className="w-8 h-8 border-4 border-stone-300 border-t-[#f53d7d] rounded-full animate-spin" />
+              <div className="w-8 h-8 border-4 border-stone-300 border-t-[#38A711] rounded-full animate-spin" />
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -140,17 +154,17 @@ export default function GolfgateCatalunyaPage() {
       </section>
 
       {/* CTA */}
-      <section className="bg-[#fdee6c] py-16 md:py-20" data-testid="golfgate-cta">
+      <section className="py-16 md:py-20" style={{ backgroundColor: '#CCFF00' }} data-testid="golfgate-cta">
         <div className="max-w-3xl mx-auto px-6 text-center">
-          <h2 className="font-heading text-3xl md:text-4xl text-stone-900 mb-4">Ready to Play?</h2>
-          <p className="text-stone-700 text-lg mb-8 max-w-2xl mx-auto">
+          <h2 className="font-heading text-3xl md:text-4xl text-black mb-4">Ready to Play?</h2>
+          <p className="text-black/70 text-lg mb-8 max-w-2xl mx-auto">
             Choose from 12 premier courses across Catalunya. Instant confirmation, best rates, and local expertise to help you plan the perfect golf day.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <a href="#courses" className="inline-flex items-center gap-2 bg-[#f53d7d] text-white px-8 py-3.5 rounded-full font-semibold text-sm hover:bg-[#e0356f] transition-all shadow-lg">
+            <a href="#courses" className="inline-flex items-center gap-2 bg-black text-[#CCFF00] px-8 py-3.5 rounded-full font-semibold text-sm hover:bg-black/80 transition-all shadow-lg">
               Book a Tee Time <ExternalLink className="w-4 h-4" />
             </a>
-            <a href="#contact" className="inline-flex items-center gap-2 border-2 border-stone-800 text-stone-800 px-8 py-3.5 rounded-full font-semibold text-sm hover:bg-stone-800 hover:text-white transition-all">
+            <a href="#contact" className="inline-flex items-center gap-2 border-2 border-black text-black px-8 py-3.5 rounded-full font-semibold text-sm hover:bg-black hover:text-[#CCFF00] transition-all">
               Contact Us
             </a>
           </div>
@@ -161,7 +175,7 @@ export default function GolfgateCatalunyaPage() {
       <section id="contact" className="max-w-5xl mx-auto px-6 md:px-12 py-16 md:py-20" data-testid="golfgate-contact">
         <div className="text-center mb-10">
           <h2 className="font-heading text-3xl md:text-4xl text-stone-900 mb-4">Get in Touch</h2>
-          <div className="w-16 h-1 bg-[#f53d7d] mx-auto rounded-full mb-6" />
+          <div className="w-16 h-1 bg-[#38A711] mx-auto rounded-full mb-6" />
           <p className="text-stone-500 text-lg max-w-2xl mx-auto">
             Need help choosing a course or planning a golf trip in Catalunya? Our team is here to help.
           </p>
@@ -173,42 +187,73 @@ export default function GolfgateCatalunyaPage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-stone-900 text-white py-12">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
-            <div>
-              <img src={LOGO} alt="GOLFGATE Catalunya" className="h-14 w-auto mb-4" />
-              <p className="text-stone-400 text-sm leading-relaxed">
+      {/* Footer - GIM style with social icons */}
+      <footer className="bg-[#1a1a1a] text-white py-16" data-testid="footer">
+        <div className="max-w-7xl mx-auto px-6 md:px-12">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+            {/* Brand + Social */}
+            <div className="lg:col-span-2">
+              <p className="text-white/70 max-w-md mb-6">
                 The premier tee time booking service for golf courses across Catalunya, Spain. From Barcelona to the Costa Brava and the Pyrenees.
               </p>
+              <div className="flex items-center gap-4 mb-6">
+                <a
+                  href="https://www.facebook.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors group"
+                  aria-label="Facebook"
+                >
+                  <Facebook className="w-5 h-5 text-white/80 group-hover:text-white" />
+                </a>
+                <a
+                  href="https://www.instagram.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors group"
+                  aria-label="Instagram"
+                >
+                  <Instagram className="w-5 h-5 text-white/80 group-hover:text-white" />
+                </a>
+                <a
+                  href="https://x.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors group"
+                  aria-label="X (Twitter)"
+                >
+                  <XIcon />
+                </a>
+              </div>
             </div>
+
+            {/* Quick Links */}
             <div>
-              <h4 className="text-sm font-semibold uppercase tracking-wider text-stone-300 mb-4">Featured Courses</h4>
-              <ul className="space-y-2 text-sm text-stone-400">
-                <li><a href="#courses" className="hover:text-[#f53d7d] transition-colors">PGA Catalunya - Stadium</a></li>
-                <li><a href="#courses" className="hover:text-[#f53d7d] transition-colors">Real Club de Golf El Prat</a></li>
-                <li><a href="#courses" className="hover:text-[#f53d7d] transition-colors">Club de Golf Terramar</a></li>
-                <li><a href="#courses" className="hover:text-[#f53d7d] transition-colors">Club de Golf Emporda</a></li>
-                <li><a href="#courses" className="hover:text-[#f53d7d] transition-colors">Golf d'Aro - Mas Nou</a></li>
+              <h4 className="font-medium text-lg mb-4">Quick Links</h4>
+              <ul className="space-y-3">
+                <li><a href="#courses" className="text-white/70 hover:text-white transition-colors">Golf Courses</a></li>
+                <li><a href="#about" className="text-white/70 hover:text-white transition-colors">About Us</a></li>
+                <li><a href="#contact" className="text-white/70 hover:text-white transition-colors">Contact</a></li>
               </ul>
             </div>
+
+            {/* Contact Info */}
             <div>
-              <h4 className="text-sm font-semibold uppercase tracking-wider text-stone-300 mb-4">Golf Regions</h4>
-              <ul className="space-y-2 text-sm text-stone-400">
-                <li>Barcelona and Surroundings</li>
-                <li>Costa Brava</li>
-                <li>Girona Province</li>
-                <li>Pyrenees</li>
-                <li>Sitges and Garraf Coast</li>
+              <h4 className="font-medium text-lg mb-4">Contact Info</h4>
+              <ul className="space-y-3 text-white/70">
+                <li><a href="tel:+34620987575" className="hover:text-white transition-colors">+34 620 987 575</a></li>
+                <li><a href="mailto:contact@golfgatecatalunya.com" className="hover:text-white transition-colors">contact@golfgatecatalunya.com</a></li>
+                <li>Barcelona, Catalunya, Spain</li>
               </ul>
             </div>
           </div>
-          <div className="border-t border-stone-800 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-stone-500 text-xs">2025 GOLFGATE Catalunya. All rights reserved.</p>
-            <div className="flex items-center gap-6 text-xs text-stone-500">
-              <Link to="/privacy" className="hover:text-stone-300 transition-colors">Privacy Policy</Link>
-              <Link to="/terms" className="hover:text-stone-300 transition-colors">Terms of Service</Link>
+
+          {/* Bottom */}
+          <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-white/50 text-sm">{currentYear} GOLFGATE Catalunya. All rights reserved.</p>
+            <div className="flex gap-6 text-sm text-white/50">
+              <Link to="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
+              <Link to="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
             </div>
           </div>
         </div>
@@ -219,30 +264,30 @@ export default function GolfgateCatalunyaPage() {
   );
 }
 
-function FeatureBox({ icon, title, text }) {
+function FeatureBox(props) {
   return (
     <div className="bg-white rounded-2xl p-6 border border-stone-100 shadow-sm text-center">
-      <div className="w-14 h-14 bg-[#fdee6c] rounded-xl flex items-center justify-center text-[#f53d7d] mx-auto mb-4">
-        {icon}
+      <div className="w-14 h-14 rounded-xl flex items-center justify-center text-black mx-auto mb-4" style={{ backgroundColor: '#CCFF00' }}>
+        {props.icon}
       </div>
-      <h3 className="font-heading text-lg text-stone-900 mb-2">{title}</h3>
-      <p className="text-stone-500 text-sm">{text}</p>
+      <h3 className="font-heading text-lg text-stone-900 mb-2">{props.title}</h3>
+      <p className="text-stone-500 text-sm">{props.text}</p>
     </div>
   );
 }
 
-function ContactBox({ icon, title, value, href }) {
-  var content = href ? (
-    <a href={href} className="text-stone-500 text-sm hover:text-[#f53d7d] transition-colors">{value}</a>
+function ContactBox(props) {
+  var content = props.href ? (
+    <a href={props.href} className="text-stone-500 text-sm hover:text-[#38A711] transition-colors">{props.value}</a>
   ) : (
-    <p className="text-stone-500 text-sm">{value}</p>
+    <p className="text-stone-500 text-sm">{props.value}</p>
   );
   return (
     <div className="bg-white rounded-2xl p-6 border border-stone-100 shadow-sm text-center">
-      <div className="w-12 h-12 bg-[#fdee6c] rounded-xl flex items-center justify-center text-[#f53d7d] mx-auto mb-3">
-        {icon}
+      <div className="w-12 h-12 rounded-xl flex items-center justify-center text-black mx-auto mb-3" style={{ backgroundColor: '#CCFF00' }}>
+        {props.icon}
       </div>
-      <h3 className="font-heading text-base text-stone-900 mb-1">{title}</h3>
+      <h3 className="font-heading text-base text-stone-900 mb-1">{props.title}</h3>
       {content}
     </div>
   );
