@@ -83,7 +83,7 @@ export default function GolfgateCatalunyaPage() {
   var currentYear = new Date().getFullYear();
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#e6ffc2' }} data-testid="golfgate-catalunya-page">
+    <div className="min-h-screen bg-white" data-testid="golfgate-catalunya-page">
 
       {/* Navbar - taller, text logo on left, no image box */}
       <nav className="sticky top-0 z-40 shadow-md" style={{ backgroundColor: '#CCFF00' }}>
