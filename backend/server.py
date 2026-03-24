@@ -555,7 +555,7 @@ async def get_catalunya_courses():
     cursor = db.catalunya_courses.find({"active": True}, {"_id": 0}).sort("display_order", 1)
     courses = await cursor.to_list(length=100)
     if not courses:
-        return CATALUNYA_COURSES
+        return [c for c in CATALUNYA_COURSES if c.get("active", True)]
     return courses
 
 
