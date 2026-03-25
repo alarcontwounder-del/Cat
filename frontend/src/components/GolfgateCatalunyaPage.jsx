@@ -90,7 +90,7 @@ export default function GolfgateCatalunyaPage() {
         <div className="max-w-6xl mx-auto px-4 md:px-6 py-2 flex items-center justify-between gap-4">
           {/* Logo - larger */}
           <Link to="/" className="flex-shrink-0">
-            <img src={LOGO} alt="GOLFGATE Catalunya" className="h-14 md:h-[4.5rem] w-auto" style={{ imageRendering: 'auto' }} />
+            <img src="/golfgate-logo-nav.png" alt="GOLFGATE Catalunya" className="h-14 md:h-[4.5rem] w-auto" />
           </Link>
 
           {/* Nav links */}
@@ -102,17 +102,17 @@ export default function GolfgateCatalunyaPage() {
 
           {/* Right side: Language + Weather + Admin + CTA */}
           <div className="flex items-center gap-3">
-            {/* Language dropdown - hover to open, glass effect */}
+            {/* Language dropdown - GIM exact structure */}
             <div className="relative" onMouseEnter={function() { setLangDropdown(true); }} onMouseLeave={function() { setLangDropdown(false); }}>
               <button
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/10 backdrop-blur-sm text-black/70 text-xs font-semibold hover:bg-black/15 transition-colors"
+                className="flex items-center gap-1.5 px-4 py-2 rounded-full border transition-colors duration-300 text-sm border-black/30 text-black/80 hover:border-black/50"
+                data-testid="language-selector"
               >
-                <Globe className="w-3.5 h-3.5" />
-                {currentLang.label}
-                <ChevronDown className="w-3 h-3" />
+                <span className="text-sm font-semibold">{currentLang.label}</span>
+                <ChevronDown className="w-4 h-4" />
               </button>
               {langDropdown && (
-                <div className="absolute right-0 top-full mt-0 bg-black/60 backdrop-blur-xl rounded-lg shadow-xl border border-white/10 py-1 min-w-[140px] z-50">
+                <div className="absolute right-0 top-full mt-1 bg-black/60 backdrop-blur-xl rounded-xl shadow-xl border border-white/10 py-1 min-w-[140px] z-50">
                   {LANGUAGES.map(function(l) {
                     return (
                       <button
@@ -277,7 +277,7 @@ export default function GolfgateCatalunyaPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
             {/* Column 1: Logo + Description + Social */}
             <div>
-              <img src={LOGO} alt="GOLFGATE Catalunya" className="h-10 w-auto mb-4" style={{ imageRendering: 'auto', maxWidth: '180px' }} />
+              <img src="/golfgate-logo-footer.png" alt="GOLFGATE Catalunya" className="h-10 w-auto mb-4" />
               <p className="text-white/60 text-sm leading-relaxed mb-6">
                 Book golf tee times across Catalunya with ease. We cover all major golfing regions including Barcelona, Costa Brava, Girona, Tarragona, and the Pyrenees &ndash; 20 premium courses at your fingertips.
               </p>

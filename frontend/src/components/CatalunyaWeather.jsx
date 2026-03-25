@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Cloud, Sun, CloudRain, CloudSnow, CloudDrizzle, Wind, CloudSun } from 'lucide-react';
+import { Cloud, Sun, CloudRain, CloudSnow, CloudDrizzle, Wind, CloudSun, ChevronDown } from 'lucide-react';
 
 var WEATHER_ICONS = {
   '01d': Sun, '01n': Sun,
@@ -77,10 +77,12 @@ export function CatalunyaWeather() {
       onMouseLeave={function() { setIsOpen(false); }}
     >
       <button
-        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs bg-black/10 backdrop-blur-sm text-black/70 hover:bg-black/15 transition-colors font-semibold"
+        className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm transition-all duration-200 bg-black/8 backdrop-blur-sm border border-black/10 text-black/70 hover:bg-black/15"
+        data-testid="weather-badge-btn"
       >
-        <Icon className="w-3.5 h-3.5" />
-        <span>{temp}°C</span>
+        <Icon className="w-4 h-4" />
+        <span className="font-semibold">{temp}°C</span>
+        <ChevronDown className="w-3 h-3 transition-transform duration-200" style={isOpen ? { transform: 'rotate(180deg)' } : {}} />
       </button>
 
       {isOpen && (
