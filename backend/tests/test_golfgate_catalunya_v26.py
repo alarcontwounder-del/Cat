@@ -6,7 +6,7 @@ import pytest
 import requests
 import os
 
-BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', 'https://golfcat-preview.preview.emergentagent.com')
+BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', 'https://golfgate-cat.preview.emergentagent.com')
 
 class TestCatalunyaCourses:
     """Tests for Catalunya golf courses API"""
