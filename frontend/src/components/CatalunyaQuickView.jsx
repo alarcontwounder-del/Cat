@@ -26,8 +26,8 @@ export function CatalunyaQuickView(props) {
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
       <div className="relative bg-white rounded-2xl max-w-md w-full max-h-[85vh] overflow-y-auto shadow-2xl">
         <button onClick={onClose} className="absolute top-3 right-3 z-10 w-8 h-8 bg-white/90 rounded-full flex items-center justify-center text-stone-600 hover:text-stone-900 shadow-lg text-sm font-semibold">X</button>
-        <div className="relative h-44 overflow-hidden rounded-t-2xl">
-          <img src={course.image} alt={course.name} className="w-full h-full object-cover" />
+        <div className="relative h-52 overflow-hidden rounded-t-2xl flex-shrink-0">
+          <img src={course.image} alt={course.name} className="w-full h-full object-cover object-center" style={{ minHeight: '100%', minWidth: '100%' }} />
         </div>
         <div className="p-5">
           <button onClick={function() { window.open(mapsUrl, '_blank'); }} className="flex items-center gap-1.5 text-stone-500 text-xs mb-1.5 hover:text-[#EF476F] transition-colors">

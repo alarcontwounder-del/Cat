@@ -399,25 +399,5 @@ CATALUNYA_COURSES = [
         "phone": "",
         "active": True,
         "display_order": 20
-    },
-    {
-        "id": "peralada-2",
-        "name": "Club de Golf Peralada",
-        "description": {
-            "en": "Duplicate listing - see Peralada Golf Club.",
-            "es": "Listado duplicado.",
-            "ca": "Llistat duplicat."
-        },
-        "image": "https://res.cloudinary.com/greenfee365/image/upload/w_800,h_600,c_fill/courses/peralada-golf-club/peralada-golf-club",
-        "holes": 18,
-        "par": 71,
-        "price_from": 66,
-        "location": "Peralada, Girona",
-        "features": ["Wine Region", "Vineyard Views"],
-        "booking_url": "https://golfinmallorca.greenfee365.com/golf-course/peralada-golf-club",
-        "full_address": "Peralada Golf Club, Carrer de l'Oca S/N, 17491 Peralada, Girona, Spain",
-        "phone": "+34 972 538 287",
-        "active": False,
-        "display_order": 21
     }
 ]

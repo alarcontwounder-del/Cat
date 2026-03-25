@@ -162,8 +162,8 @@ export default function GolfgateCatalunyaPage() {
           <p className="text-white/90 text-lg md:text-xl font-body max-w-2xl mx-auto mb-10 drop-shadow-lg">
             20 premier courses from Barcelona to Costa Brava. Championship layouts, coastal gems, and mountain retreats. Green fees from EUR 35.
           </p>
-          <a href="#courses" className="inline-flex items-center gap-2 bg-[#CCFF00] text-black px-8 py-4 rounded-full font-bold text-base hover:bg-[#DFFF00] transition-all shadow-lg hover:shadow-xl">
-            Explore Courses &amp; Book <ChevronRight className="w-5 h-5" />
+          <a href="#courses" onClick={function(e) { e.preventDefault(); document.getElementById('courses')?.scrollIntoView({behavior: 'smooth'}); }} className="inline-flex items-center gap-2 bg-[#CCFF00] text-black px-8 py-4 rounded-full font-bold text-base hover:bg-[#DFFF00] transition-all shadow-lg hover:shadow-xl">
+            Explore Golf Courses <ChevronRight className="w-5 h-5" />
           </a>
         </div>
       </section>
@@ -239,51 +239,66 @@ export default function GolfgateCatalunyaPage() {
         </div>
       </section>
 
-      {/* Footer - GIM style layout with logo, contact info, social icons */}
-      <footer className="bg-[#1a1a1a] text-white py-10" data-testid="footer">
+      {/* Footer - GIM exact 3-column layout */}
+      <footer className="text-white/80 py-14" style={{ backgroundColor: '#555555' }} data-testid="footer">
         <div className="max-w-6xl mx-auto px-6 md:px-12">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-8 mb-8">
-            {/* Logo */}
-            <div className="flex-shrink-0">
-              <img src={LOGO} alt="GOLFGATE Catalunya" className="h-16 md:h-20 w-auto brightness-0 invert" />
+          {/* Main grid: 3 columns matching GIM */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
+            {/* Column 1: Description + Social */}
+            <div>
+              <p className="text-white/70 text-sm leading-relaxed mb-6">
+                The leading golf booking service in Catalunya. Specializing in tee time reservations across 20 premium courses in Catalonia, from Barcelona to Costa Brava.
+              </p>
+              <div className="flex items-center gap-3 mb-6">
+                <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all" aria-label="Facebook">
+                  <Facebook className="w-4 h-4 text-white/80" />
+                </a>
+                <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all" aria-label="Instagram">
+                  <Instagram className="w-4 h-4 text-white/80" />
+                </a>
+                <a href="https://x.com/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all" aria-label="X">
+                  <XIcon />
+                </a>
+              </div>
             </div>
 
-            {/* Contact info - centered */}
-            <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-8 text-center sm:text-left">
-              <a href="tel:+34620987575" className="flex items-center gap-2 text-white/70 hover:text-white transition-colors text-sm">
-                <Phone className="w-4 h-4" />
-                <span>+34 620 987 575</span>
-              </a>
-              <a href="mailto:contact@golfgatecatalunya.es" className="flex items-center gap-2 text-white/70 hover:text-white transition-colors text-sm">
-                <Mail className="w-4 h-4" />
-                <span>contact@golfgatecatalunya.es</span>
-              </a>
-              <span className="flex items-center gap-2 text-white/70 text-sm">
-                <MapPin className="w-4 h-4" />
-                <span>Barcelona, Catalunya</span>
-              </span>
+            {/* Column 2: Quick Links */}
+            <div>
+              <h4 className="font-heading text-white text-base mb-4">Quick Links</h4>
+              <ul className="space-y-2.5">
+                <li><a href="#hero" className="text-white/60 text-sm hover:text-white transition-colors">Home</a></li>
+                <li><a href="#courses" className="text-white/60 text-sm hover:text-white transition-colors">Golf Courses</a></li>
+                <li><a href="#contact" className="text-white/60 text-sm hover:text-white transition-colors">Contact</a></li>
+              </ul>
             </div>
 
-            {/* Social icons */}
-            <div className="flex items-center gap-3">
-              <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#CCFF00] transition-all group" aria-label="Facebook">
-                <Facebook className="w-4 h-4 text-white/80 group-hover:text-black" />
-              </a>
-              <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#CCFF00] transition-all group" aria-label="Instagram">
-                <Instagram className="w-4 h-4 text-white/80 group-hover:text-black" />
-              </a>
-              <a href="https://x.com/" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#CCFF00] transition-all group" aria-label="X">
-                <XIcon />
-              </a>
+            {/* Column 3: Services */}
+            <div>
+              <h4 className="font-heading text-white text-base mb-4">Services</h4>
+              <ul className="space-y-2.5">
+                <li><a href="https://golfinmallorca.greenfee365.com/" target="_blank" rel="noopener noreferrer" className="text-[#CCFF00] text-sm hover:text-[#DFFF00] transition-colors">Book a tee time now</a></li>
+                <li><a href="#courses" className="text-white/60 text-sm hover:text-white transition-colors">Book Tee Times Catalunya</a></li>
+              </ul>
             </div>
           </div>
 
-          <div className="border-t border-white/10 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-white/40 text-xs">{new Date().getFullYear()} GOLFGATE Catalunya. All rights reserved.</p>
-            <div className="flex items-center gap-4 text-xs text-white/40">
-              <a href="https://golfgatecatalunya.es" target="_blank" rel="noopener noreferrer" className="hover:text-white/70">golfgatecatalunya.es</a>
-              <Link to="/privacy" className="hover:text-white/70">Privacy Policy</Link>
-              <Link to="/terms" className="hover:text-white/70">Terms</Link>
+          {/* Contact Info section */}
+          <div className="mb-8">
+            <h4 className="font-heading text-white text-base mb-4">Contact Info</h4>
+            <div className="space-y-2">
+              <p className="text-white/60 text-sm">+34 620 987 575</p>
+              <p className="text-white/60 text-sm">contact@golfgatecatalunya.es</p>
+              <p className="text-white/60 text-sm">Barcelona, CT, Spain</p>
+              <p className="text-sm">Website: <a href="https://golfgatecatalunya.es" target="_blank" rel="noopener noreferrer" className="text-[#CCFF00] hover:text-[#DFFF00] transition-colors">golfgatecatalunya.es</a></p>
+            </div>
+          </div>
+
+          {/* Divider + Copyright */}
+          <div className="border-t border-white/15 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-white/40 text-xs">&copy; {new Date().getFullYear()} Golfgatecatalunya.es&reg;. All rights reserved.</p>
+            <div className="flex items-center gap-6 text-xs text-white/40">
+              <Link to="/privacy" className="hover:text-white/70 transition-colors">Privacy Policy</Link>
+              <Link to="/terms" className="hover:text-white/70 transition-colors">Terms of Service</Link>
             </div>
           </div>
         </div>

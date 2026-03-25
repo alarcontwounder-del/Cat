@@ -598,6 +598,58 @@ async def update_catalunya_course(course_id: str, update: dict):
 
 
 
+# Blog post CRUD endpoints
+@api_router.get("/admin/blog-posts")
+async def get_blog_posts():
+    """Get all blog posts for admin"""
+    cursor = db.blog_posts.find({}, {"_id": 0}).sort("created_at", -1)
+    posts = await cursor.to_list(length=100)
+    return posts
+
+@api_router.post("/admin/blog-posts")
+async def create_blog_post(post: dict):
+    """Create a new blog post"""
+    import uuid
+    from datetime import datetime, timezone
+    new_post = {
+        "id": str(uuid.uuid4())[:8],
+        "title": post.get("title", ""),
+        "content": post.get("content", ""),
+        "category": post.get("category", "course-guides"),
+        "author": post.get("author", ""),
+        "published": post.get("published", False),
+        "created_at": datetime.now(timezone.utc).isoformat(),
+        "updated_at": datetime.now(timezone.utc).isoformat()
+    }
+    await db.blog_posts.insert_one(new_post)
+    new_post.pop("_id", None)
+    return new_post
+
+@api_router.put("/admin/blog-posts/{post_id}")
+async def update_blog_post(post_id: str, update: dict):
+    """Update a blog post"""
+    from datetime import datetime, timezone
+    allowed = {"title", "content", "category", "author", "published"}
+    filtered = {k: v for k, v in update.items() if k in allowed}
+    filtered["updated_at"] = datetime.now(timezone.utc).isoformat()
+    result = await db.blog_posts.update_one({"id": post_id}, {"$set": filtered})
+    if result.matched_count == 0:
+        from fastapi import HTTPException
+        raise HTTPException(status_code=404, detail="Post not found")
+    updated = await db.blog_posts.find_one({"id": post_id}, {"_id": 0})
+    return updated
+
+@api_router.delete("/admin/blog-posts/{post_id}")
+async def delete_blog_post(post_id: str):
+    """Delete a blog post"""
+    result = await db.blog_posts.delete_one({"id": post_id})
+    if result.deleted_count == 0:
+        from fastapi import HTTPException
+        raise HTTPException(status_code=404, detail="Post not found")
+    return {"deleted": True}
+
+
+
 @api_router.get("/golf-courses", response_model=List[dict])
 async def get_golf_courses(include_inactive: bool = False):
     """Get all golf courses from MongoDB, falls back to hardcoded data if empty"""
