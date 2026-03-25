@@ -34,9 +34,10 @@ export function CatalunyaWeather() {
   var temp = Math.round(weather.temperature_2m);
 
   return (
-    <div className="hidden sm:inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs bg-black/10 text-black/70">
+    <div className="hidden sm:inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs bg-black/10 text-black/70" data-testid="weather-badge">
       <Icon className="w-3.5 h-3.5" />
       <span className="font-semibold">{temp}°C</span>
+      <span className="text-black/50 hidden md:inline">Barcelona</span>
     </div>
   );
 }

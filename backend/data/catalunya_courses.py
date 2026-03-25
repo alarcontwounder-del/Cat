@@ -15,7 +15,7 @@ CATALUNYA_COURSES = [
         "location": "Caldes de Malavella",
         "features": ["Championship Course", "Spanish Open Venue", "Practice Range", "5-Star Resort"],
         "booking_url": "https://golfinmallorca.greenfee365.com/golf-course/camiral-golf-wellness-stadium",
-        "full_address": "Carretera N-II, Km 701, Caldes de Malavella, Girona, Spain",
+        "full_address": "Camiral Golf & Wellness, Carretera N-II Km 701, 17455 Caldes de Malavella, Girona, Spain",
         "phone": "+34 972 472 577",
         "active": True,
         "display_order": 1
@@ -35,7 +35,7 @@ CATALUNYA_COURSES = [
         "location": "Caldes de Malavella",
         "features": ["Resort Course", "Pyrenees Views", "Cork Oak Forest", "Driving Range"],
         "booking_url": "https://golfinmallorca.greenfee365.com/golf-course/camiral-golf-wellness-tour-course",
-        "full_address": "Carretera N-II, Km 701, Caldes de Malavella, Girona, Spain",
+        "full_address": "Camiral Golf & Wellness, Carretera N-II Km 701, 17455 Caldes de Malavella, Girona, Spain",
         "phone": "+34 972 472 577",
         "active": True,
         "display_order": 2
@@ -55,7 +55,7 @@ CATALUNYA_COURSES = [
         "location": "Terrassa, Barcelona",
         "features": ["Greg Norman Design", "45 Holes", "European Tour Venue", "Academy"],
         "booking_url": "https://golfinmallorca.greenfee365.com/golf-course/real-club-de-golf-el-prat-pink",
-        "full_address": "Plans de Bonvilar, 17, 08228 Terrassa, Barcelona",
+        "full_address": "Real Club de Golf El Prat, Plans de Bonvilar 17, 08228 Terrassa, Barcelona, Spain",
         "phone": "+34 937 281 000",
         "active": True,
         "display_order": 3
@@ -75,7 +75,7 @@ CATALUNYA_COURSES = [
         "location": "Terrassa, Barcelona",
         "features": ["Greg Norman Design", "Championship Layout", "Near Barcelona", "Pro Shop"],
         "booking_url": "https://golfinmallorca.greenfee365.com/golf-course/real-club-de-golf-el-prat-yellow",
-        "full_address": "Plans de Bonvilar, 17, 08228 Terrassa, Barcelona",
+        "full_address": "Real Club de Golf El Prat, Plans de Bonvilar 17, 08228 Terrassa, Barcelona, Spain",
         "phone": "+34 937 281 000",
         "active": True,
         "display_order": 4
@@ -95,7 +95,7 @@ CATALUNYA_COURSES = [
         "location": "Vallromanes, Barcelona",
         "features": ["Mediterranean Forest", "Near Barcelona", "Well Maintained", "Clubhouse"],
         "booking_url": "https://golfinmallorca.greenfee365.com/golf-course/club-de-golf-vallromanes",
-        "full_address": "Vallromanes, Barcelona, Spain",
+        "full_address": "Club de Golf Vallromanes, Afores S/N, 08188 Vallromanes, Barcelona, Spain",
         "phone": "",
         "active": True,
         "display_order": 5
@@ -115,7 +115,7 @@ CATALUNYA_COURSES = [
         "location": "La Pineda, Tarragona",
         "features": ["Resort Course", "Lake Views", "Championship Layout", "Spa"],
         "booking_url": "https://golfinmallorca.greenfee365.com/golf-course/infinitum-golf-lakes",
-        "full_address": "La Pineda, Tarragona, Spain",
+        "full_address": "Infinitum Golf, Avinguda Pau Casals 75, 43481 La Pineda, Vila-seca, Tarragona, Spain",
         "phone": "",
         "active": True,
         "display_order": 6
@@ -135,7 +135,7 @@ CATALUNYA_COURSES = [
         "location": "La Pineda, Tarragona",
         "features": ["Sea Views", "Rolling Terrain", "Mediterranean", "Resort"],
         "booking_url": "https://golfinmallorca.greenfee365.com/golf-course/infinitum-golf-hills",
-        "full_address": "La Pineda, Tarragona, Spain",
+        "full_address": "Infinitum Golf, Avinguda Pau Casals 75, 43481 La Pineda, Vila-seca, Tarragona, Spain",
         "phone": "",
         "active": True,
         "display_order": 7
@@ -155,7 +155,7 @@ CATALUNYA_COURSES = [
         "location": "Sant Andreu de Llavaneres",
         "features": ["Coastal Views", "Maresme Coast", "Members Club", "Pro Shop"],
         "booking_url": "https://golfinmallorca.greenfee365.com/golf-course/spain-club-de-golf-llavaneras",
-        "full_address": "Sant Andreu de Llavaneres, Barcelona, Spain",
+        "full_address": "Club de Golf Llavaneras, Cami del Golf S/N, 08392 Sant Andreu de Llavaneres, Barcelona, Spain",
         "phone": "+34 937 926 050",
         "active": True,
         "display_order": 8
@@ -175,7 +175,7 @@ CATALUNYA_COURSES = [
         "location": "Gualta, Girona",
         "features": ["Forest Course", "Pine Forest", "Costa Brava", "Clubhouse"],
         "booking_url": "https://golfinmallorca.greenfee365.com/golf-course/emporda-golf-forest",
-        "full_address": "Gualta, Girona, Spain",
+        "full_address": "Emporda Golf, Carrer del Golf S/N, 17257 Gualta, Girona, Spain",
         "phone": "+34 972 760 450",
         "active": True,
         "display_order": 9
@@ -195,7 +195,7 @@ CATALUNYA_COURSES = [
         "location": "Gualta, Girona",
         "features": ["Links Course", "Coastal Winds", "Open Fairways", "Unique Experience"],
         "booking_url": "https://golfinmallorca.greenfee365.com/golf-course/emporda-golf-links",
-        "full_address": "Gualta, Girona, Spain",
+        "full_address": "Emporda Golf, Carrer del Golf S/N, 17257 Gualta, Girona, Spain",
         "phone": "+34 972 760 450",
         "active": True,
         "display_order": 10
@@ -215,7 +215,7 @@ CATALUNYA_COURSES = [
         "location": "Soriguerola, Girona",
         "features": ["Pyrenees Mountain", "Cool Summers", "Valley Views", "Altitude Golf"],
         "booking_url": "https://golfinmallorca.greenfee365.com/golf-course/fontanals-golf-club",
-        "full_address": "Soriguerola, Girona, Spain",
+        "full_address": "Fontanals Golf Club, Ctra. N-260 Km 190, 17538 Soriguerola, Girona, Spain",
         "phone": "",
         "active": True,
         "display_order": 11
@@ -235,7 +235,7 @@ CATALUNYA_COURSES = [
         "location": "Platja d'Aro, Girona",
         "features": ["Sea Views", "Cork Oak Forest", "Costa Brava", "Restaurant"],
         "booking_url": "https://golfinmallorca.greenfee365.com/golf-course/club-golf-daro-mas-nou",
-        "full_address": "Platja d'Aro, Girona, Spain",
+        "full_address": "Club Golf d'Aro Mas Nou, Urbanitzacio Golf Mas Nou S/N, 17250 Platja d'Aro, Girona, Spain",
         "phone": "+34 972 826 900",
         "active": True,
         "display_order": 12
@@ -252,10 +252,10 @@ CATALUNYA_COURSES = [
         "holes": 18,
         "par": 71,
         "price_from": 68,
-        "location": "Girona",
+        "location": "Santa Cristina d'Aro, Girona",
         "features": ["Parkland Course", "Pine Forest", "Well Maintained", "Clubhouse"],
         "booking_url": "https://golfinmallorca.greenfee365.com/golf-course/golf-costa-brava",
-        "full_address": "Girona, Spain",
+        "full_address": "Golf Costa Brava, Urbanitzacio Golf Costa Brava S/N, 17246 Santa Cristina d'Aro, Girona, Spain",
         "phone": "+34 972 837 150",
         "active": True,
         "display_order": 13
@@ -275,7 +275,7 @@ CATALUNYA_COURSES = [
         "location": "Peralada, Girona",
         "features": ["Wine Region", "Vineyard Views", "Pyrenees Panorama", "Spa Hotel"],
         "booking_url": "https://golfinmallorca.greenfee365.com/golf-course/peralada-golf-club",
-        "full_address": "Peralada, Girona, Spain",
+        "full_address": "Peralada Golf Club, Carrer de l'Oca S/N, 17491 Peralada, Girona, Spain",
         "phone": "+34 972 538 287",
         "active": True,
         "display_order": 14
@@ -295,7 +295,7 @@ CATALUNYA_COURSES = [
         "location": "Navata, Girona",
         "features": ["Great Value", "Gentle Hills", "Practice Area", "Hotel"],
         "booking_url": "https://golfinmallorca.greenfee365.com/golf-course/torremirona-golf",
-        "full_address": "Navata, Girona, Spain",
+        "full_address": "Torremirona Golf, Ctra. de Navata S/N, 17744 Navata, Girona, Spain",
         "phone": "",
         "active": True,
         "display_order": 15
@@ -315,7 +315,7 @@ CATALUNYA_COURSES = [
         "location": "El Brull, Barcelona",
         "features": ["Mountain Course", "Natural Park", "Peaceful Setting", "Clubhouse"],
         "booking_url": "https://golfinmallorca.greenfee365.com/golf-course/club-de-golf-montanya",
-        "full_address": "El Brull, Barcelona, Spain",
+        "full_address": "Club de Golf Montanya, Urbanitzacio Golf Montanya, 08559 El Brull, Barcelona, Spain",
         "phone": "+34 938 840 670",
         "active": True,
         "display_order": 16
@@ -335,7 +335,7 @@ CATALUNYA_COURSES = [
         "location": "La Roca del Valles, Barcelona",
         "features": ["Near Barcelona", "Great Value", "Diverse Terrain", "30 min BCN"],
         "booking_url": "https://golfinmallorca.greenfee365.com/golf-course/golf-la-roca",
-        "full_address": "La Roca del Valles, Barcelona, Spain",
+        "full_address": "Golf La Roca, Ctra. BV-5105 Km 1, 08430 La Roca del Valles, Barcelona, Spain",
         "phone": "",
         "active": True,
         "display_order": 17
@@ -355,7 +355,7 @@ CATALUNYA_COURSES = [
         "location": "El Catllar, Tarragona",
         "features": ["Coastal Course", "Great Value", "Sea Views", "Restaurant"],
         "booking_url": "https://golfinmallorca.greenfee365.com/golf-course/golf-costa-daurada",
-        "full_address": "El Catllar, Tarragona, Spain",
+        "full_address": "Golf Costa Daurada, Ctra. de Valls Km 3, 43764 El Catllar, Tarragona, Spain",
         "phone": "",
         "active": True,
         "display_order": 18
@@ -375,7 +375,7 @@ CATALUNYA_COURSES = [
         "location": "Sant Esteve Sesrovires, Barcelona",
         "features": ["Most Affordable", "Near Barcelona", "All Levels", "Practice Area"],
         "booking_url": "https://golfinmallorca.greenfee365.com/golf-course/club-de-golf-de-barcelona",
-        "full_address": "Sant Esteve Sesrovires, Barcelona, Spain",
+        "full_address": "Club de Golf de Barcelona, Cami de Can Cata, 08635 Sant Esteve Sesrovires, Barcelona, Spain",
         "phone": "",
         "active": True,
         "display_order": 19
@@ -395,7 +395,7 @@ CATALUNYA_COURSES = [
         "location": "Reus, Tarragona",
         "features": ["Best Value", "Welcoming", "Fun Course", "Near Tarragona"],
         "booking_url": "https://golfinmallorca.greenfee365.com/golf-course/gaudi-reus-golf-club",
-        "full_address": "Reus, Tarragona, Spain",
+        "full_address": "Gaudi Reus Golf Club, Ctra. de Riudoms Km 2, 43206 Reus, Tarragona, Spain",
         "phone": "",
         "active": True,
         "display_order": 20
@@ -415,7 +415,7 @@ CATALUNYA_COURSES = [
         "location": "Peralada, Girona",
         "features": ["Wine Region", "Vineyard Views"],
         "booking_url": "https://golfinmallorca.greenfee365.com/golf-course/peralada-golf-club",
-        "full_address": "Peralada, Girona, Spain",
+        "full_address": "Peralada Golf Club, Carrer de l'Oca S/N, 17491 Peralada, Girona, Spain",
         "phone": "+34 972 538 287",
         "active": False,
         "display_order": 21

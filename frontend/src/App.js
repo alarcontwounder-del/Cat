@@ -4,6 +4,7 @@ import '@/App.css';
 
 var GolfgateCatalunyaPage = React.lazy(function() { return import('./components/GolfgateCatalunyaPage'); });
 var CatalunyaCoursePage = React.lazy(function() { return import('./components/CatalunyaCoursePage'); });
+var CatalunyaAdminPanel = React.lazy(function() { return import('./components/CatalunyaAdminPanel'); });
 var TermsPage = React.lazy(function() { return import('./components/TermsPage'); });
 var PrivacyPage = React.lazy(function() { return import('./components/PrivacyPage'); });
 
@@ -29,6 +30,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Wrap><GolfgateCatalunyaPage /></Wrap>} />
         <Route path="/courses/:courseId" element={<Wrap><CatalunyaCoursePage /></Wrap>} />
+        <Route path="/admin" element={<Wrap><CatalunyaAdminPanel /></Wrap>} />
         <Route path="/privacy" element={<Wrap><PrivacyPage /></Wrap>} />
         <Route path="/terms" element={<Wrap><TermsPage /></Wrap>} />
         <Route path="*" element={<Wrap><GolfgateCatalunyaPage /></Wrap>} />

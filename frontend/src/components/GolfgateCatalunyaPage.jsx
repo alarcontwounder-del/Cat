@@ -15,7 +15,8 @@ var LANGUAGES = [
   { code: 'es', label: 'ES', name: 'Espanol' },
   { code: 'ca', label: 'CA', name: 'Catala' },
   { code: 'de', label: 'DE', name: 'Deutsch' },
-  { code: 'fr', label: 'FR', name: 'Francais' }
+  { code: 'fr', label: 'FR', name: 'Francais' },
+  { code: 'sv', label: 'SE', name: 'Svenska' }
 ];
 
 function XIcon() {
@@ -89,7 +90,7 @@ export default function GolfgateCatalunyaPage() {
         <div className="max-w-6xl mx-auto px-4 md:px-6 py-2 flex items-center justify-between gap-4">
           {/* Logo - larger */}
           <Link to="/" className="flex-shrink-0">
-            <img src={LOGO} alt="GOLFGATE Catalunya" className="h-16 md:h-20 w-auto" />
+            <img src={LOGO} alt="GOLFGATE Catalunya" className="h-14 md:h-[4.5rem] w-auto" />
           </Link>
 
           {/* Nav links */}
@@ -232,22 +233,38 @@ export default function GolfgateCatalunyaPage() {
           <div className="w-16 h-1 bg-[#89F336] mx-auto rounded-full mb-6" />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
-          <ContactBox icon={<Mail className="w-6 h-6" />} title="Email" value="contact@golfgatecatalunya.com" href="mailto:contact@golfgatecatalunya.com" />
+          <ContactBox icon={<Mail className="w-6 h-6" />} title="Email" value="contact@golfgatecatalunya.es" href="mailto:contact@golfgatecatalunya.es" />
           <ContactBox icon={<Phone className="w-6 h-6" />} title="Phone" value="+34 620 987 575" href="tel:+34620987575" />
           <ContactBox icon={<MapPin className="w-6 h-6" />} title="Location" value="Barcelona, Catalunya, Spain" />
         </div>
       </section>
 
-      {/* Footer - shorter, GIM style, social icons */}
+      {/* Footer - GIM style layout with logo, contact info, social icons */}
       <footer className="bg-[#1a1a1a] text-white py-10" data-testid="footer">
         <div className="max-w-6xl mx-auto px-6 md:px-12">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-6">
-            <div className="flex items-center gap-4">
-              <div className="flex flex-col leading-none">
-                <span className="text-2xl font-black tracking-tight" style={{ color: '#f6416c' }}>GOLFGATE</span>
-                <span className="text-xs font-bold tracking-[0.3em]" style={{ color: '#89F336' }}>CATALUNYA</span>
-              </div>
+          <div className="flex flex-col md:flex-row justify-between items-center gap-8 mb-8">
+            {/* Logo */}
+            <div className="flex-shrink-0">
+              <img src={LOGO} alt="GOLFGATE Catalunya" className="h-16 md:h-20 w-auto brightness-0 invert" />
             </div>
+
+            {/* Contact info - centered */}
+            <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-8 text-center sm:text-left">
+              <a href="tel:+34620987575" className="flex items-center gap-2 text-white/70 hover:text-white transition-colors text-sm">
+                <Phone className="w-4 h-4" />
+                <span>+34 620 987 575</span>
+              </a>
+              <a href="mailto:contact@golfgatecatalunya.es" className="flex items-center gap-2 text-white/70 hover:text-white transition-colors text-sm">
+                <Mail className="w-4 h-4" />
+                <span>contact@golfgatecatalunya.es</span>
+              </a>
+              <span className="flex items-center gap-2 text-white/70 text-sm">
+                <MapPin className="w-4 h-4" />
+                <span>Barcelona, Catalunya</span>
+              </span>
+            </div>
+
+            {/* Social icons */}
             <div className="flex items-center gap-3">
               <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#CCFF00] transition-all group" aria-label="Facebook">
                 <Facebook className="w-4 h-4 text-white/80 group-hover:text-black" />
@@ -260,9 +277,11 @@ export default function GolfgateCatalunyaPage() {
               </a>
             </div>
           </div>
+
           <div className="border-t border-white/10 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-white/40 text-xs">{new Date().getFullYear()} GOLFGATE Catalunya. All rights reserved.</p>
-            <div className="flex gap-6 text-xs text-white/40">
+            <div className="flex items-center gap-4 text-xs text-white/40">
+              <a href="https://golfgatecatalunya.es" target="_blank" rel="noopener noreferrer" className="hover:text-white/70">golfgatecatalunya.es</a>
               <Link to="/privacy" className="hover:text-white/70">Privacy Policy</Link>
               <Link to="/terms" className="hover:text-white/70">Terms</Link>
             </div>

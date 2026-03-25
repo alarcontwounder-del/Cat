@@ -549,12 +549,14 @@ async def root():
     return {"message": "Mallorca Golf Exclusive API"}
 
 @api_router.get("/catalunya-courses", response_model=List[dict])
-async def get_catalunya_courses():
+async def get_catalunya_courses(include_inactive: bool = False):
     """Get all Catalunya golf courses for GOLFGATE CATALUNYA"""
-    # Try MongoDB first
-    cursor = db.catalunya_courses.find({"active": True}, {"_id": 0}).sort("display_order", 1)
+    query = {} if include_inactive else {"active": True}
+    cursor = db.catalunya_courses.find(query, {"_id": 0}).sort("display_order", 1)
     courses = await cursor.to_list(length=100)
     if not courses:
+        if include_inactive:
+            return CATALUNYA_COURSES
         return [c for c in CATALUNYA_COURSES if c.get("active", True)]
     return courses
 
@@ -571,6 +573,29 @@ async def get_catalunya_course(course_id: str):
         from fastapi import HTTPException
         raise HTTPException(status_code=404, detail="Course not found")
     return course
+
+
+@api_router.patch("/admin/catalunya-course/{course_id}")
+async def update_catalunya_course(course_id: str, update: dict):
+    """Update a Catalunya course card (admin)"""
+    allowed_fields = {"name", "location", "price_from", "holes", "par", "active", "booking_url", "image", "description", "features", "full_address", "phone", "display_order"}
+    filtered = {k: v for k, v in update.items() if k in allowed_fields}
+    if not filtered:
+        from fastapi import HTTPException
+        raise HTTPException(status_code=400, detail="No valid fields to update")
+    # Ensure course exists in DB; if not, seed from static data first
+    existing = await db.catalunya_courses.find_one({"id": course_id}, {"_id": 0})
+    if not existing:
+        # Seed all courses to DB
+        for c in CATALUNYA_COURSES:
+            await db.catalunya_courses.update_one({"id": c["id"]}, {"$set": c}, upsert=True)
+    result = await db.catalunya_courses.update_one({"id": course_id}, {"$set": filtered})
+    if result.matched_count == 0:
+        from fastapi import HTTPException
+        raise HTTPException(status_code=404, detail="Course not found")
+    updated = await db.catalunya_courses.find_one({"id": course_id}, {"_id": 0})
+    return updated
+
 
 
 @api_router.get("/golf-courses", response_model=List[dict])
