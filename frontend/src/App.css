@@ -143,13 +143,8 @@
   position: absolute;
   top: 0;
   left: 0;
-  background: linear-gradient(135deg, #2D2D2D 0%, #3D3D3D 100%);
+  background: transparent;
   transform: rotateY(180deg);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 2rem;
-  color: white;
 }
 
 /* Card image styling for better framing */
