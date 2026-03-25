@@ -90,7 +90,7 @@ export default function GolfgateCatalunyaPage() {
         <div className="max-w-6xl mx-auto px-4 md:px-6 py-2 flex items-center justify-between gap-4">
           {/* Logo - larger */}
           <Link to="/" className="flex-shrink-0">
-            <img src={LOGO} alt="GOLFGATE Catalunya" className="h-14 md:h-[4.5rem] w-auto" />
+            <img src={LOGO} alt="GOLFGATE Catalunya" className="h-14 md:h-[4.5rem] w-auto" style={{ imageRendering: 'auto' }} />
           </Link>
 
           {/* Nav links */}
@@ -100,29 +100,28 @@ export default function GolfgateCatalunyaPage() {
             <a href="#contact" className="hover:text-[#f6416c] transition-colors">Contact</a>
           </div>
 
-          {/* Right side: Language + Weather + Admin + CTA (Language FIRST, then Weather) */}
+          {/* Right side: Language + Weather + Admin + CTA */}
           <div className="flex items-center gap-3">
-            {/* Language dropdown - glass effect */}
-            <div className="relative">
+            {/* Language dropdown - hover to open, glass effect */}
+            <div className="relative" onMouseEnter={function() { setLangDropdown(true); }} onMouseLeave={function() { setLangDropdown(false); }}>
               <button
-                onClick={function() { setLangDropdown(!langDropdown); }}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/30 backdrop-blur-md text-black/70 text-xs font-semibold hover:bg-white/50 transition-colors"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/10 backdrop-blur-sm text-black/70 text-xs font-semibold hover:bg-black/15 transition-colors"
               >
                 <Globe className="w-3.5 h-3.5" />
                 {currentLang.label}
                 <ChevronDown className="w-3 h-3" />
               </button>
               {langDropdown && (
-                <div className="absolute right-0 top-full mt-1 bg-white/80 backdrop-blur-xl rounded-lg shadow-xl border border-white/30 py-1 min-w-[140px] z-50">
+                <div className="absolute right-0 top-full mt-0 bg-black/60 backdrop-blur-xl rounded-lg shadow-xl border border-white/10 py-1 min-w-[140px] z-50">
                   {LANGUAGES.map(function(l) {
                     return (
                       <button
                         key={l.code}
                         onClick={function() { setLang(l.code); setLangDropdown(false); }}
-                        className={'w-full text-left px-4 py-2 text-sm hover:bg-white/50 transition-colors flex items-center justify-between ' + (lang === l.code ? 'text-[#f6416c] font-semibold' : 'text-stone-700')}
+                        className={'w-full text-left px-4 py-2 text-sm hover:bg-white/10 transition-colors flex items-center justify-between ' + (lang === l.code ? 'text-[#CCFF00] font-semibold' : 'text-white/80')}
                       >
                         <span>{l.name}</span>
-                        <span className="text-xs text-stone-400">{l.label}</span>
+                        <span className="text-xs text-white/40">{l.label}</span>
                       </button>
                     );
                   })}
@@ -135,7 +134,7 @@ export default function GolfgateCatalunyaPage() {
             {/* Admin/Settings icon */}
             <Link
               to="/admin"
-              className="hidden sm:flex w-9 h-9 items-center justify-center rounded-full bg-white/30 backdrop-blur-md text-black/70 hover:bg-white/50 transition-colors"
+              className="hidden sm:flex w-9 h-9 items-center justify-center rounded-full bg-black/10 backdrop-blur-sm text-black/70 hover:bg-black/15 transition-colors"
               title="Admin Panel"
             >
               <Settings className="w-4 h-4" />
@@ -155,7 +154,7 @@ export default function GolfgateCatalunyaPage() {
           <img src={HERO_BG} alt="Golf Course Catalunya" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/70" />
         </div>
-        <div className="relative max-w-6xl mx-auto px-6 py-28 md:py-44 text-center">
+        <div className="relative max-w-6xl mx-auto px-6 py-28 md:py-40 text-center">
           <h1 className="font-heading text-4xl md:text-6xl lg:text-7xl text-white mb-6 drop-shadow-2xl leading-tight">
             Book Golf Tee Times<br />in Catalunya
           </h1>
@@ -165,6 +164,13 @@ export default function GolfgateCatalunyaPage() {
           <a href="#courses" onClick={function(e) { e.preventDefault(); document.getElementById('courses')?.scrollIntoView({behavior: 'smooth'}); }} className="inline-flex items-center gap-2 bg-[#CCFF00] text-black px-8 py-4 rounded-full font-bold text-base hover:bg-[#DFFF00] transition-all shadow-lg hover:shadow-xl">
             Explore Golf Courses <ChevronRight className="w-5 h-5" />
           </a>
+        </div>
+        {/* Scroll indicator - GIM style */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-70">
+          <span className="text-white/60 text-xs tracking-[0.3em] uppercase font-light">Scroll</span>
+          <div className="scroll-mouse">
+            <div className="scroll-mouse-dot" />
+          </div>
         </div>
       </section>
 
@@ -226,19 +232,19 @@ export default function GolfgateCatalunyaPage() {
         </div>
       </section>
 
-      {/* Play Golf Wherever You Are - Banner */}
+      {/* Play Golf Wherever You Are - Banner (GIM exact) */}
       <section className="max-w-6xl mx-auto px-6 md:px-12 py-10" data-testid="worldwide-banner">
-        <div className="relative rounded-2xl overflow-hidden min-h-[320px] flex items-center">
+        <div className="relative rounded-2xl overflow-hidden min-h-[340px] flex items-center">
           <img src="https://images.pexels.com/photos/3129262/pexels-photo-3129262.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="Golf course aerial" className="absolute inset-0 w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30" />
+          <div className="absolute inset-0 bg-black/40" />
           <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-8 p-8 md:p-12 w-full">
             <div className="max-w-lg">
-              <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-md rounded-full px-4 py-1.5 mb-5">
+              <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-1.5 mb-5">
                 <Globe className="w-4 h-4 text-[#CCFF00]" />
-                <span className="text-[#CCFF00] text-xs font-semibold">Worldwide Tee Times</span>
+                <span className="text-[#CCFF00] text-xs font-semibold tracking-wide">Worldwide Tee Times</span>
               </div>
-              <h2 className="font-heading text-3xl md:text-4xl text-white mb-4">Play Golf Wherever You Are</h2>
-              <p className="text-white/70 text-sm md:text-base leading-relaxed">
+              <h2 className="font-heading text-3xl md:text-5xl text-white mb-4 italic" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>Play Golf Wherever You Are</h2>
+              <p className="text-white/60 text-sm md:text-base leading-relaxed">
                 Planning your trip? Book tee times in your home country, destination city, or almost anywhere in the world &ndash; before or during your travels.
               </p>
             </div>
@@ -246,7 +252,7 @@ export default function GolfgateCatalunyaPage() {
               <a href="https://golfinmallorca.greenfee365.com/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-white/90 backdrop-blur-md text-stone-800 px-6 py-3.5 rounded-xl font-semibold text-sm hover:bg-white transition-all shadow-lg">
                 Explore Courses &amp; Book Tee Times Worldwide <ExternalLink className="w-4 h-4" />
               </a>
-              <span className="text-[#CCFF00] text-xs font-medium">Over 3,000 courses available</span>
+              <span className="text-[#CCFF00] text-xs font-medium italic">Over 3,000 courses available</span>
             </div>
           </div>
         </div>
@@ -272,9 +278,9 @@ export default function GolfgateCatalunyaPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
             {/* Column 1: Logo + Description + Social */}
             <div>
-              <img src={LOGO} alt="GOLFGATE Catalunya" className="h-12 w-auto mb-4" />
+              <img src={LOGO} alt="GOLFGATE Catalunya" className="h-10 w-auto mb-4" style={{ imageRendering: 'auto', maxWidth: '180px' }} />
               <p className="text-white/60 text-sm leading-relaxed mb-6">
-                Your new simple platform to book golf tee times across Catalunya. We cover all regions including Barcelona, Costa Brava, Girona, Tarragona, and the Pyrenees &ndash; 20 premium courses at your fingertips.
+                Book golf tee times across Catalunya with ease. We cover all major golfing regions including Barcelona, Costa Brava, Girona, Tarragona, and the Pyrenees &ndash; 20 premium courses at your fingertips.
               </p>
               <div className="flex items-center gap-3">
                 <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all" aria-label="Facebook">
@@ -384,26 +390,33 @@ function CookieConsent() {
   if (!show) return null;
 
   return (
-    <div className="fixed bottom-4 left-4 right-4 md:left-auto md:right-6 md:max-w-md z-50" data-testid="cookie-consent">
-      <div className="bg-white/80 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/30 p-5">
-        <p className="text-stone-700 text-sm leading-relaxed mb-4">
-          We use cookies to enhance your browsing experience and provide personalized content. By continuing to use this site, you agree to our use of cookies.
-        </p>
-        <div className="flex items-center gap-3">
-          <button
-            onClick={function() { localStorage.setItem('golfgate_cookies', 'true'); setShow(false); }}
-            className="flex-1 bg-black text-[#CCFF00] py-2.5 rounded-full text-sm font-semibold hover:bg-black/80 transition-colors"
-            data-testid="cookie-accept-btn"
-          >
-            Accept All
-          </button>
-          <button
-            onClick={function() { localStorage.setItem('golfgate_cookies', 'true'); setShow(false); }}
-            className="px-4 py-2.5 text-stone-500 text-sm hover:text-stone-800 transition-colors"
-          >
-            Decline
-          </button>
+    <div className="fixed bottom-6 left-6 z-50" data-testid="cookie-consent">
+      <div className="bg-black/50 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/10 p-6 w-[280px] text-center">
+        {/* Cookie icon */}
+        <div className="mb-4">
+          <svg className="w-8 h-8 mx-auto text-white/60" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5" />
+            <path d="M2 12h.01" /><path d="M12 2v.01" />
+            <circle cx="7.5" cy="10.5" r="1" fill="currentColor" /><circle cx="12" cy="14" r="1" fill="currentColor" /><circle cx="15.5" cy="8.5" r="1" fill="currentColor" />
+          </svg>
         </div>
+        <p className="text-white/80 text-sm leading-relaxed mb-5">
+          This website uses cookies to ensure you get the best experience.
+        </p>
+        <a href="/privacy" className="text-white/50 text-xs underline mb-4 inline-block hover:text-white/70">Learn more</a>
+        <button
+          onClick={function() { localStorage.setItem('golfgate_cookies', 'true'); setShow(false); }}
+          className="w-full border border-white/30 text-white py-2.5 rounded-xl text-sm font-medium hover:bg-white/10 transition-colors mb-3 mt-3"
+          data-testid="cookie-accept-btn"
+        >
+          Accept
+        </button>
+        <button
+          onClick={function() { localStorage.setItem('golfgate_cookies', 'declined'); setShow(false); }}
+          className="text-white/40 text-xs hover:text-white/60 transition-colors"
+        >
+          Preferences
+        </button>
       </div>
     </div>
   );

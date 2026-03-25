@@ -70,23 +70,27 @@ export function CatalunyaWeather() {
   var Icon = WEATHER_ICONS[icon] || Cloud;
 
   return (
-    <div className="relative hidden sm:block" data-testid="weather-badge">
+    <div
+      className="relative hidden sm:block"
+      data-testid="weather-badge"
+      onMouseEnter={function() { setIsOpen(true); }}
+      onMouseLeave={function() { setIsOpen(false); }}
+    >
       <button
-        onClick={function() { setIsOpen(!isOpen); }}
-        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs bg-white/30 backdrop-blur-md text-black/70 hover:bg-white/50 transition-colors font-semibold"
+        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs bg-black/10 backdrop-blur-sm text-black/70 hover:bg-black/15 transition-colors font-semibold"
       >
         <Icon className="w-3.5 h-3.5" />
         <span>{temp}°C</span>
       </button>
 
       {isOpen && (
-        <div className="absolute top-full right-0 mt-2 bg-white/80 backdrop-blur-xl rounded-xl shadow-xl border border-white/30 p-3.5 min-w-[220px] z-50">
+        <div className="absolute top-full right-0 mt-0 bg-black/60 backdrop-blur-xl rounded-xl shadow-xl border border-white/10 p-3.5 min-w-[220px] z-50">
           {/* Today */}
-          <div className="flex items-center gap-2.5 pb-2.5 mb-2 border-b border-stone-200/50">
-            <Icon className="w-5 h-5 text-stone-600" />
+          <div className="flex items-center gap-2.5 pb-2.5 mb-2 border-b border-white/10">
+            <Icon className="w-5 h-5 text-white/70" />
             <div>
-              <p className="text-[10px] text-stone-400 uppercase tracking-wider">Barcelona, Today</p>
-              <p className="text-lg font-semibold text-stone-800">{temp}°C</p>
+              <p className="text-[10px] text-white/40 uppercase tracking-wider">Barcelona, Today</p>
+              <p className="text-lg font-semibold text-white">{temp}°C</p>
             </div>
           </div>
           {/* 7-day forecast */}
@@ -95,10 +99,10 @@ export function CatalunyaWeather() {
               var DayIcon = WEATHER_ICONS[day.icon] || Cloud;
               return (
                 <div key={day.day} className="flex items-center justify-between text-xs py-0.5">
-                  <span className="text-stone-500 w-8 font-medium">{day.day}</span>
-                  <DayIcon className="w-3.5 h-3.5 text-stone-400" />
-                  <span className="text-stone-700 font-semibold w-8 text-right">{day.high}°</span>
-                  <span className="text-stone-400 w-8 text-right">{day.low}°</span>
+                  <span className="text-white/60 w-8 font-medium">{day.day}</span>
+                  <DayIcon className="w-3.5 h-3.5 text-white/40" />
+                  <span className="text-white font-semibold w-8 text-right">{day.high}°</span>
+                  <span className="text-white/40 w-8 text-right">{day.low}°</span>
                 </div>
               );
             })}

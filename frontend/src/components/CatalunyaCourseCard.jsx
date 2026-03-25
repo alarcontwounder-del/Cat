@@ -17,7 +17,7 @@ export function CatalunyaCourseCard({ course, onQuickView }) {
       <div className="flip-card-inner">
         {/* FRONT - Matches GIM layout: image top, text below */}
         <div className="flip-card-front">
-          <div className="bg-white rounded-2xl overflow-hidden h-full flex flex-col shadow-sm hover:shadow-md transition-shadow">
+          <div className="bg-white rounded-2xl border border-stone-200 overflow-hidden h-full flex flex-col shadow-sm hover:shadow-md transition-shadow">
             {/* Image area */}
             <div className="relative aspect-[4/3] overflow-hidden">
               <img

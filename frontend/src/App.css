@@ -337,3 +337,29 @@
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #a8a29e;
 }
+
+
+/* Scroll mouse indicator - GIM style */
+.scroll-mouse {
+  width: 26px;
+  height: 42px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-radius: 14px;
+  display: flex;
+  justify-content: center;
+  padding-top: 6px;
+}
+
+.scroll-mouse-dot {
+  width: 4px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 2px;
+  animation: scrollDot 2s ease-in-out infinite;
+}
+
+@keyframes scrollDot {
+  0% { transform: translateY(0); opacity: 1; }
+  50% { transform: translateY(12px); opacity: 0.3; }
+  100% { transform: translateY(0); opacity: 1; }
+}
