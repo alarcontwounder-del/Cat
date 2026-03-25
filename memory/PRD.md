@@ -1,56 +1,30 @@
 # GOLFGATE Catalunya - PRD
 
 ## Problem Statement
-Standalone golf tee time booking landing page for Catalunya, inspired by golfinmallorca.com (GIM). Uses real Catalonia course data from greenfee365. All UI components must EXACTLY match GIM's designs.
+Standalone golf tee time booking landing page for Catalunya, inspired by golfinmallorca.com (GIM). All UI must EXACTLY match GIM designs.
 
 ## Implemented Features
-- 20 real Catalonia courses with GIM-style flip cards (image top, text below, green gradient back - NO grey)
+- 20 real Catalonia courses with flip cards (image top, text below, green gradient back)
 - Individual SEO course pages at /courses/{id}
-- Navbar: Language (hover, dark glass dropdown) -> Weather 7-day (hover, dark glass) -> Admin gear -> CTA
-- Hero: heading, subtext, CTA, SCROLL mouse indicator (animated)
-- "Play Golf Wherever You Are" worldwide banner (GIM exact: golden #c8a03e accents, UPPERCASE badge, Playfair Display italic heading fontWeight 500, warm gradient overlay, CTA to greenfee365.com)
-- Cookie consent: GIM exact (warm brown glass rgba(28,24,18,0.72), blur(16px), 220px, borderRadius 20px, cookie icon, Accept with 1.5px white border, Preferences)
-- GIM 3-column footer: BLACK bg (#1a1a1a), logo in original colors, keyword-rich description, Quick Links, Services, Contact Info, copyright
-- Admin Panel /admin with login (admin/golfgate2026), course editing, blog CRUD
-- Contact section with centered boxes (email mailto, phone, location)
-- QuickView modal for quick course preview
-- Card text overflow fixed with overflow-hidden on text container
+- Navbar: Language → Weather 7-day → Admin gear → CTA
+- Hero: heading, subtext, CTA, SCROLL mouse indicator
+- Worldwide banner: GIM exact (480px tall, UPPERCASE golden badge, Playfair italic 500, CTA wraps 2 lines 240px max-width, warm overlay)
+- Cookie consent: GIM exact (280px, 16px radius, 18px text, warm olive glass rgba(35,32,22,0.68) blur(18px), 1.5px border Accept)
+- Footer: BLACK bg 3-column, logo, keyword description, Quick Links, Services, Contact
+- Admin Panel /admin (admin/golfgate2026)
+- Card text: strict 2-line clamp via inline WebkitLineClamp, overflow hidden, flex-shrink-0
 
 ## Architecture
-- Frontend: React + Tailwind + Lucide icons
-- Backend: FastAPI + Motor MongoDB
-- Data: catalunya_courses.py (20 courses) + MongoDB override
-- Weather: open-meteo.com API (free)
+- Frontend: React + Tailwind + Lucide | Backend: FastAPI + MongoDB | Weather: open-meteo.com
 
 ## Key Files
-- GolfgateCatalunyaPage.jsx (main page, navbar, hero, footer, cookie consent)
-- CatalunyaCourseCard.jsx (flip card with overflow-hidden text fix)
-- CatalunyaQuickView.jsx (modal)
-- CatalunyaWeather.jsx (7-day forecast, hover dropdown)
-- CatalunyaAdminPanel.jsx (login + course edit + blog CRUD)
-- App.css (flip card CSS - transparent back, scroll mouse animation)
-
-## API Endpoints
-- GET /api/catalunya-courses - 20 active courses
-- PATCH /api/admin/catalunya-course/{id} - Update course
-- GET/POST/PUT/DELETE /api/admin/blog-posts - Blog CRUD
+- GolfgateCatalunyaPage.jsx, CatalunyaCourseCard.jsx, CatalunyaWeather.jsx, CatalunyaAdminPanel.jsx, App.css
 
 ## Completed (25 Mar 2026)
-- P0 Fix Round 2: Cookie consent GIM exact (warm brown glass, 220px, 20px radius)
-- P0 Fix Round 2: Banner GIM exact (UPPERCASE badge, golden #c8a03e, Playfair italic 500, warm overlay)
-- P0 Fix Round 2: Card text overflow fix (overflow-hidden, flex-shrink-0)
-- P0 Fix Round 1: Card back grey removed (CSS transparent)
-- All 12 frontend features verified at 100% (iteration_29.json)
+- Round 3: Cookie 280px/18px/16px-radius, Banner 480px tall + CTA wraps, Card WebkitLineClamp fix
+- Round 2: UPPERCASE badge, golden #c8a03e, card overflow-hidden
+- Round 1: Card back grey removed, flip-card-back transparent
 
-## P1 Pending
-- Navbar & Footer logo pixelation check + dropdown UI polish
-- Language/Weather dropdown z-index overlap + close-on-hover improvements
-
-## Upcoming (P2)
-- Full multilingual support (EN, ES, CA, DE, FR, SE)
-- Privacy Policy + Terms of Service pages (adapt GIM text)
-- Hero image replacement (user to provide)
-
-## Future/Backlog
-- SEO enhancements
-- Component refactoring (GolfgateCatalunyaPage.jsx is 420+ lines)
+## Pending
+- P1: Logo pixelation, dropdown z-index/glass polish
+- P2: Multilingual, Privacy/Terms pages, Hero image replacement

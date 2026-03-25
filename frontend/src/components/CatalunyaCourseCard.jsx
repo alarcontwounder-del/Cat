@@ -47,7 +47,7 @@ export function CatalunyaCourseCard({ course, onQuickView }) {
               {/* Location */}
               <button
                 onClick={function() { window.open(mapsUrl, '_blank'); }}
-                className="flex items-center gap-1 text-stone-400 text-xs mb-1 hover:text-[#EF476F] transition-colors w-fit"
+                className="flex items-center gap-1 text-stone-400 text-xs mb-1 hover:text-[#EF476F] transition-colors w-fit flex-shrink-0"
                 data-testid={'map-link-' + course.id}
               >
                 <MapPin className="w-3 h-3" />
@@ -55,17 +55,17 @@ export function CatalunyaCourseCard({ course, onQuickView }) {
               </button>
 
               {/* Course name */}
-              <Link to={'/courses/' + course.id} className="hover:opacity-80 transition-opacity">
-                <h3 className="font-heading text-lg text-stone-900 mb-1.5 leading-tight line-clamp-2">{course.name}</h3>
+              <Link to={'/courses/' + course.id} className="hover:opacity-80 transition-opacity flex-shrink-0">
+                <h3 className="font-heading text-base text-stone-900 mb-1.5 leading-snug" style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{course.name}</h3>
               </Link>
 
-              {/* Description */}
-              <p className="text-stone-500 text-xs leading-relaxed mb-3 line-clamp-2 flex-1" style={{ overflow: 'hidden' }}>
+              {/* Description - strict 2-line clamp */}
+              <p className="text-stone-500 text-xs leading-relaxed mb-3" style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', flexShrink: 0 }}>
                 {typeof course.description === 'object' ? course.description.en : course.description}
               </p>
 
               {/* Holes / Par row */}
-              <div className="flex items-center gap-1 text-stone-600 text-xs mb-2 flex-shrink-0">
+              <div className="flex items-center gap-1 text-stone-600 text-xs mb-2 flex-shrink-0 mt-auto">
                 <span className="uppercase tracking-wider text-stone-400 text-[10px]">Holes</span>
                 <span className="font-heading text-lg font-medium text-stone-800">{course.holes}</span>
                 <span className="text-stone-300 mx-1.5">|</span>
