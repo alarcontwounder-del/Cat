@@ -7,7 +7,7 @@ import { CatalunyaQuickView } from './CatalunyaQuickView';
 import { CatalunyaWeather } from './CatalunyaWeather';
 
 var API = process.env.REACT_APP_BACKEND_URL;
-var LOGO = 'https://customer-assets.emergentagent.com/job_booking-landing/artifacts/e45y2a1q_my-project-page-1.png';
+var LOGO = '/golfgate-logo-transparent.png';
 var HERO_BG = 'https://res.cloudinary.com/greenfee365/image/upload/w_1920,h_900,c_fill/courses/camiral-golf-wellness-stadium/camiral-golf-wellness-stadium';
 
 var LANGUAGES = [
@@ -86,17 +86,17 @@ export default function GolfgateCatalunyaPage() {
 
       {/* Navbar - GIM style: logo, links, language, weather, admin, CTA */}
       <nav className="sticky top-0 z-40 shadow-md" style={{ backgroundColor: '#CCFF00' }}>
-        <div className="max-w-7xl mx-auto px-4 md:px-6 py-2 flex items-center justify-between gap-4">
+        <div className="max-w-6xl mx-auto px-4 md:px-6 py-2 flex items-center justify-between gap-4">
           {/* Logo - larger */}
           <Link to="/" className="flex-shrink-0">
-            <img src={LOGO} alt="GOLFGATE Catalunya" className="h-16 md:h-24 w-auto" style={{ mixBlendMode: 'multiply' }} />
+            <img src={LOGO} alt="GOLFGATE Catalunya" className="h-16 md:h-20 w-auto" />
           </Link>
 
           {/* Nav links */}
           <div className="hidden lg:flex items-center gap-6 text-sm font-semibold text-black/80">
-            <a href="#courses" className="hover:text-[#EF476F] transition-colors">Courses</a>
-            <a href="#about" className="hover:text-[#EF476F] transition-colors">About</a>
-            <a href="#contact" className="hover:text-[#EF476F] transition-colors">Contact</a>
+            <a href="#courses" className="hover:text-[#f6416c] transition-colors">Courses</a>
+            <a href="#about" className="hover:text-[#f6416c] transition-colors">About</a>
+            <a href="#contact" className="hover:text-[#f6416c] transition-colors">Contact</a>
           </div>
 
           {/* Right side: Weather + Language + Admin + CTA */}
@@ -120,7 +120,7 @@ export default function GolfgateCatalunyaPage() {
                       <button
                         key={l.code}
                         onClick={function() { setLang(l.code); setLangDropdown(false); }}
-                        className={'w-full text-left px-4 py-2 text-sm hover:bg-stone-50 transition-colors flex items-center justify-between ' + (lang === l.code ? 'text-[#EF476F] font-semibold' : 'text-stone-700')}
+                        className={'w-full text-left px-4 py-2 text-sm hover:bg-stone-50 transition-colors flex items-center justify-between ' + (lang === l.code ? 'text-[#f6416c] font-semibold' : 'text-stone-700')}
                       >
                         <span>{l.name}</span>
                         <span className="text-xs text-stone-400">{l.label}</span>
@@ -185,7 +185,7 @@ export default function GolfgateCatalunyaPage() {
 
       {/* Courses */}
       <section id="courses" className="py-16 md:py-20 bg-stone-50" data-testid="golfgate-courses">
-        <div className="max-w-7xl mx-auto px-6 md:px-12">
+        <div className="max-w-6xl mx-auto px-6 md:px-12">
           <div className="text-center mb-12">
             <h2 className="font-heading text-3xl md:text-4xl text-stone-900 mb-4">Golf Courses in Catalunya</h2>
             <div className="w-16 h-1 bg-[#89F336] mx-auto rounded-full mb-6" />
@@ -240,11 +240,11 @@ export default function GolfgateCatalunyaPage() {
 
       {/* Footer - shorter, GIM style, social icons */}
       <footer className="bg-[#1a1a1a] text-white py-10" data-testid="footer">
-        <div className="max-w-7xl mx-auto px-6 md:px-12">
+        <div className="max-w-6xl mx-auto px-6 md:px-12">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-6">
             <div className="flex items-center gap-4">
               <div className="flex flex-col leading-none">
-                <span className="text-2xl font-black tracking-tight" style={{ color: '#EF476F' }}>GOLFGATE</span>
+                <span className="text-2xl font-black tracking-tight" style={{ color: '#f6416c' }}>GOLFGATE</span>
                 <span className="text-xs font-bold tracking-[0.3em]" style={{ color: '#89F336' }}>CATALUNYA</span>
               </div>
             </div>
@@ -289,7 +289,7 @@ function FeatureBox(props) {
 
 function ContactBox(props) {
   var content = props.href ? (
-    <a href={props.href} className="text-stone-500 text-sm hover:text-[#EF476F] transition-colors">{props.value}</a>
+    <a href={props.href} className="text-stone-500 text-sm hover:text-[#f6416c] transition-colors">{props.value}</a>
   ) : (
     <p className="text-stone-500 text-sm">{props.value}</p>
   );

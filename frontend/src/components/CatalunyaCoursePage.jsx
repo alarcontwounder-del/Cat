@@ -4,7 +4,7 @@ import { MapPin, Flag, Trophy, ChevronRight, ExternalLink, Navigation, Star } fr
 import axios from 'axios';
 
 var API = process.env.REACT_APP_BACKEND_URL;
-var LOGO = 'https://customer-assets.emergentagent.com/job_booking-landing/artifacts/e45y2a1q_my-project-page-1.png';
+var LOGO = '/golfgate-logo-transparent.png';
 
 function getDesc(c) {
   if (!c || !c.description) return '';
@@ -66,7 +66,7 @@ function NavBarSimple() {
     <nav className="sticky top-0 z-40 shadow-md" style={{ backgroundColor: '#CCFF00' }}>
       <div className="max-w-7xl mx-auto px-6 py-2 flex items-center justify-between">
         <Link to="/">
-          <img src={LOGO} alt="GOLFGATE Catalunya" className="h-14 md:h-20 w-auto" style={{ mixBlendMode: 'multiply', filter: 'brightness(1.08) contrast(1.1)' }} />
+          <img src={LOGO} alt="GOLFGATE Catalunya" className="h-16 md:h-20 w-auto" />
         </Link>
         <Link to="/#courses" className="bg-black text-[#CCFF00] px-6 py-2.5 rounded-full text-sm font-bold hover:bg-black/80 transition-all">
           Book a Tee Time Now
