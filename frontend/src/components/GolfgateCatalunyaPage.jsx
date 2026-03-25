@@ -382,7 +382,7 @@ function CookieConsent() {
   useEffect(function() {
     var accepted = localStorage.getItem('golfgate_cookies');
     if (!accepted) {
-      var timer = setTimeout(function() { setShow(true); }, 1500);
+      var timer = setTimeout(function() { setShow(true); }, 800);
       return function() { clearTimeout(timer); };
     }
   }, []);
@@ -391,29 +391,31 @@ function CookieConsent() {
 
   return (
     <div className="fixed bottom-6 left-6 z-50" data-testid="cookie-consent">
-      <div className="bg-black/50 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/10 p-6 w-[280px] text-center">
+      <div className="rounded-3xl shadow-2xl p-7 w-[300px] text-center" style={{ background: 'rgba(60,55,45,0.55)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)', border: '1px solid rgba(255,255,255,0.08)' }}>
         {/* Cookie icon */}
-        <div className="mb-4">
-          <svg className="w-8 h-8 mx-auto text-white/60" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <div className="mb-5">
+          <svg className="w-10 h-10 mx-auto" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5" />
-            <path d="M2 12h.01" /><path d="M12 2v.01" />
-            <circle cx="7.5" cy="10.5" r="1" fill="currentColor" /><circle cx="12" cy="14" r="1" fill="currentColor" /><circle cx="15.5" cy="8.5" r="1" fill="currentColor" />
+            <circle cx="7.5" cy="10.5" r="1" fill="rgba(255,255,255,0.7)" /><circle cx="12" cy="14" r="1" fill="rgba(255,255,255,0.7)" /><circle cx="15.5" cy="8.5" r="1" fill="rgba(255,255,255,0.7)" />
           </svg>
         </div>
-        <p className="text-white/80 text-sm leading-relaxed mb-5">
+        <p className="text-white/90 text-[15px] leading-relaxed mb-5">
           This website uses cookies to ensure you get the best experience.
         </p>
-        <a href="/privacy" className="text-white/50 text-xs underline mb-4 inline-block hover:text-white/70">Learn more</a>
+        <a href="/privacy" className="text-white/50 text-xs underline underline-offset-2 mb-5 inline-block hover:text-white/70">Learn more</a>
         <button
           onClick={function() { localStorage.setItem('golfgate_cookies', 'true'); setShow(false); }}
-          className="w-full border border-white/30 text-white py-2.5 rounded-xl text-sm font-medium hover:bg-white/10 transition-colors mb-3 mt-3"
+          className="w-full py-3.5 rounded-2xl text-[15px] font-medium mt-4 transition-colors"
+          style={{ border: '1px solid rgba(255,255,255,0.3)', color: 'white', background: 'transparent' }}
+          onMouseEnter={function(e) { e.target.style.background = 'rgba(255,255,255,0.08)'; }}
+          onMouseLeave={function(e) { e.target.style.background = 'transparent'; }}
           data-testid="cookie-accept-btn"
         >
           Accept
         </button>
         <button
           onClick={function() { localStorage.setItem('golfgate_cookies', 'declined'); setShow(false); }}
-          className="text-white/40 text-xs hover:text-white/60 transition-colors"
+          className="text-white/35 text-xs mt-3 block mx-auto hover:text-white/50 transition-colors"
         >
           Preferences
         </button>
