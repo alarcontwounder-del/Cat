@@ -232,27 +232,27 @@ export default function GolfgateCatalunyaPage() {
         </div>
       </section>
 
-      {/* Play Golf Wherever You Are - Banner (GIM amber/gold style) */}
+      {/* Play Golf Wherever You Are - Banner (GIM exact copy) */}
       <section className="max-w-6xl mx-auto px-6 md:px-12 py-10" data-testid="worldwide-banner">
-        <div className="relative rounded-2xl overflow-hidden min-h-[340px] flex items-center">
+        <div className="relative rounded-2xl overflow-hidden min-h-[380px] flex items-center">
           <img src="https://images.pexels.com/photos/3129262/pexels-photo-3129262.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="Golf course aerial" className="absolute inset-0 w-full h-full object-cover" />
-          <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(120,80,20,0.55) 0%, rgba(40,30,10,0.65) 100%)' }} />
-          <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-8 p-8 md:p-12 w-full">
-            <div className="max-w-lg">
-              <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-1.5 mb-5">
-                <Globe className="w-4 h-4 text-amber-300" />
-                <span className="text-amber-300 text-xs font-semibold tracking-wide uppercase">Worldwide Tee Times</span>
+          <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(50,45,25,0.55) 0%, rgba(25,22,12,0.7) 100%)' }} />
+          <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-8 p-8 md:p-14 w-full">
+            <div className="max-w-xl">
+              <div className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-6" style={{ background: 'rgba(255,255,255,0.12)', backdropFilter: 'blur(8px)' }}>
+                <Globe className="w-4 h-4" style={{ color: '#c8a03e' }} />
+                <span className="text-xs font-semibold tracking-[0.12em]" style={{ color: '#c8a03e' }}>WORLDWIDE TEE TIMES</span>
               </div>
-              <h2 className="text-3xl md:text-5xl text-white mb-4" style={{ fontFamily: "'Playfair Display', Georgia, serif", fontStyle: 'italic', fontWeight: 400 }}>Play Golf Wherever You Are</h2>
-              <p className="text-white/70 text-sm md:text-base leading-relaxed">
+              <h2 className="text-4xl md:text-5xl lg:text-[3.5rem] text-white mb-5 leading-tight" style={{ fontFamily: "'Playfair Display', Georgia, 'Times New Roman', serif", fontStyle: 'italic', fontWeight: 500 }}>Play Golf Wherever You Are</h2>
+              <p className="text-white/60 text-sm md:text-base leading-relaxed max-w-md">
                 Planning your trip? Book tee times in your home country, destination city, or almost anywhere in the world &ndash; before or during your travels.
               </p>
             </div>
             <div className="flex flex-col items-start md:items-end gap-3">
-              <a href="https://greenfee365.com/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-white/90 backdrop-blur-md text-stone-800 px-6 py-3.5 rounded-xl font-semibold text-sm hover:bg-white transition-all shadow-lg">
+              <a href="https://greenfee365.com/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-white/90 backdrop-blur-md text-stone-800 px-7 py-4 rounded-2xl font-semibold text-sm hover:bg-white transition-all shadow-lg whitespace-nowrap">
                 Explore Courses &amp; Book Tee Times Worldwide <ExternalLink className="w-4 h-4" />
               </a>
-              <span className="text-amber-300 text-xs font-medium italic">Over 3,000 courses available</span>
+              <span className="text-xs font-medium italic" style={{ color: '#c8a03e' }}>Over 3,000 courses available</span>
             </div>
           </div>
         </div>
@@ -390,24 +390,23 @@ function CookieConsent() {
   if (!show) return null;
 
   return (
-    <div className="fixed bottom-6 left-4 z-50" data-testid="cookie-consent">
-      <div className="rounded-2xl shadow-2xl p-5 w-[220px] text-center" style={{ background: 'rgba(18,18,14,0.78)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', border: '1px solid rgba(255,255,255,0.06)' }}>
-        {/* Cookie icon */}
-        <div className="mb-3">
-          <svg className="w-8 h-8 mx-auto" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+    <div className="fixed bottom-5 left-3 z-50" data-testid="cookie-consent">
+      <div className="shadow-2xl text-center" style={{ background: 'rgba(28,24,18,0.72)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '20px', padding: '28px 24px 20px', width: '220px' }}>
+        {/* Cookie icon - GIM exact */}
+        <div style={{ marginBottom: '18px' }}>
+          <svg className="mx-auto" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.55)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
             <path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5" />
-            <circle cx="7.5" cy="10.5" r="1" fill="rgba(255,255,255,0.6)" /><circle cx="12" cy="14" r="1" fill="rgba(255,255,255,0.6)" /><circle cx="15.5" cy="8.5" r="1" fill="rgba(255,255,255,0.6)" />
+            <circle cx="7.5" cy="10.5" r="1" fill="rgba(255,255,255,0.55)" /><circle cx="12" cy="14" r="1" fill="rgba(255,255,255,0.55)" /><circle cx="15.5" cy="8.5" r="1" fill="rgba(255,255,255,0.55)" />
           </svg>
         </div>
-        <p className="text-white/80 text-[13px] leading-relaxed mb-3">
+        <p style={{ color: 'rgba(255,255,255,0.75)', fontSize: '14px', lineHeight: '1.5', marginBottom: '12px' }}>
           This website uses cookies to ensure you get the best experience.
         </p>
-        <a href="/privacy" className="text-white/40 text-[11px] underline underline-offset-2 mb-3 inline-block hover:text-white/60">Learn more</a>
+        <a href="/privacy" style={{ color: 'rgba(255,255,255,0.4)', fontSize: '12px', textDecoration: 'underline', textUnderlineOffset: '3px', display: 'inline-block', marginBottom: '16px' }}>Learn more</a>
         <button
           onClick={function() { localStorage.setItem('golfgate_cookies', 'true'); setShow(false); }}
-          className="w-full py-2.5 rounded-xl text-[13px] font-medium mt-2 transition-colors"
-          style={{ border: '1px solid rgba(255,255,255,0.25)', color: 'white', background: 'transparent' }}
-          onMouseEnter={function(e) { e.target.style.background = 'rgba(255,255,255,0.08)'; }}
+          style={{ width: '100%', padding: '12px 0', borderRadius: '12px', fontSize: '15px', fontWeight: '500', border: '1.5px solid rgba(255,255,255,0.35)', color: 'white', background: 'transparent', cursor: 'pointer', transition: 'background 0.2s' }}
+          onMouseEnter={function(e) { e.target.style.background = 'rgba(255,255,255,0.06)'; }}
           onMouseLeave={function(e) { e.target.style.background = 'transparent'; }}
           data-testid="cookie-accept-btn"
         >
@@ -415,7 +414,7 @@ function CookieConsent() {
         </button>
         <button
           onClick={function() { localStorage.setItem('golfgate_cookies', 'declined'); setShow(false); }}
-          className="text-white/30 text-[11px] mt-2 block mx-auto hover:text-white/50 transition-colors"
+          style={{ color: 'rgba(255,255,255,0.35)', fontSize: '12px', marginTop: '10px', display: 'block', marginLeft: 'auto', marginRight: 'auto', background: 'none', border: 'none', cursor: 'pointer' }}
         >
           Preferences
         </button>

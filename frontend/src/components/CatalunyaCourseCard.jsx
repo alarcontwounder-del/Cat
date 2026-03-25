@@ -43,7 +43,7 @@ export function CatalunyaCourseCard({ course, onQuickView }) {
             </div>
 
             {/* Text area below image */}
-            <div className="flex-1 flex flex-col p-4 pt-3">
+            <div className="flex-1 flex flex-col p-4 pt-3 overflow-hidden">
               {/* Location */}
               <button
                 onClick={function() { window.open(mapsUrl, '_blank'); }}
@@ -60,12 +60,12 @@ export function CatalunyaCourseCard({ course, onQuickView }) {
               </Link>
 
               {/* Description */}
-              <p className="text-stone-500 text-xs leading-relaxed mb-3 line-clamp-2 flex-1">
+              <p className="text-stone-500 text-xs leading-relaxed mb-3 line-clamp-2 flex-1" style={{ overflow: 'hidden' }}>
                 {typeof course.description === 'object' ? course.description.en : course.description}
               </p>
 
               {/* Holes / Par row */}
-              <div className="flex items-center gap-1 text-stone-600 text-xs mb-2">
+              <div className="flex items-center gap-1 text-stone-600 text-xs mb-2 flex-shrink-0">
                 <span className="uppercase tracking-wider text-stone-400 text-[10px]">Holes</span>
                 <span className="font-heading text-lg font-medium text-stone-800">{course.holes}</span>
                 <span className="text-stone-300 mx-1.5">|</span>
@@ -74,7 +74,7 @@ export function CatalunyaCourseCard({ course, onQuickView }) {
               </div>
 
               {/* Hover hint */}
-              <p className="text-stone-400 text-xs italic">Hover for details &rarr;</p>
+              <p className="text-stone-400 text-xs italic flex-shrink-0">Hover for details &rarr;</p>
             </div>
           </div>
         </div>
