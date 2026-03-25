@@ -86,7 +86,7 @@ export function CatalunyaWeather() {
       </button>
 
       {isOpen && (
-        <div className="absolute top-full right-0 mt-0 bg-black/60 backdrop-blur-xl rounded-xl shadow-xl border border-white/10 p-3.5 min-w-[220px] z-50">
+        <div className="absolute top-full right-0 mt-0 bg-black/60 backdrop-blur-xl rounded-xl shadow-xl border border-white/10 p-3 w-[160px] z-50">
           {/* Today */}
           <div className="flex items-center gap-2.5 pb-2.5 mb-2 border-b border-white/10">
             <Icon className="w-5 h-5 text-white/70" />
