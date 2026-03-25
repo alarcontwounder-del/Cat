@@ -102,10 +102,10 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Build a GOLFGATE Catalunya tee time booking landing page with hero, about section, golf course cards (same flip-card style as GIM site), CTA, contact, and footer. 12 Catalunya golf courses with booking links."
+user_problem_statement: "Build GOLFGATE Catalunya tee time booking site. 20 real Catalunya courses from greenfee365 with real images and booking URLs. GIM-style flip cards, Electric Kiwi card backs, multilingual navbar, individual course pages for SEO, admin panel."
 
 backend:
-  - task: "Catalunya Courses API endpoint"
+  - task: "Catalunya Courses API (list + individual)"
     implemented: true
     working: true
     file: "backend/server.py"
@@ -115,10 +115,10 @@ backend:
     status_history:
         - working: true
           agent: "main"
-          comment: "Added GET /api/catalunya-courses endpoint returning 12 Catalunya golf courses from static data file. Falls back to static data if no MongoDB data found."
+          comment: "GET /api/catalunya-courses returns 20 active courses. GET /api/catalunya-courses/{id} returns individual course. Real data from greenfee365 with Cloudinary images and booking URLs."
         - working: true
           agent: "testing"
-          comment: "✅ TESTED: GET /api/catalunya-courses returns exactly 12 Catalunya courses with all required fields (id, name, description, image, holes, par, price_from, location, features, booking_url, full_address, phone, active, display_order). Multi-language descriptions (en/es/ca) working correctly. Courses properly sorted by display_order (1-12). All expected courses present from PGA Catalunya Stadium to Real Club de Golf de Cerdanya."
+          comment: "✅ COMPREHENSIVE TESTING COMPLETE: GET /api/catalunya-courses returns exactly 20 active Catalunya courses (not 21, one inactive as expected). All courses have complete data structure with required fields: id, name, description (en/es/ca), image, holes, par, price_from, location, features, booking_url, full_address, active, display_order. GET /api/catalunya-courses/camiral-stadium returns correct individual course data. GET /api/catalunya-courses/nonexistent correctly returns 404. All booking URLs start with https://golfinmallorca.greenfee365.com/golf-course/ and all image URLs start with https://res.cloudinary.com/greenfee365/. Courses properly sorted by display_order (1-20). API endpoints working perfectly at https://booking-landing.preview.emergentagent.com/api/catalunya-courses."
 
   - task: "Catalunya Courses Data"
     implemented: true
@@ -134,6 +134,9 @@ backend:
         - working: true
           agent: "testing"
           comment: "✅ TESTED: All 12 Catalunya courses data structure validated. Each course has proper multi-language descriptions (English, Spanish, Catalan), complete contact information, booking URLs, and feature arrays. Data integrity confirmed."
+        - working: true
+          agent: "testing"
+          comment: "✅ COMPREHENSIVE VALIDATION: Data file contains 21 total courses with 20 active and 1 inactive (peralada-2 duplicate). All 20 active courses have complete data structure with multilingual descriptions (en/es/ca), proper booking URLs (golfinmallorca.greenfee365.com), Cloudinary image URLs, and all required fields. Data perfectly matches API output with display_order 1-20 for active courses."
 
 frontend:
   - task: "GOLFGATE Catalunya Landing Page"
@@ -191,3 +194,5 @@ agent_communication:
       message: "Built GOLFGATE Catalunya landing page. Backend has GET /api/catalunya-courses returning 12 courses. Frontend has full landing page at /golfgate-catalunya route with flip card components. Please test the backend API endpoint returns proper data with all required fields."
     - agent: "testing"
       message: "✅ BACKEND TESTING COMPLETE: Catalunya Courses API fully functional. GET /api/catalunya-courses returns exactly 12 courses with complete data structure. All required fields present: id, name, multi-language descriptions (en/es/ca), image, holes, par, price_from, location, features array, booking_url, full_address, phone, active status, and display_order. Courses properly sorted 1-12. API endpoint working perfectly at https://booking-landing.preview.emergentagent.com/api/catalunya-courses. Backend implementation is production-ready."
+    - agent: "testing"
+      message: "✅ COMPREHENSIVE BACKEND TESTING COMPLETE: Catalunya Courses API fully validated against review requirements. GET /api/catalunya-courses returns exactly 20 active Catalunya courses (not 21, one inactive as expected). GET /api/catalunya-courses/camiral-stadium returns complete individual course data. GET /api/catalunya-courses/nonexistent correctly returns 404. All courses have required fields: id, name, description (en/es/ca), image, holes, par, price_from, location, features, booking_url, full_address, active, display_order. All booking URLs start with https://golfinmallorca.greenfee365.com/golf-course/ and all image URLs start with https://res.cloudinary.com/greenfee365/. Backend API is production-ready and meets all specifications."

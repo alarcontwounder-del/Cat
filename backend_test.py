@@ -1,308 +1,284 @@
 #!/usr/bin/env python3
+"""
+Backend API Testing for GOLFGATE Catalunya
+Tests the Catalunya courses API endpoints as specified in the review request.
+"""
 
 import requests
-import sys
 import json
-from datetime import datetime
+import sys
+from typing import Dict, List, Any
 
-class GolfMallorcaAPITester:
-    def __init__(self, base_url="https://booking-landing.preview.emergentagent.com"):
-        self.base_url = base_url
-        self.api_url = f"{base_url}/api"
-        self.tests_run = 0
-        self.tests_passed = 0
-        self.failed_tests = []
+# Backend URL from frontend .env
+BACKEND_URL = "https://booking-landing.preview.emergentagent.com"
+API_BASE = f"{BACKEND_URL}/api"
 
-    def log_test(self, name, success, details=""):
-        """Log test results"""
-        self.tests_run += 1
+def test_catalunya_courses_list():
+    """Test GET /api/catalunya-courses - Should return 20 active Catalunya golf courses"""
+    print("🧪 Testing GET /api/catalunya-courses...")
+    
+    try:
+        response = requests.get(f"{API_BASE}/catalunya-courses", timeout=10)
+        print(f"   Status Code: {response.status_code}")
+        
+        if response.status_code != 200:
+            print(f"   ❌ FAILED: Expected 200, got {response.status_code}")
+            print(f"   Response: {response.text}")
+            return False
+        
+        courses = response.json()
+        print(f"   ✅ SUCCESS: Got {len(courses)} courses")
+        
+        # Check count - should be exactly 20 active courses
+        if len(courses) != 20:
+            print(f"   ❌ FAILED: Expected 20 active courses, got {len(courses)}")
+            return False
+        
+        # Validate each course has required fields
+        required_fields = [
+            'id', 'name', 'description', 'image', 'holes', 'par', 
+            'price_from', 'location', 'features', 'booking_url', 
+            'full_address', 'active', 'display_order'
+        ]
+        
+        for i, course in enumerate(courses):
+            for field in required_fields:
+                if field not in course:
+                    print(f"   ❌ FAILED: Course {i+1} missing required field: {field}")
+                    return False
+            
+            # Validate description is multilingual (en/es/ca)
+            if not isinstance(course['description'], dict):
+                print(f"   ❌ FAILED: Course {course['name']} description is not multilingual dict")
+                return False
+            
+            required_langs = ['en', 'es', 'ca']
+            for lang in required_langs:
+                if lang not in course['description']:
+                    print(f"   ❌ FAILED: Course {course['name']} missing {lang} description")
+                    return False
+            
+            # Validate booking URL format
+            if not course['booking_url'].startswith('https://golfinmallorca.greenfee365.com/golf-course/'):
+                print(f"   ❌ FAILED: Course {course['name']} has invalid booking URL: {course['booking_url']}")
+                return False
+            
+            # Validate image URL format
+            if not course['image'].startswith('https://res.cloudinary.com/greenfee365/'):
+                print(f"   ❌ FAILED: Course {course['name']} has invalid image URL: {course['image']}")
+                return False
+            
+            # Validate active status
+            if not course['active']:
+                print(f"   ❌ FAILED: Course {course['name']} is not active but returned in list")
+                return False
+        
+        print(f"   ✅ All {len(courses)} courses have valid structure and required fields")
+        
+        # Check if courses are sorted by display_order
+        display_orders = [course['display_order'] for course in courses]
+        if display_orders != sorted(display_orders):
+            print(f"   ❌ FAILED: Courses not sorted by display_order")
+            return False
+        
+        print(f"   ✅ Courses properly sorted by display_order")
+        
+        # Print sample course for verification
+        sample_course = courses[0]
+        print(f"   📋 Sample course: {sample_course['name']}")
+        print(f"      ID: {sample_course['id']}")
+        print(f"      Location: {sample_course['location']}")
+        print(f"      Price from: €{sample_course['price_from']}")
+        print(f"      Holes: {sample_course['holes']}, Par: {sample_course['par']}")
+        
+        return True
+        
+    except requests.exceptions.RequestException as e:
+        print(f"   ❌ FAILED: Request error - {e}")
+        return False
+    except json.JSONDecodeError as e:
+        print(f"   ❌ FAILED: JSON decode error - {e}")
+        return False
+    except Exception as e:
+        print(f"   ❌ FAILED: Unexpected error - {e}")
+        return False
+
+def test_catalunya_course_individual():
+    """Test GET /api/catalunya-courses/camiral-stadium - Should return the Camiral Stadium course"""
+    print("\n🧪 Testing GET /api/catalunya-courses/camiral-stadium...")
+    
+    try:
+        response = requests.get(f"{API_BASE}/catalunya-courses/camiral-stadium", timeout=10)
+        print(f"   Status Code: {response.status_code}")
+        
+        if response.status_code != 200:
+            print(f"   ❌ FAILED: Expected 200, got {response.status_code}")
+            print(f"   Response: {response.text}")
+            return False
+        
+        course = response.json()
+        print(f"   ✅ SUCCESS: Got course data")
+        
+        # Validate it's the correct course
+        if course['id'] != 'camiral-stadium':
+            print(f"   ❌ FAILED: Expected camiral-stadium, got {course['id']}")
+            return False
+        
+        if course['name'] != 'Camiral Golf & Wellness - Stadium Course':
+            print(f"   ❌ FAILED: Unexpected course name: {course['name']}")
+            return False
+        
+        # Validate all required fields are present
+        required_fields = [
+            'id', 'name', 'description', 'image', 'holes', 'par', 
+            'price_from', 'location', 'features', 'booking_url', 
+            'full_address', 'phone', 'active', 'display_order'
+        ]
+        
+        for field in required_fields:
+            if field not in course:
+                print(f"   ❌ FAILED: Missing required field: {field}")
+                return False
+        
+        print(f"   ✅ All required fields present")
+        print(f"   📋 Course details:")
+        print(f"      Name: {course['name']}")
+        print(f"      Location: {course['location']}")
+        print(f"      Holes: {course['holes']}, Par: {course['par']}")
+        print(f"      Price from: €{course['price_from']}")
+        print(f"      Features: {', '.join(course['features'])}")
+        print(f"      Booking URL: {course['booking_url']}")
+        
+        return True
+        
+    except requests.exceptions.RequestException as e:
+        print(f"   ❌ FAILED: Request error - {e}")
+        return False
+    except json.JSONDecodeError as e:
+        print(f"   ❌ FAILED: JSON decode error - {e}")
+        return False
+    except Exception as e:
+        print(f"   ❌ FAILED: Unexpected error - {e}")
+        return False
+
+def test_catalunya_course_not_found():
+    """Test GET /api/catalunya-courses/nonexistent - Should return 404"""
+    print("\n🧪 Testing GET /api/catalunya-courses/nonexistent...")
+    
+    try:
+        response = requests.get(f"{API_BASE}/catalunya-courses/nonexistent", timeout=10)
+        print(f"   Status Code: {response.status_code}")
+        
+        if response.status_code != 404:
+            print(f"   ❌ FAILED: Expected 404, got {response.status_code}")
+            print(f"   Response: {response.text}")
+            return False
+        
+        print(f"   ✅ SUCCESS: Correctly returned 404 for non-existent course")
+        return True
+        
+    except requests.exceptions.RequestException as e:
+        print(f"   ❌ FAILED: Request error - {e}")
+        return False
+    except Exception as e:
+        print(f"   ❌ FAILED: Unexpected error - {e}")
+        return False
+
+def test_url_formats():
+    """Test that all booking URLs and image URLs follow the correct format"""
+    print("\n🧪 Testing URL formats for all courses...")
+    
+    try:
+        response = requests.get(f"{API_BASE}/catalunya-courses", timeout=10)
+        if response.status_code != 200:
+            print(f"   ❌ FAILED: Could not fetch courses list")
+            return False
+        
+        courses = response.json()
+        booking_url_failures = []
+        image_url_failures = []
+        
+        for course in courses:
+            # Check booking URL format
+            expected_booking_prefix = "https://golfinmallorca.greenfee365.com/golf-course/"
+            if not course['booking_url'].startswith(expected_booking_prefix):
+                booking_url_failures.append(f"{course['name']}: {course['booking_url']}")
+            
+            # Check image URL format
+            expected_image_prefix = "https://res.cloudinary.com/greenfee365/"
+            if not course['image'].startswith(expected_image_prefix):
+                image_url_failures.append(f"{course['name']}: {course['image']}")
+        
+        if booking_url_failures:
+            print(f"   ❌ FAILED: {len(booking_url_failures)} courses have invalid booking URLs:")
+            for failure in booking_url_failures:
+                print(f"      {failure}")
+            return False
+        
+        if image_url_failures:
+            print(f"   ❌ FAILED: {len(image_url_failures)} courses have invalid image URLs:")
+            for failure in image_url_failures:
+                print(f"      {failure}")
+            return False
+        
+        print(f"   ✅ SUCCESS: All {len(courses)} courses have correct URL formats")
+        print(f"      Booking URLs: https://golfinmallorca.greenfee365.com/golf-course/...")
+        print(f"      Image URLs: https://res.cloudinary.com/greenfee365/...")
+        
+        return True
+        
+    except Exception as e:
+        print(f"   ❌ FAILED: Unexpected error - {e}")
+        return False
+
+def run_all_tests():
+    """Run all Catalunya courses API tests"""
+    print("🚀 Starting GOLFGATE Catalunya Backend API Tests")
+    print(f"   Backend URL: {BACKEND_URL}")
+    print(f"   API Base: {API_BASE}")
+    print("=" * 60)
+    
+    tests = [
+        ("Catalunya Courses List", test_catalunya_courses_list),
+        ("Individual Course (camiral-stadium)", test_catalunya_course_individual),
+        ("Non-existent Course (404)", test_catalunya_course_not_found),
+        ("URL Formats Validation", test_url_formats),
+    ]
+    
+    results = []
+    
+    for test_name, test_func in tests:
+        print(f"\n📋 {test_name}")
+        print("-" * 40)
+        success = test_func()
+        results.append((test_name, success))
+    
+    print("\n" + "=" * 60)
+    print("📊 TEST RESULTS SUMMARY")
+    print("=" * 60)
+    
+    passed = 0
+    failed = 0
+    
+    for test_name, success in results:
+        status = "✅ PASS" if success else "❌ FAIL"
+        print(f"{status} - {test_name}")
         if success:
-            self.tests_passed += 1
-            print(f"✅ {name} - PASSED")
+            passed += 1
         else:
-            self.failed_tests.append({"test": name, "details": details})
-            print(f"❌ {name} - FAILED: {details}")
-
-    def test_api_root(self):
-        """Test API root endpoint"""
-        try:
-            response = requests.get(f"{self.api_url}/", timeout=10)
-            success = response.status_code == 200
-            details = f"Status: {response.status_code}"
-            if success:
-                data = response.json()
-                details += f", Response: {data}"
-            self.log_test("API Root Endpoint", success, details)
-            return success
-        except Exception as e:
-            self.log_test("API Root Endpoint", False, str(e))
-            return False
-
-    def test_golf_courses_api(self):
-        """Test golf courses API endpoint"""
-        try:
-            response = requests.get(f"{self.api_url}/golf-courses", timeout=10)
-            success = response.status_code == 200
-            details = f"Status: {response.status_code}"
-            
-            if success:
-                courses = response.json()
-                details += f", Count: {len(courses)}"
-                
-                # Validate structure
-                if len(courses) >= 4:  # Should have 4 courses
-                    sample_course = courses[0]
-                    required_fields = ['id', 'name', 'description', 'image', 'holes', 'par', 'features', 'booking_url']
-                    missing_fields = [field for field in required_fields if field not in sample_course]
-                    
-                    if not missing_fields:
-                        # Check multi-language support
-                        if isinstance(sample_course.get('description'), dict):
-                            langs = sample_course['description'].keys()
-                            details += f", Languages: {list(langs)}"
-                        else:
-                            success = False
-                            details += ", Missing multi-language descriptions"
-                    else:
-                        success = False
-                        details += f", Missing fields: {missing_fields}"
-                else:
-                    success = False
-                    details += f", Expected 4+ courses, got {len(courses)}"
-                    
-            self.log_test("Golf Courses API", success, details)
-            return success, response.json() if success else []
-        except Exception as e:
-            self.log_test("Golf Courses API", False, str(e))
-            return False, []
-
-    def test_partner_offers_api(self):
-        """Test partner offers API endpoint"""
-        try:
-            # Test all offers
-            response = requests.get(f"{self.api_url}/partner-offers", timeout=10)
-            success = response.status_code == 200
-            details = f"Status: {response.status_code}"
-            
-            if success:
-                offers = response.json()
-                details += f", Total offers: {len(offers)}"
-                
-                # Test hotel filter
-                hotel_response = requests.get(f"{self.api_url}/partner-offers?offer_type=hotel", timeout=10)
-                if hotel_response.status_code == 200:
-                    hotels = hotel_response.json()
-                    details += f", Hotels: {len(hotels)}"
-                    
-                    # Test restaurant filter
-                    restaurant_response = requests.get(f"{self.api_url}/partner-offers?offer_type=restaurant", timeout=10)
-                    if restaurant_response.status_code == 200:
-                        restaurants = restaurant_response.json()
-                        details += f", Restaurants: {len(restaurants)}"
-                        
-                        # Validate structure
-                        if len(hotels) >= 3 and len(restaurants) >= 3:
-                            sample_offer = offers[0]
-                            required_fields = ['id', 'name', 'type', 'description', 'image', 'location', 'deal', 'contact_url']
-                            missing_fields = [field for field in required_fields if field not in sample_offer]
-                            
-                            if missing_fields:
-                                success = False
-                                details += f", Missing fields: {missing_fields}"
-                        else:
-                            success = False
-                            details += f", Expected 3+ hotels and 3+ restaurants"
-                    else:
-                        success = False
-                        details += f", Restaurant filter failed: {restaurant_response.status_code}"
-                else:
-                    success = False
-                    details += f", Hotel filter failed: {hotel_response.status_code}"
-                    
-            self.log_test("Partner Offers API", success, details)
-            return success, response.json() if success else []
-        except Exception as e:
-            self.log_test("Partner Offers API", False, str(e))
-            return False, []
-
-    def test_contact_api(self):
-        """Test contact form submission API"""
-        try:
-            # Test POST request
-            test_data = {
-                "name": "Test User",
-                "email": "test@example.com",
-                "phone": "+34 123 456 789",
-                "country": "germany",
-                "message": "Test inquiry for golf booking",
-                "inquiry_type": "general"
-            }
-            
-            response = requests.post(
-                f"{self.api_url}/contact", 
-                json=test_data,
-                headers={'Content-Type': 'application/json'},
-                timeout=10
-            )
-            
-            success = response.status_code == 200
-            details = f"Status: {response.status_code}"
-            
-            if success:
-                result = response.json()
-                details += f", Created ID: {result.get('id', 'N/A')}"
-                
-                # Validate response structure
-                required_fields = ['id', 'name', 'email', 'country', 'message', 'created_at']
-                missing_fields = [field for field in required_fields if field not in result]
-                
-                if missing_fields:
-                    success = False
-                    details += f", Missing response fields: {missing_fields}"
-            else:
-                try:
-                    error_data = response.json()
-                    details += f", Error: {error_data}"
-                except:
-                    details += f", Response: {response.text[:200]}"
-                    
-            self.log_test("Contact Form API", success, details)
-            return success
-        except Exception as e:
-            self.log_test("Contact Form API", False, str(e))
-            return False
-
-    def test_catalunya_courses_api(self):
-        """Test Catalunya courses API endpoint specifically"""
-        try:
-            response = requests.get(f"{self.api_url}/catalunya-courses", timeout=10)
-            success = response.status_code == 200
-            details = f"Status: {response.status_code}"
-            
-            if success:
-                courses = response.json()
-                details += f", Count: {len(courses)}"
-                
-                # Validate we have exactly 12 courses
-                if len(courses) == 12:
-                    # Check required fields for Catalunya courses
-                    sample_course = courses[0]
-                    required_fields = ['id', 'name', 'description', 'image', 'holes', 'par', 'price_from', 'location', 'features', 'booking_url', 'full_address', 'phone', 'active', 'display_order']
-                    missing_fields = [field for field in required_fields if field not in sample_course]
-                    
-                    if not missing_fields:
-                        # Check multi-language descriptions (en, es, ca)
-                        if isinstance(sample_course.get('description'), dict):
-                            desc_langs = set(sample_course['description'].keys())
-                            expected_langs = {'en', 'es', 'ca'}
-                            if expected_langs.issubset(desc_langs):
-                                # Check if courses are sorted by display_order
-                                display_orders = [course.get('display_order', 0) for course in courses]
-                                is_sorted = display_orders == sorted(display_orders)
-                                
-                                if is_sorted:
-                                    # Verify specific courses exist
-                                    course_ids = [course['id'] for course in courses]
-                                    expected_courses = [
-                                        'pga-catalunya-stadium', 'pga-catalunya-tour', 'real-club-golf-el-prat',
-                                        'club-golf-terramar', 'club-golf-llavaneras', 'golf-montanya',
-                                        'club-golf-peralada', 'club-golf-emporda', 'golf-daro-mas-nou',
-                                        'golf-girona', 'club-golf-costa-brava', 'real-club-golf-cerdanya'
-                                    ]
-                                    
-                                    missing_courses = [cid for cid in expected_courses if cid not in course_ids]
-                                    if not missing_courses:
-                                        # Check features array exists
-                                        features_valid = all(isinstance(course.get('features'), list) for course in courses)
-                                        if features_valid:
-                                            details += f", All 12 Catalunya courses present and properly structured"
-                                        else:
-                                            success = False
-                                            details += ", Some courses missing features array"
-                                    else:
-                                        success = False
-                                        details += f", Missing expected courses: {missing_courses}"
-                                else:
-                                    success = False
-                                    details += ", Courses not sorted by display_order"
-                            else:
-                                success = False
-                                missing_langs = expected_langs - desc_langs
-                                details += f", Missing description languages: {missing_langs}"
-                        else:
-                            success = False
-                            details += ", Description not in multi-language format"
-                    else:
-                        success = False
-                        details += f", Missing required fields: {missing_fields}"
-                else:
-                    success = False
-                    details += f", Expected exactly 12 Catalunya courses, got {len(courses)}"
-                    
-            self.log_test("Catalunya Courses API", success, details)
-            return success, response.json() if success else []
-        except Exception as e:
-            self.log_test("Catalunya Courses API", False, str(e))
-            return False, []
-
-    def test_cors_headers(self):
-        """Test CORS headers are present"""
-        try:
-            response = requests.options(f"{self.api_url}/golf-courses", timeout=10)
-            success = response.status_code in [200, 204]
-            details = f"Status: {response.status_code}"
-            
-            if success:
-                cors_headers = {
-                    'Access-Control-Allow-Origin': response.headers.get('Access-Control-Allow-Origin'),
-                    'Access-Control-Allow-Methods': response.headers.get('Access-Control-Allow-Methods'),
-                    'Access-Control-Allow-Headers': response.headers.get('Access-Control-Allow-Headers')
-                }
-                details += f", CORS headers present: {bool(any(cors_headers.values()))}"
-                
-            self.log_test("CORS Headers", success, details)
-            return success
-        except Exception as e:
-            self.log_test("CORS Headers", False, str(e))
-            return False
-
-    def run_all_tests(self):
-        """Run all backend API tests"""
-        print("🏌️ Starting Mallorca Golf API Tests...")
-        print("=" * 50)
-        
-        # Test API availability
-        api_available = self.test_api_root()
-        
-        if not api_available:
-            print("\n❌ API is not available. Stopping tests.")
-            return False
-            
-        # Run all tests - prioritize Catalunya courses as per test_result.md
-        self.test_catalunya_courses_api()
-        self.test_golf_courses_api()
-        self.test_partner_offers_api()
-        self.test_contact_api()
-        self.test_cors_headers()
-        
-        # Print summary
-        print("\n" + "=" * 50)
-        print(f"📊 Test Summary: {self.tests_passed}/{self.tests_run} tests passed")
-        
-        if self.failed_tests:
-            print("\n❌ Failed Tests:")
-            for test in self.failed_tests:
-                print(f"  - {test['test']}: {test['details']}")
-        
-        success_rate = (self.tests_passed / self.tests_run) * 100 if self.tests_run > 0 else 0
-        print(f"✅ Success Rate: {success_rate:.1f}%")
-        
-        return self.tests_passed == self.tests_run
-
-def main():
-    tester = GolfMallorcaAPITester()
-    success = tester.run_all_tests()
-    return 0 if success else 1
+            failed += 1
+    
+    print(f"\nTotal: {len(results)} tests")
+    print(f"Passed: {passed}")
+    print(f"Failed: {failed}")
+    
+    if failed == 0:
+        print("\n🎉 ALL TESTS PASSED! Catalunya courses API is working correctly.")
+        return True
+    else:
+        print(f"\n⚠️  {failed} TEST(S) FAILED. Please check the issues above.")
+        return False
 
 if __name__ == "__main__":
-    sys.exit(main())
+    success = run_all_tests()
+    sys.exit(0 if success else 1)

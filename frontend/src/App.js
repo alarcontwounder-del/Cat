@@ -2,15 +2,24 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import '@/App.css';
 
-const GolfgateCatalunyaPage = React.lazy(() => import('./components/GolfgateCatalunyaPage'));
-const TermsPage = React.lazy(() => import('./components/TermsPage'));
-const PrivacyPage = React.lazy(() => import('./components/PrivacyPage'));
+var GolfgateCatalunyaPage = React.lazy(function() { return import('./components/GolfgateCatalunyaPage'); });
+var CatalunyaCoursePage = React.lazy(function() { return import('./components/CatalunyaCoursePage'); });
+var TermsPage = React.lazy(function() { return import('./components/TermsPage'); });
+var PrivacyPage = React.lazy(function() { return import('./components/PrivacyPage'); });
 
 function LoadingSpinner() {
   return (
-    <div className="min-h-screen bg-brand-cream flex items-center justify-center">
-      <div className="w-8 h-8 border-4 border-stone-300 border-t-[#f53d7d] rounded-full animate-spin" />
+    <div className="min-h-screen bg-white flex items-center justify-center">
+      <div className="w-8 h-8 border-4 border-stone-300 border-t-[#EF476F] rounded-full animate-spin" />
     </div>
+  );
+}
+
+function Wrap(props) {
+  return (
+    <React.Suspense fallback={<LoadingSpinner />}>
+      {props.children}
+    </React.Suspense>
   );
 }
 
@@ -18,31 +27,11 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={
-          <React.Suspense fallback={<LoadingSpinner />}>
-            <GolfgateCatalunyaPage />
-          </React.Suspense>
-        } />
-        <Route path="/golfgate-catalunya" element={
-          <React.Suspense fallback={<LoadingSpinner />}>
-            <GolfgateCatalunyaPage />
-          </React.Suspense>
-        } />
-        <Route path="/privacy" element={
-          <React.Suspense fallback={<LoadingSpinner />}>
-            <PrivacyPage />
-          </React.Suspense>
-        } />
-        <Route path="/terms" element={
-          <React.Suspense fallback={<LoadingSpinner />}>
-            <TermsPage />
-          </React.Suspense>
-        } />
-        <Route path="*" element={
-          <React.Suspense fallback={<LoadingSpinner />}>
-            <GolfgateCatalunyaPage />
-          </React.Suspense>
-        } />
+        <Route path="/" element={<Wrap><GolfgateCatalunyaPage /></Wrap>} />
+        <Route path="/courses/:courseId" element={<Wrap><CatalunyaCoursePage /></Wrap>} />
+        <Route path="/privacy" element={<Wrap><PrivacyPage /></Wrap>} />
+        <Route path="/terms" element={<Wrap><TermsPage /></Wrap>} />
+        <Route path="*" element={<Wrap><GolfgateCatalunyaPage /></Wrap>} />
       </Routes>
     </BrowserRouter>
   );

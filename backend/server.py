@@ -559,6 +559,20 @@ async def get_catalunya_courses():
     return courses
 
 
+@api_router.get("/catalunya-courses/{course_id}")
+async def get_catalunya_course(course_id: str):
+    """Get a single Catalunya course by ID"""
+    course = await db.catalunya_courses.find_one({"id": course_id, "active": True}, {"_id": 0})
+    if not course:
+        for c in CATALUNYA_COURSES:
+            if c["id"] == course_id and c.get("active", True):
+                return c
+    if not course:
+        from fastapi import HTTPException
+        raise HTTPException(status_code=404, detail="Course not found")
+    return course
+
+
 @api_router.get("/golf-courses", response_model=List[dict])
 async def get_golf_courses(include_inactive: bool = False):
     """Get all golf courses from MongoDB, falls back to hardcoded data if empty"""

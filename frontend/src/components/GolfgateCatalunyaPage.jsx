@@ -1,33 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { ChevronRight, ExternalLink, Globe, Clock, Shield, Mail, Phone, MapPin, Instagram, Facebook } from 'lucide-react';
+import { ChevronRight, ExternalLink, Globe, Clock, Shield, Mail, Phone, MapPin, Instagram, Facebook, Settings, ChevronDown } from 'lucide-react';
 import { CatalunyaCourseCard } from './CatalunyaCourseCard';
 import { CatalunyaQuickView } from './CatalunyaQuickView';
+import { CatalunyaWeather } from './CatalunyaWeather';
 
 var API = process.env.REACT_APP_BACKEND_URL;
-var LOGO = 'https://customer-assets.emergentagent.com/job_booking-landing/artifacts/ot2drdmb_with_padding.png';
+var LOGO = 'https://customer-assets.emergentagent.com/job_booking-landing/artifacts/e45y2a1q_my-project-page-1.png';
 var HERO_BG = 'https://res.cloudinary.com/greenfee365/image/upload/w_1920,h_900,c_fill/courses/camiral-golf-wellness-stadium/camiral-golf-wellness-stadium';
+
+var LANGUAGES = [
+  { code: 'en', label: 'EN', name: 'English' },
+  { code: 'es', label: 'ES', name: 'Espanol' },
+  { code: 'ca', label: 'CA', name: 'Catala' },
+  { code: 'de', label: 'DE', name: 'Deutsch' },
+  { code: 'fr', label: 'FR', name: 'Francais' }
+];
 
 function XIcon() {
   return (
-    <svg className="w-5 h-5 text-white/80 group-hover:text-white" viewBox="0 0 24 24" fill="currentColor">
+    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
       <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
     </svg>
-  );
-}
-
-function LogoImage(props) {
-  var size = props.size || 'nav';
-  var isNav = size === 'nav';
-  var cls = isNav ? 'h-14 md:h-18 w-auto' : 'h-14 w-auto';
-  return (
-    <img
-      src={LOGO}
-      alt="GOLFGATE Catalunya"
-      className={cls}
-      style={{ mixBlendMode: 'multiply', filter: 'brightness(1.08) contrast(1.1)' }}
-    />
   );
 }
 
@@ -41,6 +36,12 @@ export default function GolfgateCatalunyaPage() {
   var quickViewState = useState(null);
   var quickViewItem = quickViewState[0];
   var setQuickViewItem = quickViewState[1];
+  var langState = useState('en');
+  var lang = langState[0];
+  var setLang = langState[1];
+  var langDropdownState = useState(false);
+  var langDropdown = langDropdownState[0];
+  var setLangDropdown = langDropdownState[1];
 
   useEffect(function() {
     window.scrollTo(0, 0);
@@ -51,18 +52,16 @@ export default function GolfgateCatalunyaPage() {
       if (!el) { el = document.createElement('meta'); el.setAttribute(attr, name); document.head.appendChild(el); }
       el.setAttribute('content', content);
     };
-    setMeta('name', 'description', 'Book tee times at 20 premier golf courses in Catalunya Spain. Camiral Resort, El Prat, Infinitum, Emporda and more. Green fees from EUR35. Instant confirmation.');
-    setMeta('name', 'keywords', 'golf Catalunya, tee times Catalunya, golf courses Barcelona, PGA Catalunya, golf Costa Brava, golf Girona, book tee times Spain, Camiral Golf, Infinitum Golf');
+    setMeta('name', 'description', 'Book tee times at 20 premier golf courses in Catalunya Spain. Camiral Resort, El Prat, Infinitum, Emporda and more. Green fees from EUR35.');
+    setMeta('name', 'keywords', 'golf Catalunya, tee times Catalunya, golf courses Barcelona, PGA Catalunya, golf Costa Brava, golf Girona, book tee times Spain');
     setMeta('property', 'og:title', 'GOLFGATE Catalunya | Book Tee Times');
-    setMeta('property', 'og:description', 'Book tee times at 20 premier golf courses across Catalunya. Instant confirmation, best rates.');
+    setMeta('property', 'og:description', 'Book tee times at 20 premier golf courses across Catalunya.');
     setMeta('property', 'og:type', 'website');
 
     var schema = document.getElementById('golfgate-schema');
     if (!schema) { schema = document.createElement('script'); schema.id = 'golfgate-schema'; schema.type = 'application/ld+json'; document.head.appendChild(schema); }
     schema.textContent = JSON.stringify({
-      '@context': 'https://schema.org',
-      '@type': 'WebSite',
-      name: 'GOLFGATE Catalunya',
+      '@context': 'https://schema.org', '@type': 'WebSite', name: 'GOLFGATE Catalunya',
       description: 'Book tee times at 20 premier golf courses in Catalunya Spain.',
       url: window.location.href,
       provider: { '@type': 'Organization', name: 'GOLFGATE Catalunya' },
@@ -80,25 +79,72 @@ export default function GolfgateCatalunyaPage() {
     };
   }, []);
 
-  var currentYear = new Date().getFullYear();
+  var currentLang = LANGUAGES.find(function(l) { return l.code === lang; }) || LANGUAGES[0];
 
   return (
     <div className="min-h-screen bg-white" data-testid="golfgate-catalunya-page">
 
-      {/* Navbar - taller, text logo on left, no image box */}
+      {/* Navbar - GIM style: logo, links, language, weather, admin, CTA */}
       <nav className="sticky top-0 z-40 shadow-md" style={{ backgroundColor: '#CCFF00' }}>
-        <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
-          <Link to="/" className="flex items-center">
-            <LogoImage size="nav" />
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-2 flex items-center justify-between gap-4">
+          {/* Logo - larger */}
+          <Link to="/" className="flex-shrink-0">
+            <img src={LOGO} alt="GOLFGATE Catalunya" className="h-16 md:h-24 w-auto" style={{ mixBlendMode: 'multiply' }} />
           </Link>
-          <div className="hidden md:flex items-center gap-8 text-sm font-bold text-black/80">
-            <a href="#courses" className="hover:text-[#38A711] transition-colors">Courses</a>
-            <a href="#about" className="hover:text-[#38A711] transition-colors">About</a>
-            <a href="#contact" className="hover:text-[#38A711] transition-colors">Contact</a>
+
+          {/* Nav links */}
+          <div className="hidden lg:flex items-center gap-6 text-sm font-semibold text-black/80">
+            <a href="#courses" className="hover:text-[#EF476F] transition-colors">Courses</a>
+            <a href="#about" className="hover:text-[#EF476F] transition-colors">About</a>
+            <a href="#contact" className="hover:text-[#EF476F] transition-colors">Contact</a>
           </div>
-          <a href="#courses" className="bg-black text-[#CCFF00] px-6 py-2.5 rounded-full text-sm font-bold hover:bg-black/80 transition-all shadow-sm">
-            Book Now
-          </a>
+
+          {/* Right side: Weather + Language + Admin + CTA */}
+          <div className="flex items-center gap-3">
+            <CatalunyaWeather />
+
+            {/* Language dropdown */}
+            <div className="relative">
+              <button
+                onClick={function() { setLangDropdown(!langDropdown); }}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/10 text-black/70 text-xs font-semibold hover:bg-black/15 transition-colors"
+              >
+                <Globe className="w-3.5 h-3.5" />
+                {currentLang.label}
+                <ChevronDown className="w-3 h-3" />
+              </button>
+              {langDropdown && (
+                <div className="absolute right-0 top-full mt-1 bg-white rounded-lg shadow-xl border border-stone-100 py-1 min-w-[140px] z-50">
+                  {LANGUAGES.map(function(l) {
+                    return (
+                      <button
+                        key={l.code}
+                        onClick={function() { setLang(l.code); setLangDropdown(false); }}
+                        className={'w-full text-left px-4 py-2 text-sm hover:bg-stone-50 transition-colors flex items-center justify-between ' + (lang === l.code ? 'text-[#EF476F] font-semibold' : 'text-stone-700')}
+                      >
+                        <span>{l.name}</span>
+                        <span className="text-xs text-stone-400">{l.label}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+
+            {/* Admin/Settings icon */}
+            <Link
+              to="/admin"
+              className="hidden sm:flex w-9 h-9 items-center justify-center rounded-full bg-black/10 text-black/70 hover:bg-black/15 transition-colors"
+              title="Admin Panel"
+            >
+              <Settings className="w-4 h-4" />
+            </Link>
+
+            {/* CTA */}
+            <a href="#courses" className="bg-black text-[#CCFF00] px-4 md:px-6 py-2.5 rounded-full text-xs md:text-sm font-bold hover:bg-black/80 transition-all shadow-sm whitespace-nowrap">
+              Book a Tee Time Now
+            </a>
+          </div>
         </div>
       </nav>
 
@@ -138,7 +184,7 @@ export default function GolfgateCatalunyaPage() {
       </section>
 
       {/* Courses */}
-      <section id="courses" className="py-16 md:py-20" style={{ backgroundColor: '#ffffff' }} data-testid="golfgate-courses">
+      <section id="courses" className="py-16 md:py-20 bg-stone-50" data-testid="golfgate-courses">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           <div className="text-center mb-12">
             <h2 className="font-heading text-3xl md:text-4xl text-stone-900 mb-4">Golf Courses in Catalunya</h2>
@@ -152,7 +198,7 @@ export default function GolfgateCatalunyaPage() {
               <div className="w-8 h-8 border-4 border-stone-300 border-t-[#89F336] rounded-full animate-spin" />
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {courses.map(function(course) {
                 return <CatalunyaCourseCard key={course.id} course={course} onQuickView={setQuickViewItem} />;
               })}
@@ -166,11 +212,11 @@ export default function GolfgateCatalunyaPage() {
         <div className="max-w-3xl mx-auto px-6 text-center">
           <h2 className="font-heading text-3xl md:text-4xl text-black mb-4">Ready to Play?</h2>
           <p className="text-black/70 text-lg mb-8 max-w-2xl mx-auto">
-            Choose from 20 premier courses across Catalunya. Instant confirmation, best rates, and local expertise to help you plan the perfect golf day.
+            Choose from 20 premier courses across Catalunya. Instant confirmation, best rates, and local expertise.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <a href="#courses" className="inline-flex items-center gap-2 bg-black text-[#CCFF00] px-8 py-3.5 rounded-full font-bold text-sm hover:bg-black/80 transition-all shadow-lg">
-              Book a Tee Time <ExternalLink className="w-4 h-4" />
+              Book a Tee Time Now <ExternalLink className="w-4 h-4" />
             </a>
             <a href="#contact" className="inline-flex items-center gap-2 border-2 border-black text-black px-8 py-3.5 rounded-full font-bold text-sm hover:bg-black hover:text-[#CCFF00] transition-all">
               Contact Us
@@ -184,9 +230,6 @@ export default function GolfgateCatalunyaPage() {
         <div className="text-center mb-10">
           <h2 className="font-heading text-3xl md:text-4xl text-stone-900 mb-4">Get in Touch</h2>
           <div className="w-16 h-1 bg-[#89F336] mx-auto rounded-full mb-6" />
-          <p className="text-stone-500 text-lg max-w-2xl mx-auto">
-            Need help choosing a course or planning a golf trip in Catalunya? Our team is here to help.
-          </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
           <ContactBox icon={<Mail className="w-6 h-6" />} title="Email" value="contact@golfgatecatalunya.com" href="mailto:contact@golfgatecatalunya.com" />
@@ -195,49 +238,33 @@ export default function GolfgateCatalunyaPage() {
         </div>
       </section>
 
-      {/* Footer - GIM style */}
-      <footer className="bg-[#1a1a1a] text-white py-16" data-testid="footer">
+      {/* Footer - shorter, GIM style, social icons */}
+      <footer className="bg-[#1a1a1a] text-white py-10" data-testid="footer">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
-            <div className="lg:col-span-2">
-              <img src={LOGO} alt="GOLFGATE Catalunya" className="h-14 w-auto" style={{ filter: 'brightness(10) contrast(1.5)' }} />
-              <p className="text-white/60 max-w-md mt-4 mb-6 text-sm leading-relaxed">
-                The premier tee time booking service for golf courses across Catalunya, Spain. From Barcelona to the Costa Brava and the Pyrenees.
-              </p>
-              <div className="flex items-center gap-4">
-                <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#CCFF00] hover:text-black transition-all group" aria-label="Facebook">
-                  <Facebook className="w-5 h-5 text-white/80 group-hover:text-black" />
-                </a>
-                <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#CCFF00] hover:text-black transition-all group" aria-label="Instagram">
-                  <Instagram className="w-5 h-5 text-white/80 group-hover:text-black" />
-                </a>
-                <a href="https://x.com/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#CCFF00] hover:text-black transition-all group" aria-label="X">
-                  <XIcon />
-                </a>
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-6">
+            <div className="flex items-center gap-4">
+              <div className="flex flex-col leading-none">
+                <span className="text-2xl font-black tracking-tight" style={{ color: '#EF476F' }}>GOLFGATE</span>
+                <span className="text-xs font-bold tracking-[0.3em]" style={{ color: '#89F336' }}>CATALUNYA</span>
               </div>
             </div>
-            <div>
-              <h4 className="font-bold text-sm uppercase tracking-wider mb-4 text-white/90">Quick Links</h4>
-              <ul className="space-y-3">
-                <li><a href="#courses" className="text-white/60 hover:text-[#CCFF00] transition-colors text-sm">Golf Courses</a></li>
-                <li><a href="#about" className="text-white/60 hover:text-[#CCFF00] transition-colors text-sm">About Us</a></li>
-                <li><a href="#contact" className="text-white/60 hover:text-[#CCFF00] transition-colors text-sm">Contact</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-bold text-sm uppercase tracking-wider mb-4 text-white/90">Contact Info</h4>
-              <ul className="space-y-3 text-white/60 text-sm">
-                <li><a href="tel:+34620987575" className="hover:text-[#CCFF00] transition-colors">+34 620 987 575</a></li>
-                <li><a href="mailto:contact@golfgatecatalunya.com" className="hover:text-[#CCFF00] transition-colors">contact@golfgatecatalunya.com</a></li>
-                <li>Barcelona, Catalunya, Spain</li>
-              </ul>
+            <div className="flex items-center gap-3">
+              <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#CCFF00] transition-all group" aria-label="Facebook">
+                <Facebook className="w-4 h-4 text-white/80 group-hover:text-black" />
+              </a>
+              <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#CCFF00] transition-all group" aria-label="Instagram">
+                <Instagram className="w-4 h-4 text-white/80 group-hover:text-black" />
+              </a>
+              <a href="https://x.com/" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#CCFF00] transition-all group" aria-label="X">
+                <XIcon />
+              </a>
             </div>
           </div>
-          <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-white/40 text-xs">{currentYear} GOLFGATE Catalunya. All rights reserved.</p>
+          <div className="border-t border-white/10 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-white/40 text-xs">{new Date().getFullYear()} GOLFGATE Catalunya. All rights reserved.</p>
             <div className="flex gap-6 text-xs text-white/40">
-              <Link to="/privacy" className="hover:text-white/70 transition-colors">Privacy Policy</Link>
-              <Link to="/terms" className="hover:text-white/70 transition-colors">Terms of Service</Link>
+              <Link to="/privacy" className="hover:text-white/70">Privacy Policy</Link>
+              <Link to="/terms" className="hover:text-white/70">Terms</Link>
             </div>
           </div>
         </div>
@@ -262,7 +289,7 @@ function FeatureBox(props) {
 
 function ContactBox(props) {
   var content = props.href ? (
-    <a href={props.href} className="text-stone-500 text-sm hover:text-[#38A711] transition-colors">{props.value}</a>
+    <a href={props.href} className="text-stone-500 text-sm hover:text-[#EF476F] transition-colors">{props.value}</a>
   ) : (
     <p className="text-stone-500 text-sm">{props.value}</p>
   );

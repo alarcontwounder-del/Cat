@@ -1,5 +1,6 @@
 import React from 'react';
-import { MapPin, ExternalLink, Phone, Flag, Navigation, Eye, Trophy } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { MapPin, ExternalLink, Flag, Navigation, Eye, Trophy } from 'lucide-react';
 
 function getDesc(course) {
   if (!course || !course.description) return '';
@@ -14,7 +15,7 @@ export function CatalunyaCourseCard(props) {
   return (
     <div className="flip-card" data-testid={'cat-course-card-' + course.id}>
       <div className="flip-card-inner">
-        {/* Front - exactly like GIM */}
+        {/* Front - EXACT GIM style */}
         <div className="flip-card-front bg-white border border-stone-100 shadow-sm rounded-2xl">
           <div className="aspect-[4/3] overflow-hidden rounded-t-2xl relative m-3 mb-0">
             <img
@@ -40,17 +41,19 @@ export function CatalunyaCourseCard(props) {
           </div>
           <div className="p-5 pt-4">
             <div
-              className="flex items-center gap-2 text-stone-400 text-xs mb-2 cursor-pointer hover:text-[#38A711] transition-colors"
+              className="location-link flex items-center gap-2 text-stone-400 text-xs mb-2 cursor-pointer hover:text-stone-700 transition-colors"
               onClick={function(e) {
                 e.stopPropagation();
-                window.open('https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(course.name + ', ' + course.location + ', Catalunya'), '_blank');
+                window.open('https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(course.full_address || course.name + ', ' + course.location + ', Catalunya, Spain'), '_blank');
               }}
               title="Open in Google Maps"
             >
               <MapPin className="w-3.5 h-3.5" />
               <span>{course.location}</span>
             </div>
-            <h3 className="font-heading text-xl text-stone-900 mb-2">{course.name}</h3>
+            <Link to={'/courses/' + course.id} className="hover:text-stone-700 transition-colors">
+              <h3 className="font-heading text-xl text-stone-900 mb-2">{course.name}</h3>
+            </Link>
             <p className="text-stone-500 text-sm mb-4 line-clamp-2">{getDesc(course)}</p>
             <div className="flex items-baseline gap-2 mb-3">
               <span className="text-xs uppercase tracking-wider text-stone-400">Holes</span>
@@ -63,7 +66,7 @@ export function CatalunyaCourseCard(props) {
             {onQuickView && (
               <button
                 onClick={function(e) { e.stopPropagation(); onQuickView(course); }}
-                className="md:hidden text-xs text-[#38A711] font-medium flex items-center gap-1"
+                className="md:hidden text-xs text-stone-600 font-medium flex items-center gap-1"
               >
                 <Eye className="w-3 h-3" /> View Details
               </button>
@@ -71,15 +74,15 @@ export function CatalunyaCourseCard(props) {
           </div>
         </div>
 
-        {/* Back - Electric Kiwi colors */}
+        {/* Back - Electric Kiwi gradient, GIM structure (no phone, with View Details) */}
         <div className="flip-card-back rounded-2xl p-6" style={{ background: 'linear-gradient(135deg, #CCFF00 0%, #DFFF00 50%, #FFFF00 100%)' }}>
           <h3 className="font-heading text-2xl mb-5 text-black">{course.name}</h3>
           <div className="space-y-3">
             <div
-              className="flex items-start gap-3 cursor-pointer hover:opacity-80 transition-opacity"
+              className="location-link flex items-start gap-3 cursor-pointer hover:opacity-80 transition-opacity"
               onClick={function(e) {
                 e.stopPropagation();
-                window.open('https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(course.full_address || course.name + ', Catalunya'), '_blank');
+                window.open('https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(course.full_address || course.name + ', ' + course.location + ', Catalunya, Spain'), '_blank');
               }}
               title="Open in Google Maps"
             >
@@ -100,17 +103,6 @@ export function CatalunyaCourseCard(props) {
                 <p className="text-sm text-black">{course.holes} Holes - Par {course.par}</p>
               </div>
             </div>
-            {course.phone && (
-              <div className="flex items-start gap-3">
-                <div className="w-9 h-9 bg-black/15 rounded-full flex items-center justify-center flex-shrink-0">
-                  <Phone className="w-4 h-4 text-black" />
-                </div>
-                <div>
-                  <p className="text-black/60 text-xs uppercase tracking-wider mb-0.5">Pro Shop</p>
-                  <p className="text-sm text-black">{course.phone}</p>
-                </div>
-              </div>
-            )}
             {course.features && course.features.length > 0 && (
               <div className="flex flex-wrap gap-1.5 mt-3">
                 {course.features.slice(0, 3).map(function(f, i) {
@@ -135,6 +127,12 @@ export function CatalunyaCourseCard(props) {
             >
               Book a Tee Time now! <ExternalLink className="w-3 h-3" />
             </a>
+            <Link
+              to={'/courses/' + course.id}
+              className="inline-flex items-center justify-center gap-1.5 bg-black/15 text-black px-4 py-2 rounded-full text-xs font-medium hover:bg-black/25 transition-all border border-black/30"
+            >
+              View Details
+            </Link>
           </div>
         </div>
       </div>
