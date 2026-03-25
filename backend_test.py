@@ -10,7 +10,7 @@ import sys
 from typing import Dict, List, Any
 
 # Backend URL from frontend .env
-BACKEND_URL = "https://booking-landing.preview.emergentagent.com"
+BACKEND_URL = "https://golfcat-preview.preview.emergentagent.com"
 API_BASE = f"{BACKEND_URL}/api"
 
 def test_catalunya_courses_list():
