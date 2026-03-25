@@ -15,6 +15,16 @@ var WEATHER_ICONS = {
 
 var DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
+function codeToIcon(code) {
+  if (code <= 1) return '01d';
+  if (code <= 3) return '03d';
+  if (code <= 48) return '50d';
+  if (code <= 55) return '09d';
+  if (code <= 65) return '10d';
+  if (code <= 77) return '13d';
+  return '10d';
+}
+
 export function CatalunyaWeather() {
   var tempState = useState(null);
   var temp = tempState[0];
@@ -30,39 +40,23 @@ export function CatalunyaWeather() {
   var setForecast = forecastState[1];
 
   useEffect(function() {
-    // Barcelona coordinates
-    fetch('https://api.open-meteo.com/v1/forecast?latitude=41.39&longitude=2.17&current=temperature_2m,weather_code&daily=temperature_2m_max,temperature_2m_min,weather_code&timezone=Europe/Madrid&forecast_days=4')
+    fetch('https://api.open-meteo.com/v1/forecast?latitude=41.39&longitude=2.17&current=temperature_2m,weather_code&daily=temperature_2m_max,temperature_2m_min,weather_code&timezone=Europe/Madrid&forecast_days=8')
       .then(function(r) { return r.json(); })
       .then(function(data) {
         if (data.current) {
           setTemp(Math.round(data.current.temperature_2m));
-          var code = data.current.weather_code;
-          if (code <= 1) setIcon('01d');
-          else if (code <= 3) setIcon('03d');
-          else if (code <= 48) setIcon('50d');
-          else if (code <= 55) setIcon('09d');
-          else if (code <= 65) setIcon('10d');
-          else if (code <= 77) setIcon('13d');
-          else setIcon('10d');
+          setIcon(codeToIcon(data.current.weather_code));
         }
         if (data.daily) {
           var days = [];
-          for (var i = 1; i < 4; i++) {
+          for (var i = 1; i <= 7; i++) {
+            if (!data.daily.time[i]) break;
             var date = new Date(data.daily.time[i]);
-            var dayCode = data.daily.weather_code[i];
-            var dayIcon = '03d';
-            if (dayCode <= 1) dayIcon = '01d';
-            else if (dayCode <= 3) dayIcon = '03d';
-            else if (dayCode <= 48) dayIcon = '50d';
-            else if (dayCode <= 55) dayIcon = '09d';
-            else if (dayCode <= 65) dayIcon = '10d';
-            else if (dayCode <= 77) dayIcon = '13d';
-            else dayIcon = '10d';
             days.push({
               day: DAYS[date.getDay()],
               high: Math.round(data.daily.temperature_2m_max[i]),
               low: Math.round(data.daily.temperature_2m_min[i]),
-              icon: dayIcon
+              icon: codeToIcon(data.daily.weather_code[i])
             });
           }
           setForecast(days);
@@ -79,32 +73,32 @@ export function CatalunyaWeather() {
     <div className="relative hidden sm:block" data-testid="weather-badge">
       <button
         onClick={function() { setIsOpen(!isOpen); }}
-        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs bg-black/10 text-black/70 hover:bg-black/15 transition-colors"
+        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs bg-white/30 backdrop-blur-md text-black/70 hover:bg-white/50 transition-colors font-semibold"
       >
         <Icon className="w-3.5 h-3.5" />
-        <span className="font-semibold">{temp}°C</span>
+        <span>{temp}°C</span>
       </button>
 
       {isOpen && (
-        <div className="absolute top-full right-0 mt-2 bg-white rounded-xl shadow-xl border border-stone-200 p-3 min-w-[200px] z-50">
+        <div className="absolute top-full right-0 mt-2 bg-white/80 backdrop-blur-xl rounded-xl shadow-xl border border-white/30 p-3.5 min-w-[220px] z-50">
           {/* Today */}
-          <div className="flex items-center gap-2 pb-2 mb-2 border-b border-stone-100">
+          <div className="flex items-center gap-2.5 pb-2.5 mb-2 border-b border-stone-200/50">
             <Icon className="w-5 h-5 text-stone-600" />
             <div>
-              <p className="text-xs text-stone-400">Barcelona, Today</p>
+              <p className="text-[10px] text-stone-400 uppercase tracking-wider">Barcelona, Today</p>
               <p className="text-lg font-semibold text-stone-800">{temp}°C</p>
             </div>
           </div>
-          {/* 3-day forecast */}
-          <div className="space-y-1.5">
+          {/* 7-day forecast */}
+          <div className="space-y-1">
             {forecast.map(function(day) {
               var DayIcon = WEATHER_ICONS[day.icon] || Cloud;
               return (
-                <div key={day.day} className="flex items-center justify-between text-xs">
-                  <span className="text-stone-500 w-8">{day.day}</span>
+                <div key={day.day} className="flex items-center justify-between text-xs py-0.5">
+                  <span className="text-stone-500 w-8 font-medium">{day.day}</span>
                   <DayIcon className="w-3.5 h-3.5 text-stone-400" />
-                  <span className="text-stone-700 font-medium">{day.high}°</span>
-                  <span className="text-stone-400">{day.low}°</span>
+                  <span className="text-stone-700 font-semibold w-8 text-right">{day.high}°</span>
+                  <span className="text-stone-400 w-8 text-right">{day.low}°</span>
                 </div>
               );
             })}
