@@ -1,107 +1,82 @@
-# Golf in Mallorca - Product Requirements Document
+# GOLFGATE Catalunya - Product Requirements Document
 
 ## Original Problem Statement
-Build a full-featured golf travel portal for Mallorca with authentic images, performant UI, fully functional partner cards, robust email contact forms, and a comprehensive "Trip Planner" lead capture tool.
+Build a tee time booking landing page called "GOLFGATE CATALUNYA". Standalone site using card designs, functions, and architecture inspired by golfinmallorca.com (GIM). Real Catalonia golf course data and images pulled from greenfee365 booking site.
 
 ## Core Features (Implemented)
-- Partner listings: Hotels, Restaurants, Cafe/Bars, Beach Clubs, Golf Courses
-- Contact/Newsletter forms via Resend
-- Trip Planner wizard with Golf Groups support
-- Per-service dynamic scheduling
-- Golf Course Pairing (auto-suggests nearest course to hotel)
-- Share Trip functionality
-- Admin panel with Partner Image editing
-- Blog section, Reviews, Weather widget
-
-## Recently Implemented (March 22, 2026)
-- **SEO-Friendly Blog Routes**: Converted blog from modal-based to individual pages at `/blog/[slug]`. Full SEO: meta tags, JSON-LD schemas, 80+ keywords, AI discoverability.
-- **Cookie Consent Banner**: GDPR-compliant dark glass popup. Stores choice in localStorage, never reappears.
-- **Terms of Service** (`/terms`): Adapted from Greenfee365 terms, covers bookings, payments, cancellations, liability, Stripe security.
-- **Privacy Policy** (`/privacy`): Full GDPR/LOPDGDD compliance — data controller, data types, retention periods, user rights, AEPD reference.
-- **Sitemap Updated**: Added 10 blog posts + 2 legal pages to `sitemap.xml` (38 URLs total).
-- **Stripe Live Keys**: Configured `sk_live` + `whsec` webhook secret. Payment flow is production-ready.
-- **Hardcoded URLs Fixed**: All email logo URLs now point to `golfinmallorca.com` instead of preview.
-- **Footer Updates**: Save the Med + Illes Balears logos with links. Privacy/Terms links now functional.
-- **Email Fixes**: Footer links clickable on mobile, phone numbers no longer blue in Apple Mail.
-
-## Previously Implemented (March 21, 2026)
-- **Stripe Payment Integration**: Admin creates payment requests from dashboard, gets shareable link. Customer visits /pay/:id, pays via Stripe Checkout. Tested (iteration_21).
-- **Payment Auto-Emails**: Payment link auto-sent to customer on creation. Confirmation emails to both admin (contact@golfinmallorca.com) and customer on payment completion. Tested (iteration_22).
-- **Payment Dashboard**: Admin Payments tab with stats summary (collected, pending, total), search, create/delete/copy link. Redesigned payment page matching site branding. Tested (iteration_22).
-- **Drag-and-Drop Image Upload**: Admin can upload images via drag-and-drop or file picker. Uses Emergent Object Storage. Fully tested (iteration_20).
-- **Golf Groups**: New Trip Planner category with group type, player count, per-person/day budget, vehicle type
-- **Admin Partner Images tab**: Self-service image editing for all partner cards (URL paste + drag-and-drop upload)
-- **Cappuccino, Wellies, La Bodeguilla, Bar Bosch, Terrae, Barlovento, Flanigan's, Tahini**: All images updated
-- **Refactoring**: server.py split from 5974 → 1833 lines. Data extracted to /app/backend/data/
-- **Lint cleanup**: All ESLint + Python lint errors resolved
-- **Trip Planner UI fixes**: Uniform card sizes, no green colors, floating pill scroll indicator
+- 20 real Catalonia golf courses from Greenfee365 with accurate data
+- GIM-style flip cards with Electric Kiwi gradient
+- Individual SEO-friendly course pages at `/courses/{id}`
+- Custom navbar with weather badge, language selector, admin gear icon, CTA button
+- Hero section with Camiral Resort background image
+- Contact section with email, phone, location cards
+- Footer with logo, centered contact info, social icons, legal links
+- Quick View modal (compact, GIM-sized)
+- Admin Panel at `/admin` with Course Cards management and Blog Posts placeholder
 
 ## Tech Stack
-- Frontend: React, Tailwind CSS, Shadcn UI
-- Backend: FastAPI, Motor (async MongoDB), Pydantic
-- Email: Resend SDK
-- Payments: Stripe via emergentintegrations (test key: sk_test_emergent)
-- Storage: Emergent Object Storage
-- DB: MongoDB (database: test_database)
+- Frontend: React, Tailwind CSS, Lucide icons
+- Backend: FastAPI, Motor (async MongoDB)
+- Data: Static `catalunya_courses.py` with MongoDB fallback/override
+- No auth required for admin (standalone site)
 
 ## Architecture
 ```
 /app/backend/
-├── server.py              # Routes + models (1833 lines)
+├── server.py              # Routes + API endpoints
 ├── data/
-│   ├── partners.py        # PARTNER_OFFERS + BLOG_POSTS (3613 lines)
-│   ├── courses.py         # GOLF_COURSES (280 lines)
-│   └── reviews.py         # REVIEWS_DATA (259 lines)
-├── seed_all_partners.py
+│   └── catalunya_courses.py   # 21 courses (20 active, 1 duplicate hidden)
 └── .env
 
 /app/frontend/src/
+├── App.js                     # Routes: /, /courses/:id, /admin, /privacy, /terms
+├── App.css                    # Flip card CSS, animations
 ├── components/
-│   ├── TripPlanner.jsx
-│   ├── AdminDashboard.jsx
-│   ├── admin/
-│   │   ├── PartnerImagesTab.jsx  # NEW - self-service image editing
-│   │   ├── ContactsTab.jsx
-│   │   ├── DisplaySettingsTab.jsx
-│   │   └── ...
-│   └── ui/
-└── context/
+│   ├── GolfgateCatalunyaPage.jsx  # Main landing page (navbar, hero, courses, contact, footer)
+│   ├── CatalunyaCourseCard.jsx    # Flip card component
+│   ├── CatalunyaQuickView.jsx     # Quick view modal (max-w-md)
+│   ├── CatalunyaCoursePage.jsx    # Individual SEO course page
+│   ├── CatalunyaWeather.jsx       # Weather badge (temp + Barcelona)
+│   └── CatalunyaAdminPanel.jsx    # Admin panel (Course Cards + Blog tabs)
 ```
 
 ## Key API Endpoints
-- `GET /api/all-partners`: All partners (reads DB, falls back to code, applies overrides)
-- `PATCH /api/admin/partner/{id}/image`: Update partner image (writes to DB)
-- `POST /api/admin/upload-image`: Upload image file to Object Storage, returns {url, path}
-- `GET /api/images/{path}`: Serve uploaded image from Object Storage (cached 1yr)
-- `POST /api/admin/payment-request`: Create Stripe payment request (amount, customer, description)
-- `GET /api/admin/payments`: List all payment requests/transactions
-- `GET /api/payment/{id}`: Public payment details for customer page
-- `POST /api/payment/{id}/checkout`: Create Stripe checkout session
-- `GET /api/payment/status/{session_id}`: Poll Stripe payment status
-- `DELETE /api/admin/payment/{id}`: Delete unpaid payment request
-- `POST /api/webhook/stripe`: Stripe webhook handler
-- `POST /api/trip-planner`: Submit trip request
-- `GET /api/blog`: Blog posts
+- `GET /api/catalunya-courses` - Active courses (20)
+- `GET /api/catalunya-courses?include_inactive=true` - All courses (21)
+- `GET /api/catalunya-courses/{course_id}` - Single course
+- `PATCH /api/admin/catalunya-course/{course_id}` - Update course fields
 
-## CRITICAL: Database Sync Note
-The DB name is `test_database` (from .env DB_NAME). When updating partner data:
-- Update BOTH the code (data/partners.py) AND the MongoDB collection
-- The admin image editor handles this automatically via the API
+## Recently Implemented (Feb 2026)
+- **Quick View Modal** - Shrunk from max-w-lg to max-w-md with smaller image (h-44)
+- **Card Flip Animation** - Slowed: 0.8s transition + 1.2s hover delay (was 0.6s + 0.8s)
+- **Google Maps Links** - All 20 courses updated with accurate full_address fields
+- **Footer Redesign** - Logo image (inverted), centered contact info, social icons, golfgatecatalunya.es link
+- **Contact Info Updated** - Email: contact@golfgatecatalunya.es, URL: golfgatecatalunya.es
+- **Navbar Logo** - Reduced by ~10% (h-14 md:h-[4.5rem])
+- **Weather Badge** - Shows temperature + "Barcelona" location text
+- **Language Selector** - Added Swedish (SE) as 6th language
+- **Admin Panel** - `/admin` route with Course Cards table (edit, toggle active/hidden) + Blog Posts placeholder
+- **Backend Admin API** - PATCH endpoint for course updates, include_inactive query param
+
+## Previously Implemented
+- Scraped 20 real Catalonia courses from greenfee365
+- Created backend API endpoints for courses
+- Built GIM-style flip-cards with Electric Kiwi back-gradient
+- Individual SEO course pages with JSON-LD schemas
+- Logo transparency processing (Python PIL)
+- Standalone React App (no GIM wrappers)
 
 ## Upcoming Tasks (P1)
-- Hero Video on homepage
+- Blog management in admin panel (create/edit/publish posts)
+- Full admin authentication
 
 ## Future/Backlog (P2)
-- Refactor TripPlanner.jsx (~800 lines → smaller components)
-- Refactor server.py (extract email templates to separate module)
-- Golf Packages page (bundle deals)
-- Google Business Profile (resolve suspension — user action)
-- External review links (need URLs from user)
-- Google Search Console (submit sitemap after production deploy)
-- Golf Packages page
-- Refactor TripPlanner.jsx (~800 lines)
+- Full multilingual support (translate entire site content)
+- Replace hero image (user to provide specific one)
+- Scroll-down animation matching GIM
+- SEO sitemap for Catalunya site
 
-## Blocked Items
-- Google Business Profile suspension (user action)
-- Sitemap submission (needs production deployment)
-- External review links (waiting on user URLs)
+## CRITICAL Notes
+- DO NOT mix Golfgate Catalunya with GIM - this is a standalone site at root `/`
+- DO NOT wrap in GIM's CookieConsent or DataProvider
+- Keep React components modular and small to avoid Babel `Maximum call stack size exceeded` errors
