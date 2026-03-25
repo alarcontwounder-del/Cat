@@ -3,27 +3,35 @@
 ## Problem Statement
 Standalone golf tee time booking landing page for Catalunya, inspired by golfinmallorca.com (GIM). All UI must EXACTLY match GIM designs.
 
+## GIM Matching Approach (LOCKED)
+When user asks to match ANYTHING from GIM:
+1. Pull exact source code from golfinmallorca.com using Playwright
+2. Build standalone mockup at /mockup.html for approval
+3. Only deploy after user confirms
+
 ## Implemented Features
-- 20 real Catalonia courses with flip cards (image top, text below, green gradient back)
+- 20 real Catalonia courses with flip cards (green gradient back, no grey)
 - Individual SEO course pages at /courses/{id}
 - Navbar: Language → Weather 7-day → Admin gear → CTA
 - Hero: heading, subtext, CTA, SCROLL mouse indicator
-- Worldwide banner: GIM exact (480px tall, UPPERCASE golden badge, Playfair italic 500, CTA wraps 2 lines 240px max-width, warm overlay)
-- Cookie consent: GIM exact (280px, 16px radius, 18px text, warm olive glass rgba(35,32,22,0.68) blur(18px), 1.5px border Accept)
-- Footer: BLACK bg 3-column, logo, keyword description, Quick Links, Services, Contact
+- Cookie consent: EXACT GIM code (w-[260px] bg-black/50 backdrop-blur-md rounded-2xl border-white/15 p-5, 13px text, rounded-lg Accept)
+- Worldwide banner: EXACT GIM code (rounded-3xl, charcoal gradient overlay, font-heading text-3xl md:text-4xl, rounded-full white CTA, text-white/60 subtext)
+- Footer: BLACK bg 3-column, logo, keyword description
 - Admin Panel /admin (admin/golfgate2026)
-- Card text: strict 2-line clamp via inline WebkitLineClamp, overflow hidden, flex-shrink-0
+- Card text: strict WebkitLineClamp fix, overflow hidden
 
 ## Architecture
-- Frontend: React + Tailwind + Lucide | Backend: FastAPI + MongoDB | Weather: open-meteo.com
+Frontend: React + Tailwind + Lucide | Backend: FastAPI + MongoDB | Weather: open-meteo.com
 
 ## Key Files
-- GolfgateCatalunyaPage.jsx, CatalunyaCourseCard.jsx, CatalunyaWeather.jsx, CatalunyaAdminPanel.jsx, App.css
+- GolfgateCatalunyaPage.jsx (main page, cookie, banner, footer)
+- CatalunyaCourseCard.jsx (flip card)
+- CatalunyaWeather.jsx, CatalunyaAdminPanel.jsx, App.css
 
 ## Completed (25 Mar 2026)
-- Round 3: Cookie 280px/18px/16px-radius, Banner 480px tall + CTA wraps, Card WebkitLineClamp fix
-- Round 2: UPPERCASE badge, golden #c8a03e, card overflow-hidden
-- Round 1: Card back grey removed, flip-card-back transparent
+- Cookie + Banner: deployed with EXACT GIM source code extracted via Playwright
+- Card back: transparent (no grey)
+- Card text: WebkitLineClamp overflow fix
 
 ## Pending
 - P1: Logo pixelation, dropdown z-index/glass polish
