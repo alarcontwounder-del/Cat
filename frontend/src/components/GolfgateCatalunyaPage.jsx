@@ -133,23 +133,24 @@ export default function GolfgateCatalunyaPage() {
 
       {/* Navbar - GIM style: logo, links, language, weather, admin, CTA */}
       <nav className="sticky top-0 z-40 shadow-md" style={{ backgroundColor: '#CCFF00' }}>
-        <div className="max-w-6xl mx-auto px-4 md:px-6 py-2 flex items-center justify-between gap-4">
-          {/* Logo - larger */}
+        <div className="max-w-6xl mx-auto px-4 md:px-6 py-4 flex items-center justify-between gap-4">
+          {/* Logo */}
           <Link to="/" className="flex-shrink-0">
-            <img src="/golfgate-logo-nav.png" alt="GOLFGATE Catalunya" className="h-10 md:h-[4.5rem] w-auto" />
+            <img src="/golfgate-logo-nav.png" alt="GOLFGATE Catalunya" className="h-12 md:h-20 w-auto" />
           </Link>
 
-          {/* Nav links */}
-          <div className="hidden lg:flex items-center gap-6 text-sm font-semibold text-black/80">
+          {/* Nav links with separator */}
+          <div className="hidden lg:flex items-center gap-5 text-sm font-medium text-black/80">
             <a href="#courses" className="hover:text-[#f6416c] transition-colors">{t.nav.courses}</a>
             <Link to="/hotels" className="hover:text-[#f6416c] transition-colors">Hotels</Link>
             <Link to="/compare" className="hover:text-[#f6416c] transition-colors">Compare</Link>
+            <span className="w-px h-5 bg-black/20 rounded-full" />
             <a href="#about" className="hover:text-[#f6416c] transition-colors">{t.nav.about}</a>
             <a href="#contact" className="hover:text-[#f6416c] transition-colors">{t.nav.contact}</a>
             <Link to="/blog" className="hover:text-[#f6416c] transition-colors">{t.nav.blog}</Link>
           </div>
 
-          {/* Right side: Language + Weather + Admin + CTA */}
+          {/* Right side: Language + Weather + Admin */}
           <div className="flex items-center gap-3">
             {/* Language dropdown - GIM exact structure */}
             <div className="relative" onMouseEnter={function() { setLangDropdown(true); }} onMouseLeave={function() { setLangDropdown(false); }}>
@@ -188,12 +189,6 @@ export default function GolfgateCatalunyaPage() {
             >
               <Settings className="w-5 h-5" />
             </Link>
-
-            {/* CTA */}
-            <a href="#courses" className="bg-black text-[#CCFF00] px-3 md:px-6 py-2 md:py-2.5 rounded-full text-[10px] md:text-sm font-bold hover:bg-black/80 transition-all shadow-sm whitespace-nowrap">
-              <span className="hidden sm:inline">{t.nav.bookCta}</span>
-              <span className="sm:hidden">Book Now!</span>
-            </a>
           </div>
         </div>
       </nav>
@@ -211,9 +206,14 @@ export default function GolfgateCatalunyaPage() {
           <p className="text-white/90 text-lg md:text-xl font-body max-w-2xl mx-auto mb-10 drop-shadow-lg">
             {t.hero.subtitle}
           </p>
-          <a href="#courses" onClick={function(e) { e.preventDefault(); document.getElementById('courses')?.scrollIntoView({behavior: 'smooth'}); }} className="inline-flex items-center gap-2 bg-[#CCFF00] text-black px-8 py-4 rounded-full font-bold text-base hover:bg-[#DFFF00] transition-all shadow-lg hover:shadow-xl">
-            {t.hero.cta} <ChevronRight className="w-5 h-5" />
-          </a>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <a href="https://golfinmallorca.greenfee365.com/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-semibold rounded-full bg-white text-stone-800 hover:bg-stone-100 transition-all duration-300 shadow-lg hover:shadow-xl">
+              {t.nav.bookCta} <ExternalLink className="w-4 h-4" />
+            </a>
+            <a href="#courses" onClick={function(e) { e.preventDefault(); document.getElementById('courses')?.scrollIntoView({behavior: 'smooth'}); }} className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-semibold rounded-full bg-white/15 backdrop-blur-md text-white border border-white/30 hover:bg-white/25 transition-all duration-300 shadow-lg">
+              {t.hero.cta} <ChevronRight className="w-4 h-4" />
+            </a>
+          </div>
         </div>
         {/* Scroll indicator - GIM style */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-70">
