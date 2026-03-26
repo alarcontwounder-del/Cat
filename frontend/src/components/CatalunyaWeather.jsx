@@ -77,7 +77,7 @@ export function CatalunyaWeather() {
       onMouseLeave={function() { setIsOpen(false); }}
     >
       <button
-        className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200 backdrop-blur-md border border-white/30 hover:bg-white/25" style={{ background: 'rgba(255,255,255,0.15)', color: '#f6416c' }}
+        className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200 bg-white/10 backdrop-blur-sm border border-white/15 hover:bg-white/20" style={{ color: '#f6416c' }}
         data-testid="weather-badge-btn"
       >
         <Icon className="w-4 h-4" />
@@ -86,13 +86,13 @@ export function CatalunyaWeather() {
       </button>
 
       {isOpen && (
-        <div className="absolute top-full right-0 mt-0 backdrop-blur-xl rounded-xl shadow-xl border border-white/40 p-3 w-[160px] z-50" style={{ background: 'rgba(255,255,255,0.85)' }}>
+        <div className="absolute top-full right-0 mt-0 bg-white/10 backdrop-blur-xl rounded-xl shadow-xl border border-white/15 p-3 w-[160px] z-50">
           {/* Today */}
-          <div className="flex items-center gap-2.5 pb-2.5 mb-2 border-b border-stone-200">
-            <Icon className="w-5 h-5 text-stone-500" />
+          <div className="flex items-center gap-2.5 pb-2.5 mb-2 border-b border-black/10">
+            <Icon className="w-5 h-5 text-black/50" />
             <div>
-              <p className="text-[10px] text-stone-400 uppercase tracking-wider">Barcelona, Today</p>
-              <p className="text-lg font-semibold text-stone-800">{temp}°C</p>
+              <p className="text-[10px] text-black/40 uppercase tracking-wider">Barcelona, Today</p>
+              <p className="text-lg font-semibold text-black/80">{temp}°C</p>
             </div>
           </div>
           {/* 7-day forecast */}
@@ -101,10 +101,10 @@ export function CatalunyaWeather() {
               var DayIcon = WEATHER_ICONS[day.icon] || Cloud;
               return (
                 <div key={day.day} className="flex items-center justify-between text-xs py-0.5">
-                  <span className="text-stone-500 w-8 font-medium">{day.day}</span>
-                  <DayIcon className="w-3.5 h-3.5 text-stone-400" />
-                  <span className="text-stone-800 font-semibold w-8 text-right">{day.high}°</span>
-                  <span className="text-stone-400 w-8 text-right">{day.low}°</span>
+                  <span className="text-black/50 w-8 font-medium">{day.day}</span>
+                  <DayIcon className="w-3.5 h-3.5 text-black/30" />
+                  <span className="text-black/70 font-semibold w-8 text-right">{day.high}°</span>
+                  <span className="text-black/35 w-8 text-right">{day.low}°</span>
                 </div>
               );
             })}
