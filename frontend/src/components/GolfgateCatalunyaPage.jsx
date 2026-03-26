@@ -44,6 +44,12 @@ export default function GolfgateCatalunyaPage() {
   var langDropdownState = useState(false);
   var langDropdown = langDropdownState[0];
   var setLangDropdown = langDropdownState[1];
+  var hotelsState = useState([]);
+  var hotels = hotelsState[0];
+  var setHotels = hotelsState[1];
+  var hotelsLoadingState = useState(true);
+  var hotelsLoading = hotelsLoadingState[0];
+  var setHotelsLoading = hotelsLoadingState[1];
 
   var t = TRANSLATIONS[lang] || TRANSLATIONS.en;
 
@@ -86,6 +92,11 @@ export default function GolfgateCatalunyaPage() {
       .then(function(res) { setCourses(res.data); })
       .catch(function(err) { console.error('Error fetching courses:', err); })
       .finally(function() { setLoading(false); });
+
+    axios.get(API + '/api/catalunya-hotels')
+      .then(function(res) { setHotels(res.data); })
+      .catch(function() {})
+      .finally(function() { setHotelsLoading(false); });
 
     return function() {
       var s = document.getElementById('golfgate-schema');
@@ -242,6 +253,46 @@ export default function GolfgateCatalunyaPage() {
               })}
             </div>
           )}
+        </div>
+      </section>
+
+      {/* Hotels Section - on homepage */}
+      <section id="hotels" className="py-16 md:py-20 bg-stone-50" data-testid="golfgate-hotels">
+        <div className="max-w-6xl mx-auto px-6 md:px-12">
+          <div className="text-center mb-12 fade-in-up">
+            <p className="text-stone-500 text-sm uppercase tracking-[0.2em] mb-4">Golf Resorts & Hotels</p>
+            <h2 className="font-heading text-3xl md:text-4xl text-stone-900 mb-4">Luxury Golf Hotels in Catalunya</h2>
+            <div className="h-1 mx-auto rounded-full mb-6 accent-line" style={{ background: 'linear-gradient(90deg, #CCFF00, #FFFF00, #DFFF00)' }} />
+            <p className="text-stone-500 text-lg max-w-2xl mx-auto">Stay and play at Catalunya's finest golf resorts. Exclusive packages with special rates.</p>
+          </div>
+          {hotelsLoading ? (
+            <div className="flex items-center justify-center py-10">
+              <div className="w-8 h-8 border-4 border-stone-300 border-t-[#89F336] rounded-full animate-spin" />
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {hotels.slice(0, 3).map(function(hotel) {
+                return (
+                  <Link to="/hotels" key={hotel.id} className="bg-white border border-stone-100 rounded-2xl overflow-hidden group hover:shadow-lg transition-shadow card-hover-lift">
+                    <div className="h-48 overflow-hidden">
+                      <img src={hotel.image} alt={hotel.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                    </div>
+                    <div className="p-5">
+                      <h3 className="font-heading text-lg text-stone-900 mb-1">{hotel.name}</h3>
+                      <p className="text-stone-400 text-xs mb-2">{hotel.location}</p>
+                      <p className="text-stone-500 text-sm" style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{hotel.description}</p>
+                      <p className="mt-3"><span className="text-xs uppercase tracking-wider text-stone-400">From </span><span className="text-lg font-semibold text-stone-800">&euro;{hotel.price_from}</span><span className="text-xs text-stone-400">/night</span></p>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          )}
+          <div className="text-center mt-8">
+            <Link to="/hotels" className="inline-flex items-center gap-2 bg-black text-[#CCFF00] px-6 py-3 rounded-full text-sm font-bold hover:bg-black/80 transition-all">
+              View All Hotels <ExternalLink className="w-4 h-4" />
+            </Link>
+          </div>
         </div>
       </section>
 
