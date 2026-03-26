@@ -29,22 +29,22 @@ export function HotelCardFront(props) {
 export function HotelCardBack(props) {
   var h = props.hotel;
   return (
-    <div className="rounded-2xl h-full flex flex-col items-center justify-center text-center p-6" style={{ background: 'linear-gradient(135deg, #CCFF00 0%, #89F336 40%, #38A711 100%)' }}>
-      <h3 className="font-heading text-2xl text-black mb-6">{h.name}</h3>
+    <div className="rounded-2xl h-full flex flex-col items-center justify-center text-center p-6" style={{ background: 'linear-gradient(135deg, #f6416c 0%, #e8365f 40%, #d42a52 100%)' }}>
+      <h3 className="font-heading text-2xl text-white mb-6">{h.name}</h3>
       <div className="flex items-center gap-3 mb-5">
-        <div className="w-10 h-10 bg-black/15 rounded-full flex items-center justify-center flex-shrink-0">
-          <Navigation className="w-4 h-4 text-black/70" />
+        <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
+          <Navigation className="w-4 h-4 text-white/80" />
         </div>
         <div className="text-left">
-          <p className="text-black/50 text-xs uppercase tracking-wider mb-0.5">Location</p>
-          <p className="text-sm text-black/90">{h.location}</p>
+          <p className="text-white/60 text-xs uppercase tracking-wider mb-0.5">Location</p>
+          <p className="text-sm text-white">{h.location}</p>
         </div>
       </div>
-      <div className="bg-black/10 rounded-lg px-4 py-3 mb-5 w-full">
-        <p className="text-sm font-medium text-black/80">Exclusive: Golf & Stay Package</p>
+      <div className="bg-white/15 rounded-lg px-4 py-3 mb-5 w-full">
+        <p className="text-sm font-medium text-white">Exclusive: Golf & Stay Package</p>
       </div>
-      {h.nearest_golf && <p className="flex items-center gap-2 text-black/70 text-sm mb-6"><Navigation className="w-4 h-4" /> {h.nearest_golf}</p>}
-      <a href={h.booking_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-1.5 bg-white text-black px-5 py-2.5 rounded-full text-xs font-semibold hover:bg-white/90 transition-all shadow-md">
+      {h.nearest_golf && <p className="flex items-center gap-2 text-white/80 text-sm mb-6"><Navigation className="w-4 h-4" /> {h.nearest_golf}</p>}
+      <a href={h.booking_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-1.5 bg-white text-[#f6416c] px-5 py-2.5 rounded-full text-xs font-semibold hover:bg-white/90 transition-all shadow-md">
         Book Now <ExternalLink className="w-3 h-3" />
       </a>
     </div>
