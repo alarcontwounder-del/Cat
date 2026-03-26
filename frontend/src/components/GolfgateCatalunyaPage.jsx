@@ -317,6 +317,7 @@ export default function GolfgateCatalunyaPage() {
                 <li><a href="#hero" className="text-white/50 text-sm hover:text-white transition-colors">{t.footer.home}</a></li>
                 <li><Link to="/courses" className="text-white/50 text-sm hover:text-white transition-colors">{t.footer.golfCourses} Info</Link></li>
                 <li><Link to="/blog" className="text-white/50 text-sm hover:text-white transition-colors">{t.nav.blog}</Link></li>
+                <li><Link to="/compare" className="text-white/50 text-sm hover:text-white transition-colors">Compare Courses</Link></li>
                 <li><a href="#about" className="text-white/50 text-sm hover:text-white transition-colors">{t.nav.about}</a></li>
                 <li><a href="#contact" className="text-white/50 text-sm hover:text-white transition-colors">{t.nav.contact}</a></li>
               </ul>
