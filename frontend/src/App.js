@@ -10,6 +10,7 @@ var CatalunyaBlogPostPage = React.lazy(function() { return import('./components/
 var CatalunyaCoursesListPage = React.lazy(function() { return import('./components/CatalunyaCoursesListPage'); });
 var CatalunyaHotelsPage = React.lazy(function() { return import('./components/CatalunyaHotelsPage'); });
 var CatalunyaLocationPage = React.lazy(function() { return import('./components/CatalunyaLocationPage'); });
+var CatalunyaComparePage = React.lazy(function() { return import('./components/CatalunyaComparePage'); });
 var TermsPage = React.lazy(function() { return import('./components/TermsPage'); });
 var PrivacyPage = React.lazy(function() { return import('./components/PrivacyPage'); });
 
@@ -37,6 +38,7 @@ function App() {
         <Route path="/courses" element={<Wrap><CatalunyaCoursesListPage /></Wrap>} />
         <Route path="/hotels" element={<Wrap><CatalunyaHotelsPage /></Wrap>} />
         <Route path="/golf/:region" element={<Wrap><CatalunyaLocationPage /></Wrap>} />
+        <Route path="/compare" element={<Wrap><CatalunyaComparePage /></Wrap>} />
         <Route path="/courses/:courseId" element={<Wrap><CatalunyaCoursePage /></Wrap>} />
         <Route path="/blog" element={<Wrap><CatalunyaBlogPage /></Wrap>} />
         <Route path="/blog/:postId" element={<Wrap><CatalunyaBlogPostPage /></Wrap>} />
