@@ -50,6 +50,9 @@ export default function GolfgateCatalunyaPage() {
   var hotelsLoadingState = useState(true);
   var hotelsLoading = hotelsLoadingState[0];
   var setHotelsLoading = hotelsLoadingState[1];
+  var blogPostsState = useState([]);
+  var blogPosts = blogPostsState[0];
+  var setBlogPosts = blogPostsState[1];
 
   var t = TRANSLATIONS[lang] || TRANSLATIONS.en;
 
@@ -97,6 +100,10 @@ export default function GolfgateCatalunyaPage() {
       .then(function(res) { setHotels(res.data); })
       .catch(function() {})
       .finally(function() { setHotelsLoading(false); });
+
+    axios.get(API + '/api/blog-posts')
+      .then(function(res) { setBlogPosts(res.data); })
+      .catch(function() {});
 
     return function() {
       var s = document.getElementById('golfgate-schema');
@@ -338,6 +345,43 @@ export default function GolfgateCatalunyaPage() {
           </div>
         </div>
       </section>
+
+      {/* Blog Preview Section */}
+      {blogPosts.length > 0 && (
+        <section id="blog" className="py-16 md:py-20" data-testid="golfgate-blog">
+          <div className="max-w-6xl mx-auto px-6 md:px-12">
+            <div className="text-center mb-12 fade-in-up">
+              <p className="text-stone-500 text-sm uppercase tracking-[0.2em] mb-4">{t.blog.subtitle}</p>
+              <h2 className="font-heading text-3xl md:text-4xl text-stone-900 mb-4">{t.blog.title}</h2>
+              <div className="h-1 mx-auto rounded-full mb-6 accent-line" style={{ background: 'linear-gradient(90deg, #CCFF00, #FFFF00, #DFFF00)' }} />
+              <p className="text-stone-500 text-lg max-w-2xl mx-auto">{t.blog.description}</p>
+            </div>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {blogPosts.slice(0, 3).map(function(post) {
+                return (
+                  <Link to={'/blog/' + post.id} key={post.id} className="bg-white border border-stone-100 rounded-2xl overflow-hidden group hover:shadow-lg transition-shadow card-hover-lift">
+                    {post.image && (
+                      <div className="overflow-hidden aspect-[3/2]">
+                        <img src={post.image} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                      </div>
+                    )}
+                    <div className="p-5">
+                      <p className="text-stone-400 text-xs mb-2">{post.category}</p>
+                      <h3 className="font-heading text-lg text-stone-900 mb-2 group-hover:text-stone-600 transition-colors" style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{post.title}</h3>
+                      <p className="text-stone-500 text-sm" style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{post.content && post.content.substring(0, 120) + '...'}</p>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+            <div className="text-center mt-8">
+              <Link to="/blog" className="inline-flex items-center gap-2 bg-black text-[#CCFF00] px-6 py-3 rounded-full text-sm font-bold hover:bg-black/80 transition-all">
+                {t.blog.readMore} <ExternalLink className="w-4 h-4" />
+              </Link>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Contact */}
       <section id="contact" className="max-w-5xl mx-auto px-6 md:px-12 py-16 md:py-20" data-testid="golfgate-contact">
