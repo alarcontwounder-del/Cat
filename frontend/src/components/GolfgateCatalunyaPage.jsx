@@ -105,6 +105,7 @@ export default function GolfgateCatalunyaPage() {
           {/* Nav links */}
           <div className="hidden lg:flex items-center gap-6 text-sm font-semibold text-black/80">
             <a href="#courses" className="hover:text-[#f6416c] transition-colors">{t.nav.courses}</a>
+            <Link to="/hotels" className="hover:text-[#f6416c] transition-colors">Hotels</Link>
             <a href="#about" className="hover:text-[#f6416c] transition-colors">{t.nav.about}</a>
             <a href="#contact" className="hover:text-[#f6416c] transition-colors">{t.nav.contact}</a>
             <Link to="/blog" className="hover:text-[#f6416c] transition-colors">{t.nav.blog}</Link>

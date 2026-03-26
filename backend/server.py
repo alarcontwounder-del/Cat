@@ -658,6 +658,79 @@ async def logout_user(request: Request, response: Response):
 
 
 
+# ============ HOTELS ============
+from data.catalunya_hotels import CATALUNYA_HOTELS
+
+@api_router.get("/catalunya-hotels")
+async def get_catalunya_hotels():
+    """Get all active Catalunya hotels"""
+    cursor = db.catalunya_hotels.find({"active": True}, {"_id": 0}).sort("display_order", 1)
+    hotels = await cursor.to_list(length=50)
+    if not hotels:
+        return [h for h in CATALUNYA_HOTELS if h.get("active", True)]
+    return hotels
+
+@api_router.get("/admin/catalunya-hotels")
+async def get_admin_hotels():
+    """Get all hotels for admin (including inactive)"""
+    cursor = db.catalunya_hotels.find({}, {"_id": 0}).sort("display_order", 1)
+    hotels = await cursor.to_list(length=50)
+    if not hotels:
+        return CATALUNYA_HOTELS
+    return hotels
+
+@api_router.post("/admin/catalunya-hotels")
+async def create_hotel(hotel: dict):
+    """Create a new hotel"""
+    new_hotel = {
+        "id": "hotel-" + uuid.uuid4().hex[:8],
+        "name": hotel.get("name", ""),
+        "location": hotel.get("location", ""),
+        "description": hotel.get("description", ""),
+        "image": hotel.get("image", ""),
+        "stars": hotel.get("stars", 4),
+        "price_from": hotel.get("price_from", 0),
+        "price_original": hotel.get("price_original", 0),
+        "discount": hotel.get("discount", ""),
+        "nearest_golf": hotel.get("nearest_golf", ""),
+        "booking_url": hotel.get("booking_url", ""),
+        "features": hotel.get("features", []),
+        "active": hotel.get("active", True),
+        "display_order": hotel.get("display_order", 99),
+        "created_at": datetime.now(timezone.utc).isoformat()
+    }
+    await db.catalunya_hotels.insert_one(new_hotel)
+    new_hotel.pop("_id", None)
+    return new_hotel
+
+@api_router.patch("/admin/catalunya-hotel/{hotel_id}")
+async def update_hotel(hotel_id: str, update: dict):
+    """Update a hotel"""
+    update.pop("_id", None)
+    update.pop("id", None)
+    result = await db.catalunya_hotels.update_one({"id": hotel_id}, {"$set": update})
+    if result.matched_count == 0:
+        # Try to seed from static data first
+        for h in CATALUNYA_HOTELS:
+            if h["id"] == hotel_id:
+                h.update(update)
+                await db.catalunya_hotels.insert_one({**h})
+                doc = await db.catalunya_hotels.find_one({"id": hotel_id}, {"_id": 0})
+                return doc
+        raise HTTPException(status_code=404, detail="Hotel not found")
+    updated = await db.catalunya_hotels.find_one({"id": hotel_id}, {"_id": 0})
+    return updated
+
+@api_router.delete("/admin/catalunya-hotel/{hotel_id}")
+async def delete_hotel(hotel_id: str):
+    """Delete a hotel"""
+    result = await db.catalunya_hotels.delete_one({"id": hotel_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Hotel not found")
+    return {"deleted": True}
+
+
+
 @api_router.get("/catalunya-courses", response_model=List[dict])
 async def get_catalunya_courses(include_inactive: bool = False):
     """Get all Catalunya golf courses for GOLFGATE CATALUNYA"""

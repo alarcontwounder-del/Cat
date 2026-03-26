@@ -93,8 +93,8 @@ export default function CatalunyaAdminPanel() {
         <div className="max-w-6xl mx-auto flex items-center gap-0">
           <button
             onClick={function() { setTab('courses'); }}
-            className={'px-6 py-4 text-sm font-medium border-b-2 transition-colors flex items-center gap-2 ' + (tab === 'courses' ? 'border-blue-500 text-stone-900' : 'border-transparent text-stone-400 hover:text-stone-600')}
-            data-testid="admin-tab-courses"
+            className={'px-6 py-4 text-sm font-medium border-b-2 transition-colors flex items-center gap-2 ' + (tab === 'courses' || tab === 'hotels' ? 'border-blue-500 text-stone-900' : 'border-transparent text-stone-400 hover:text-stone-600')}
+            data-testid="admin-tab-content"
           >
             <LayoutGrid className="w-4 h-4" /> Content Manager
           </button>
@@ -108,8 +108,23 @@ export default function CatalunyaAdminPanel() {
         </div>
       </div>
 
+      {/* Content Manager Sub-tabs (GIM style) */}
+      {(tab === 'courses' || tab === 'hotels') && (
+        <div className="bg-white border-b border-stone-100 px-6">
+          <div className="max-w-6xl mx-auto flex items-center gap-6 py-3">
+            <button onClick={function() { setTab('courses'); }} className={'flex items-center gap-2 text-sm font-medium pb-2 border-b-2 -mb-3 transition-colors ' + (tab === 'courses' ? 'border-stone-900 text-stone-900' : 'border-transparent text-stone-400 hover:text-stone-600')}>
+              <LayoutGrid className="w-4 h-4" /> Golf Courses
+            </button>
+            <button onClick={function() { setTab('hotels'); }} className={'flex items-center gap-2 text-sm font-medium pb-2 border-b-2 -mb-3 transition-colors ' + (tab === 'hotels' ? 'border-stone-900 text-stone-900' : 'border-transparent text-stone-400 hover:text-stone-600')}>
+              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2Z"/><path d="m9 16 .348-.24c1.465-1.013 3.84-1.013 5.304 0L15 16"/><path d="M8 7h.01"/><path d="M16 7h.01"/><path d="M12 7h.01"/><path d="M12 11h.01"/><path d="M16 11h.01"/><path d="M8 11h.01"/></svg> Hotels
+            </button>
+          </div>
+        </div>
+      )}
+
       <div className="max-w-6xl mx-auto px-6 py-6">
         {tab === 'courses' && <CoursesTab />}
+        {tab === 'hotels' && <HotelsTab />}
         {tab === 'blog' && <BlogTab />}
       </div>
 
@@ -513,6 +528,194 @@ function BlogTab() {
               </div>
             );
           })}
+        </div>
+      )}
+    </div>
+  );
+}
+
+
+function HotelsTab() {
+  var hotelsState = useState([]);
+  var hotels = hotelsState[0];
+  var setHotels = hotelsState[1];
+  var loadingState = useState(true);
+  var loading = loadingState[0];
+  var setLoading = loadingState[1];
+  var editState = useState(null);
+  var editingHotel = editState[0];
+  var setEditingHotel = editState[1];
+  var searchState = useState('');
+  var search = searchState[0];
+  var setSearch = searchState[1];
+
+  useEffect(function() { fetchHotels(); }, []);
+
+  function fetchHotels() {
+    setLoading(true);
+    axios.get(API + '/api/admin/catalunya-hotels')
+      .then(function(res) { setHotels(res.data); })
+      .catch(function() {})
+      .finally(function() { setLoading(false); });
+  }
+
+  function startEdit(hotel) {
+    setEditingHotel(Object.assign({}, hotel));
+  }
+
+  function saveEdit() {
+    var data = Object.assign({}, editingHotel);
+    delete data.id;
+    delete data._id;
+    if (editingHotel._isNew) {
+      axios.post(API + '/api/admin/catalunya-hotels', editingHotel)
+        .then(function() { setEditingHotel(null); fetchHotels(); })
+        .catch(function(err) { alert('Error: ' + err.message); });
+    } else {
+      axios.patch(API + '/api/admin/catalunya-hotel/' + editingHotel.id, data)
+        .then(function() { setEditingHotel(null); fetchHotels(); })
+        .catch(function(err) { alert('Error: ' + err.message); });
+    }
+  }
+
+  var filtered = hotels.filter(function(h) {
+    if (!search) return true;
+    return h.name.toLowerCase().includes(search.toLowerCase()) || h.location.toLowerCase().includes(search.toLowerCase());
+  });
+
+  if (loading) {
+    return <div className="flex items-center justify-center py-20"><div className="w-8 h-8 border-4 border-stone-300 border-t-blue-500 rounded-full animate-spin" /></div>;
+  }
+
+  return (
+    <div className="pb-24" data-testid="admin-hotels-list">
+      {/* Search + Add New */}
+      <div className="bg-white rounded-xl border border-stone-200 px-6 py-4 mb-4">
+        <div className="flex items-center justify-between gap-4">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
+            <input type="text" value={search} onChange={function(e) { setSearch(e.target.value); }} placeholder="Search hotels..." className="pl-9 pr-4 py-2 rounded-lg border border-stone-200 text-sm text-stone-700 w-[220px] focus:outline-none focus:ring-2 focus:ring-blue-100" />
+          </div>
+          <button onClick={function() { setEditingHotel({ _isNew: true, name: '', location: '', description: '', image: '', stars: 4, price_from: 0, price_original: 0, discount: '', nearest_golf: '', booking_url: '', features: [], active: true, display_order: hotels.length }); }} className="inline-flex items-center gap-2 px-5 py-2.5 bg-blue-600 text-white rounded-lg text-sm font-semibold hover:bg-blue-700 transition-colors shadow-sm">
+            <Plus className="w-4 h-4" /> Add New
+          </button>
+        </div>
+        <div className="flex items-center gap-4 text-sm mt-3">
+          <span className="flex items-center gap-1.5"><Eye className="w-3.5 h-3.5 text-green-500" /> <strong>{filtered.filter(function(h) { return h.active; }).length}</strong> <span className="text-stone-400">active</span></span>
+          <span className="flex items-center gap-1.5"><EyeOff className="w-3.5 h-3.5 text-stone-400" /> <strong>{filtered.filter(function(h) { return !h.active; }).length}</strong> <span className="text-stone-400">hidden</span></span>
+        </div>
+      </div>
+
+      {/* 2-Column Card Grid - GIM style */}
+      <div className="bg-white rounded-xl border border-stone-200 p-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {filtered.map(function(hotel, index) {
+            return (
+              <div key={hotel.id} className="flex items-center gap-3 p-3 rounded-xl border border-stone-100 hover:border-stone-300 hover:shadow-sm transition-all cursor-pointer" onClick={function() { startEdit(hotel); }} data-testid={'admin-hotel-' + hotel.id}>
+                <div className="flex-shrink-0 w-10 text-center">
+                  <div className="text-sm font-bold text-stone-700 border border-stone-200 rounded px-1.5 py-0.5">{index}</div>
+                  <p className="text-[10px] text-stone-400 mt-0.5">Pos</p>
+                </div>
+                <img src={hotel.image} alt="" className="w-16 h-16 rounded-lg object-cover flex-shrink-0" />
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center justify-between gap-2">
+                    <h3 className="text-sm font-bold text-stone-900 truncate" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>{hotel.name}</h3>
+                    {hotel.active ? <Eye className="w-4 h-4 text-green-500 flex-shrink-0" /> : <EyeOff className="w-4 h-4 text-stone-300 flex-shrink-0" />}
+                  </div>
+                  <div className="flex items-center gap-1 text-xs text-stone-400 mt-0.5">
+                    <MapPin className="w-3 h-3" /> {hotel.location}
+                  </div>
+                  <div className="flex items-center gap-2 mt-0.5">
+                    <span className="text-xs font-semibold text-amber-500">{'*'.repeat(hotel.stars || 4)}</span>
+                    <span className="text-xs text-green-600 font-medium">&euro;{hotel.price_from}/night</span>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Edit Modal */}
+      {editingHotel && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-black/50" onClick={function() { setEditingHotel(null); }} />
+          <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-lg p-6 max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between mb-5">
+              <h3 className="text-lg font-bold text-stone-900">{editingHotel._isNew ? 'Add New Hotel' : 'Edit Hotel'}</h3>
+              <button onClick={function() { setEditingHotel(null); }} className="text-stone-400 hover:text-stone-600"><X className="w-5 h-5" /></button>
+            </div>
+
+            {/* Image */}
+            <div className="mb-4">
+              <label className="block text-xs font-medium text-stone-600 mb-1.5">Hotel Image</label>
+              {editingHotel.image && <img src={editingHotel.image} alt="" className="w-full h-40 object-cover rounded-xl mb-2 border border-stone-200" />}
+              <div className="flex gap-2">
+                <input type="text" value={editingHotel.image} onChange={function(e) { setEditingHotel(Object.assign({}, editingHotel, { image: e.target.value })); }} className="flex-1 px-3 py-2 rounded-lg border border-stone-300 text-sm" placeholder="Image URL" />
+                <label className="flex items-center gap-1.5 px-3 py-2 bg-stone-100 hover:bg-stone-200 rounded-lg cursor-pointer text-xs font-medium text-stone-600 transition-colors border border-stone-200">
+                  <Upload className="w-3.5 h-3.5" /> Upload
+                  <input type="file" accept="image/*" className="hidden" onChange={function(e) { var file = e.target.files[0]; if (file) { var reader = new FileReader(); reader.onloadend = function() { setEditingHotel(Object.assign({}, editingHotel, { image: reader.result })); }; reader.readAsDataURL(file); } }} />
+                </label>
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <div>
+                <label className="block text-xs font-medium text-stone-600 mb-1">Hotel Name</label>
+                <input type="text" value={editingHotel.name} onChange={function(e) { setEditingHotel(Object.assign({}, editingHotel, { name: e.target.value })); }} className="w-full px-3 py-2 rounded-lg border border-stone-300 text-sm" />
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs font-medium text-stone-600 mb-1">Location</label>
+                  <input type="text" value={editingHotel.location} onChange={function(e) { setEditingHotel(Object.assign({}, editingHotel, { location: e.target.value })); }} className="w-full px-3 py-2 rounded-lg border border-stone-300 text-sm" />
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-stone-600 mb-1">Stars</label>
+                  <select value={editingHotel.stars} onChange={function(e) { setEditingHotel(Object.assign({}, editingHotel, { stars: parseInt(e.target.value) })); }} className="w-full px-3 py-2 rounded-lg border border-stone-300 text-sm">
+                    <option value="3">3 Stars</option>
+                    <option value="4">4 Stars</option>
+                    <option value="5">5 Stars</option>
+                  </select>
+                </div>
+              </div>
+              <div className="grid grid-cols-3 gap-3">
+                <div>
+                  <label className="block text-xs font-medium text-stone-600 mb-1">Price From</label>
+                  <input type="number" value={editingHotel.price_from} onChange={function(e) { setEditingHotel(Object.assign({}, editingHotel, { price_from: parseInt(e.target.value) || 0 })); }} className="w-full px-3 py-2 rounded-lg border border-stone-300 text-sm" />
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-stone-600 mb-1">Original Price</label>
+                  <input type="number" value={editingHotel.price_original} onChange={function(e) { setEditingHotel(Object.assign({}, editingHotel, { price_original: parseInt(e.target.value) || 0 })); }} className="w-full px-3 py-2 rounded-lg border border-stone-300 text-sm" />
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-stone-600 mb-1">Discount</label>
+                  <input type="text" value={editingHotel.discount} onChange={function(e) { setEditingHotel(Object.assign({}, editingHotel, { discount: e.target.value })); }} className="w-full px-3 py-2 rounded-lg border border-stone-300 text-sm" placeholder="Save 25%" />
+                </div>
+              </div>
+              <div>
+                <label className="block text-xs font-medium text-stone-600 mb-1">Nearest Golf Course</label>
+                <input type="text" value={editingHotel.nearest_golf} onChange={function(e) { setEditingHotel(Object.assign({}, editingHotel, { nearest_golf: e.target.value })); }} className="w-full px-3 py-2 rounded-lg border border-stone-300 text-sm" placeholder="2km to..." />
+              </div>
+              <div>
+                <label className="block text-xs font-medium text-stone-600 mb-1">Description</label>
+                <textarea value={editingHotel.description} onChange={function(e) { setEditingHotel(Object.assign({}, editingHotel, { description: e.target.value })); }} rows="3" className="w-full px-3 py-2 rounded-lg border border-stone-300 text-sm" />
+              </div>
+              <div>
+                <label className="block text-xs font-medium text-stone-600 mb-1">Booking URL</label>
+                <input type="text" value={editingHotel.booking_url} onChange={function(e) { setEditingHotel(Object.assign({}, editingHotel, { booking_url: e.target.value })); }} className="w-full px-3 py-2 rounded-lg border border-stone-300 text-sm" />
+              </div>
+              <div className="flex items-center gap-2">
+                <input type="checkbox" id="hotel-active" checked={editingHotel.active} onChange={function(e) { setEditingHotel(Object.assign({}, editingHotel, { active: e.target.checked })); }} />
+                <label htmlFor="hotel-active" className="text-sm text-stone-600">Active (visible on site)</label>
+              </div>
+              <div className="flex gap-2 pt-2">
+                <button onClick={saveEdit} className="flex-1 flex items-center justify-center gap-2 bg-blue-600 text-white py-2.5 rounded-lg text-sm font-semibold hover:bg-blue-700 transition-colors">
+                  <Save className="w-4 h-4" /> {editingHotel._isNew ? 'Create Hotel' : 'Save Changes'}
+                </button>
+                <button onClick={function() { setEditingHotel(null); }} className="px-6 py-2.5 text-stone-600 hover:text-stone-800 text-sm rounded-lg border border-stone-300">Cancel</button>
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </div>
