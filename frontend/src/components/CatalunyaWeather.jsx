@@ -86,25 +86,25 @@ export function CatalunyaWeather() {
       </button>
 
       {isOpen && (
-        <div className="absolute top-full right-0 mt-0 bg-white/10 backdrop-blur-xl rounded-xl shadow-xl border border-white/15 p-3 w-[160px] z-50">
+        <div className="absolute top-full right-0 mt-0 bg-white/10 backdrop-blur-xl rounded-lg shadow-xl border border-white/15 p-2.5 w-[130px] z-50">
           {/* Today */}
-          <div className="flex items-center gap-2.5 pb-2.5 mb-2 border-b border-black/10">
-            <Icon className="w-5 h-5 text-black/50" />
+          <div className="flex items-center gap-2 pb-2 mb-1.5 border-b border-white/15">
+            <Icon className="w-4 h-4 text-white/70" />
             <div>
-              <p className="text-[10px] text-black/40 uppercase tracking-wider">Barcelona, Today</p>
-              <p className="text-lg font-semibold text-black/80">{temp}°C</p>
+              <p className="text-[9px] text-white/50 uppercase tracking-wider">Barcelona</p>
+              <p className="text-base font-semibold text-white">{temp}°C</p>
             </div>
           </div>
           {/* 7-day forecast */}
-          <div className="space-y-1">
+          <div className="space-y-0.5">
             {forecast.map(function(day) {
               var DayIcon = WEATHER_ICONS[day.icon] || Cloud;
               return (
-                <div key={day.day} className="flex items-center justify-between text-xs py-0.5">
-                  <span className="text-black/50 w-8 font-medium">{day.day}</span>
-                  <DayIcon className="w-3.5 h-3.5 text-black/30" />
-                  <span className="text-black/70 font-semibold w-8 text-right">{day.high}°</span>
-                  <span className="text-black/35 w-8 text-right">{day.low}°</span>
+                <div key={day.day} className="flex items-center justify-between text-[11px] py-0.5">
+                  <span className="text-white/60 w-7 font-medium">{day.day}</span>
+                  <DayIcon className="w-3 h-3 text-white/40" />
+                  <span className="text-white font-semibold w-7 text-right">{day.high}°</span>
+                  <span className="text-white/40 w-7 text-right">{day.low}°</span>
                 </div>
               );
             })}

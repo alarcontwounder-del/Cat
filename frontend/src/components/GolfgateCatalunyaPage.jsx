@@ -162,17 +162,16 @@ export default function GolfgateCatalunyaPage() {
                 <ChevronDown className="w-4 h-4" />
               </button>
               {langDropdown && (
-                <div className="absolute right-0 top-full mt-1 bg-white/10 backdrop-blur-xl rounded-xl shadow-xl border border-white/15 py-1 min-w-[140px] z-50">
+                <div className="absolute right-0 top-full mt-1 bg-white/10 backdrop-blur-xl rounded-lg shadow-xl border border-white/15 py-0.5 min-w-[120px] z-50">
                   {LANGUAGES.map(function(l) {
                     return (
                       <button
                         key={l.code}
                         onClick={function() { changeLang(l.code); }}
-                        className={'w-full text-left px-4 py-2 text-sm hover:bg-white/15 transition-colors flex items-center justify-between ' + (lang === l.code ? 'font-semibold' : '')}
-                        style={{ color: lang === l.code ? '#f6416c' : 'rgba(0,0,0,0.7)' }}
+                        className={'w-full text-left px-3 py-1.5 text-xs hover:bg-white/15 transition-colors flex items-center justify-between ' + (lang === l.code ? 'font-semibold text-white' : 'text-white/80')}
                       >
                         <span>{l.name}</span>
-                        <span className="text-xs" style={{ color: 'rgba(0,0,0,0.35)' }}>{l.label}</span>
+                        <span className="text-[10px] text-white/50">{l.label}</span>
                       </button>
                     );
                   })}
