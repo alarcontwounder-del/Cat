@@ -191,7 +191,8 @@ export default function GolfgateCatalunyaPage() {
 
             {/* CTA */}
             <a href="#courses" className="bg-black text-[#CCFF00] px-3 md:px-6 py-2 md:py-2.5 rounded-full text-[10px] md:text-sm font-bold hover:bg-black/80 transition-all shadow-sm whitespace-nowrap">
-              {t.nav.bookCta}
+              <span className="hidden sm:inline">{t.nav.bookCta}</span>
+              <span className="sm:hidden">Book Now!</span>
             </a>
           </div>
         </div>
