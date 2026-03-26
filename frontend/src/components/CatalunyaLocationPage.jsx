@@ -14,7 +14,7 @@ var REGIONS = {
     metaTitle: 'Golf Near Barcelona | Book Tee Times at Golf Courses Near Barcelona',
     metaDesc: 'Book tee times at golf courses near Barcelona, Spain. El Prat, Terramar Sitges, Vallromanes and more. Green fees from EUR65. Golf day trips from Barcelona. Instant confirmation.',
     metaKeywords: 'golf near barcelona, golf courses near barcelona, barcelona golf tee times, golf day trips from barcelona, best golf courses near barcelona, play golf near barcelona city, golf weekend barcelona, barcelona golf packages',
-    filter: ['Barcelona', 'Sitges', 'Sant Esteve Sesrovires', 'El Prat']
+    filter: ['Barcelona', 'Sitges', 'Sant Esteve Sesrovires', 'El Prat', 'Terrassa', 'Vallromanes']
   },
   'costa-brava': {
     name: 'Costa Brava',
@@ -23,7 +23,7 @@ var REGIONS = {
     description: 'The Costa Brava is one of Europe\'s most sought-after luxury golf destinations. From the world-renowned Camiral Resort (PGA Catalunya) to the stunning Emporda Forest Course, experience championship golf surrounded by Mediterranean beauty.',
     metaTitle: 'Golf Costa Brava | Book Tee Times at Costa Brava Golf Courses',
     metaDesc: 'Book tee times at Costa Brava golf courses. Camiral Resort (PGA Catalunya), Emporda, Peralada and more. Luxury golf holidays on the Costa Brava. Green fees from EUR60.',
-    metaKeywords: 'golf costa brava, best golf courses costa brava, costa brava golf holidays, golf resorts costa brava, luxury golf costa brava, costa brava golf packages, golf hotels costa brava',
+    metaKeywords: 'golf costa brava, best golf courses costa brava, costa brava golf holidays, golf resorts costa brava, luxury golf costa brava, costa brava golf packages, golf hotels costa brava, stay and play golf breaks costa brava',
     filter: ['Caldes de Malavella', 'Girona', 'Gualta', 'Peralada', 'Santa Cristina', 'Pals']
   },
   girona: {
@@ -45,6 +45,50 @@ var REGIONS = {
     metaDesc: 'Book tee times at golf courses in Tarragona, Spain. Infinitum Resort (45 holes, European Tour venue), Bonmont and more. Golf on the Costa Daurada from EUR55.',
     metaKeywords: 'golf tarragona, golf costa daurada, infinitum golf, golf courses tarragona, golf resorts tarragona',
     filter: ['Tarragona', 'Salou', 'Reus', 'Mont-roig']
+  },
+  // German SEO - targeting "golfurlaub katalonien", "golfreisen katalonien"
+  'katalonien': {
+    name: 'Katalonien',
+    title: 'Golfpl\u00e4tze in Katalonien',
+    subtitle: 'Golfurlaub Katalonien',
+    description: 'Buchen Sie Tee Times an 20 erstklassigen Golfpl\u00e4tzen in Katalonien, Spanien. Von Barcelona \u00fcber die Costa Brava bis Girona \u2013 Championship-Golf, K\u00fcstenperlen und Bergrefugien. Green Fees ab 35 EUR. Sofortige Best\u00e4tigung.',
+    metaTitle: 'Golfurlaub Katalonien | Tee Times buchen an 20 Golfpl\u00e4tzen in Katalonien',
+    metaDesc: 'Buchen Sie Tee Times an 20 Golfpl\u00e4tzen in Katalonien, Spanien. Golfreisen Katalonien mit Camiral Resort, El Prat, Infinitum. Green Fees ab 35 EUR. Golf Costa Brava, Barcelona, Girona.',
+    metaKeywords: 'golfurlaub katalonien, golfreisen katalonien, golf costa brava reisen, golf hotels katalonien, golfpl\u00e4tze katalonien, golfurlaub barcelona region, golfreise costa brava spanien, golf resort katalonien',
+    filter: []
+  },
+  // UK golfer landing
+  'uk-holidays': {
+    name: 'UK Golf Holidays',
+    title: 'Golf Holidays in Catalunya from the UK',
+    subtitle: 'Catalunya Golf Holidays from UK',
+    description: 'Plan your golf holiday in Catalunya from the UK. Just 2 hours from London, Catalunya offers 20 championship courses, year-round sunshine, world-class dining, and green fees from EUR35. Stay and play packages, golf breaks with flights, and all-inclusive golf deals available.',
+    metaTitle: 'Golf Holidays Catalunya from UK | Cheap Golf Breaks Catalonia 2026',
+    metaDesc: 'Book golf holidays in Catalunya from the UK. 2h from London. 20 courses, green fees from EUR35. Golf breaks catalonia with flights. Stay and play packages. Best golf deals 2026.',
+    metaKeywords: 'golf holidays catalonia from uk, cheap golf holidays catalonia, golf breaks catalonia flights included, golf deals catalonia 2026, best golf holidays costa brava, golf weekend catalonia deals, golf packages catalonia from london, all inclusive golf catalonia',
+    filter: []
+  },
+  // Luxury segment
+  'luxury': {
+    name: 'Luxury Golf',
+    title: 'Luxury Golf Resorts in Catalunya',
+    subtitle: 'Luxury Golf Catalunya',
+    description: 'Experience the pinnacle of luxury golf in Catalunya. 5-star resorts, exclusive golf packages, private experiences, and VIP service at the finest championship courses. From Camiral Resort to boutique Costa Brava hideaways.',
+    metaTitle: 'Luxury Golf Resorts Catalunya | 5-Star Golf Hotels & Exclusive Packages',
+    metaDesc: 'Luxury golf resorts in Catalunya. 5-star golf hotels, exclusive packages, private golf experiences. Camiral Resort, premium Costa Brava courses. VIP golf travel Catalunya.',
+    metaKeywords: 'luxury golf resorts catalonia, 5 star golf hotels catalonia, luxury golf holidays costa brava, premium golf resorts catalonia, exclusive golf resorts catalonia, luxury stay and play catalonia, private golf experiences catalonia, vip golf travel catalonia',
+    filter: []
+  },
+  // Stay and play
+  'stay-and-play': {
+    name: 'Stay & Play',
+    title: 'Stay and Play Golf Packages in Catalunya',
+    subtitle: 'Stay and Play Catalunya Golf',
+    description: 'Combine your golf with luxury accommodation in Catalunya. Our stay and play packages include tee times at championship courses plus hand-picked hotels \u2013 everything arranged, one price, instant confirmation. Golf resort packages from EUR180/night.',
+    metaTitle: 'Stay and Play Golf Catalunya | Golf Resort Packages Catalunya Spain',
+    metaDesc: 'Stay and play golf packages in Catalunya, Spain. Golf resort packages with hotel + tee times. Camiral Resort, Infinitum, Costa Brava hotels. From EUR180/night. Instant booking.',
+    metaKeywords: 'stay and play catalonia golf, golf holiday packages catalonia, golf resort packages catalonia, golf holidays catalonia with hotel, golf breaks catalonia spain, golf trip catalonia booking',
+    filter: []
   }
 };
 

@@ -858,7 +858,7 @@ async def get_sitemap():
     urls.append({"loc": "https://golfgatecatalunya.es/blog", "lastmod": today, "changefreq": "weekly", "priority": "0.9"})
     
     # Location pages (high SEO value)
-    for region in ["barcelona", "costa-brava", "girona", "tarragona"]:
+    for region in ["barcelona", "costa-brava", "girona", "tarragona", "katalonien", "uk-holidays", "luxury", "stay-and-play"]:
         urls.append({"loc": f"https://golfgatecatalunya.es/golf/{region}", "lastmod": today, "changefreq": "weekly", "priority": "0.9"})
     
     # Hotels page
