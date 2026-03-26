@@ -155,7 +155,7 @@ export default function GolfgateCatalunyaPage() {
             {/* Language dropdown - GIM exact structure */}
             <div className="relative" onMouseEnter={function() { setLangDropdown(true); }} onMouseLeave={function() { setLangDropdown(false); }}>
               <button
-                className="flex items-center gap-1.5 px-4 py-2 rounded-full text-sm transition-all duration-200 backdrop-blur-sm" style={{ background: 'rgba(246,65,108,0.1)', border: '1px solid rgba(246,65,108,0.25)', color: '#f6416c' }}
+                className="flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200 backdrop-blur-md border border-white/30 text-white/90 hover:bg-white/25" style={{ background: 'rgba(255,255,255,0.15)' }}
                 data-testid="language-selector"
               >
                 <span className="text-sm font-semibold">{currentLang.label}</span>
