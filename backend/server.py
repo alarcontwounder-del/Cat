@@ -617,6 +617,8 @@ async def create_blog_post(post: dict):
         "content": post.get("content", ""),
         "category": post.get("category", "course-guides"),
         "author": post.get("author", ""),
+        "image": post.get("image", ""),
+        "excerpt": post.get("excerpt", ""),
         "published": post.get("published", False),
         "created_at": datetime.now(timezone.utc).isoformat(),
         "updated_at": datetime.now(timezone.utc).isoformat()
@@ -629,7 +631,7 @@ async def create_blog_post(post: dict):
 async def update_blog_post(post_id: str, update: dict):
     """Update a blog post"""
     from datetime import datetime, timezone
-    allowed = {"title", "content", "category", "author", "published"}
+    allowed = {"title", "content", "category", "author", "published", "image", "excerpt"}
     filtered = {k: v for k, v in update.items() if k in allowed}
     filtered["updated_at"] = datetime.now(timezone.utc).isoformat()
     result = await db.blog_posts.update_one({"id": post_id}, {"$set": filtered})
