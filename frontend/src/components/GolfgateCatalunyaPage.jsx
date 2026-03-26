@@ -155,23 +155,24 @@ export default function GolfgateCatalunyaPage() {
             {/* Language dropdown - GIM exact structure */}
             <div className="relative" onMouseEnter={function() { setLangDropdown(true); }} onMouseLeave={function() { setLangDropdown(false); }}>
               <button
-                className="flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200 backdrop-blur-md border border-white/30 text-white/90 hover:bg-white/25" style={{ background: 'rgba(255,255,255,0.15)' }}
+                className="flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200 backdrop-blur-md border border-white/30 hover:bg-white/25" style={{ background: 'rgba(255,255,255,0.15)', color: '#f6416c' }}
                 data-testid="language-selector"
               >
                 <span className="text-sm font-semibold">{currentLang.label}</span>
                 <ChevronDown className="w-4 h-4" />
               </button>
               {langDropdown && (
-                <div className="absolute right-0 top-full mt-1 bg-black/60 backdrop-blur-xl rounded-xl shadow-xl border border-white/10 py-1 min-w-[140px] z-50">
+                <div className="absolute right-0 top-full mt-1 backdrop-blur-xl rounded-xl shadow-xl border border-white/40 py-1 min-w-[140px] z-50" style={{ background: 'rgba(255,255,255,0.85)' }}>
                   {LANGUAGES.map(function(l) {
                     return (
                       <button
                         key={l.code}
                         onClick={function() { changeLang(l.code); }}
-                        className={'w-full text-left px-4 py-2 text-sm hover:bg-white/10 transition-colors flex items-center justify-between ' + (lang === l.code ? 'text-[#CCFF00] font-semibold' : 'text-white/80')}
+                        className={'w-full text-left px-4 py-2 text-sm hover:bg-white/60 transition-colors flex items-center justify-between ' + (lang === l.code ? 'font-semibold' : '')}
+                        style={{ color: lang === l.code ? '#f6416c' : '#555' }}
                       >
                         <span>{l.name}</span>
-                        <span className="text-xs text-white/40">{l.label}</span>
+                        <span className="text-xs text-stone-400">{l.label}</span>
                       </button>
                     );
                   })}
