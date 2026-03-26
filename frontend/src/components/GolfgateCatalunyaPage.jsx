@@ -207,7 +207,7 @@ export default function GolfgateCatalunyaPage() {
             {t.hero.subtitle}
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <a href="https://golfinmallorca.greenfee365.com/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-semibold rounded-full bg-white text-stone-800 hover:bg-stone-100 transition-all duration-300 shadow-lg hover:shadow-xl">
+            <a href="https://golfinmallorca.greenfee365.com/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-semibold rounded-full text-white hover:opacity-90 transition-all duration-300 shadow-lg hover:shadow-xl" style={{ backgroundColor: '#f6416c' }}>
               {t.nav.bookCta} <ExternalLink className="w-4 h-4" />
             </a>
             <a href="#courses" onClick={function(e) { e.preventDefault(); document.getElementById('courses')?.scrollIntoView({behavior: 'smooth'}); }} className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-semibold rounded-full bg-white/15 backdrop-blur-md text-white border border-white/30 hover:bg-white/25 transition-all duration-300 shadow-lg">
