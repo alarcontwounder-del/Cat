@@ -4,32 +4,30 @@
 Standalone golf tee time booking landing page for Catalunya, inspired by golfinmallorca.com (GIM). All UI must EXACTLY match GIM designs.
 
 ## GIM Matching Approach (LOCKED)
-When user asks to match ANYTHING from GIM:
 1. Pull exact source code from golfinmallorca.com using Playwright
 2. Build standalone mockup for approval
 3. Only deploy after user confirms
 
 ## Implemented Features
-- 20 real Catalonia courses with flip cards (green gradient back, no grey)
-- Individual SEO course pages at /courses/{id}
-- Navbar: Language (GIM pill style) → Weather (GIM pill style) → Admin gear → CTA
-- Logo: anti-aliased LANCZOS versions for nav (563x144) and footer (312x80)
-- Hero: heading, subtext, CTA, SCROLL mouse indicator
-- Cookie consent: EXACT GIM code (w-[260px] bg-black/50 backdrop-blur-md rounded-2xl border-white/15 p-5)
-- Worldwide banner: EXACT GIM code (rounded-3xl, charcoal gradient overlay, font-heading, rounded-full CTA)
-- Footer: BLACK bg 3-column, logo, keyword description
+- 20 courses with flip cards, individual SEO pages at /courses/{id}
+- Full multilingual: EN, ES, CA, DE, FR, SE (translations.js, localStorage persisted)
+- Public blog page at /blog (GIM 2-col grid design, reads published posts from MongoDB)
+- Blog admin CRUD in /admin panel
+- SEO sitemap at /api/sitemap.xml (home, blog, 20 courses, privacy, terms)
+- Cookie consent + Worldwide banner: EXACT GIM source code
+- Navbar: sharp logo, GIM language pill, GIM weather pill
+- Footer: BLACK 3-column with Blog link, translated content
 - Admin Panel /admin (admin/golfgate2026)
-- Card text: strict WebkitLineClamp fix, overflow hidden
 
 ## Architecture
 Frontend: React + Tailwind + Lucide | Backend: FastAPI + MongoDB | Weather: open-meteo.com
 
-## Completed (25 Mar 2026)
-- Logo: LANCZOS anti-aliased versions (was pixelated, zero anti-aliasing)
-- Language: GIM exact structure (rounded-full border pill with EN + chevron)
-- Weather: GIM exact structure (rounded-full glass pill with icon + temp + chevron)
-- Cookie + Banner: EXACT GIM source code
-- Card back: transparent, card text: WebkitLineClamp overflow fix
+## Completed (26 Mar 2026)
+- Full multilingual support (6 languages, all sections translated)
+- Public blog page /blog (GIM design, fetches from /api/blog-posts)
+- SEO sitemap /api/sitemap.xml (GIM structure)
+- Blog nav link added to navbar and footer
 
 ## Pending
-- P2: Multilingual, Privacy/Terms pages, Hero image replacement
+- Hero image replacement (user to provide)
+- Scroll-down animation polish

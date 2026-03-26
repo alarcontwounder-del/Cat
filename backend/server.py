@@ -1,5 +1,5 @@
 from fastapi import FastAPI, APIRouter, HTTPException, Request, Response, UploadFile, File
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, PlainTextResponse
 from fastapi.staticfiles import StaticFiles
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
@@ -647,6 +647,54 @@ async def delete_blog_post(post_id: str):
         from fastapi import HTTPException
         raise HTTPException(status_code=404, detail="Post not found")
     return {"deleted": True}
+
+
+# Public blog posts endpoint (published only)
+@api_router.get("/blog-posts")
+async def get_public_blog_posts():
+    """Get published blog posts for public blog page"""
+    cursor = db.blog_posts.find({"published": True}, {"_id": 0}).sort("created_at", -1)
+    posts = await cursor.to_list(length=50)
+    return posts
+
+
+
+# SEO Sitemap endpoint - GIM structure
+@api_router.get("/sitemap.xml")
+async def get_sitemap():
+    """Generate SEO sitemap matching GIM structure"""
+    from datetime import datetime
+    today = datetime.now().strftime("%Y-%m-%d")
+    
+    urls = []
+    # Homepage
+    urls.append({"loc": "https://golfgatecatalunya.es/", "lastmod": today, "changefreq": "weekly", "priority": "1.0"})
+    # Blog page
+    urls.append({"loc": "https://golfgatecatalunya.es/blog", "lastmod": today, "changefreq": "weekly", "priority": "0.9"})
+    
+    # Course pages
+    from data.catalunya_courses import CATALUNYA_COURSES
+    for course in CATALUNYA_COURSES:
+        urls.append({"loc": f"https://golfgatecatalunya.es/courses/{course['id']}", "lastmod": today, "changefreq": "monthly", "priority": "0.8"})
+    
+    # Blog posts
+    cursor = db.blog_posts.find({"published": True}, {"_id": 0, "id": 1, "updated_at": 1})
+    blog_posts = await cursor.to_list(length=100)
+    for post in blog_posts:
+        urls.append({"loc": f"https://golfgatecatalunya.es/blog/{post['id']}", "lastmod": post.get("updated_at", today)[:10], "changefreq": "monthly", "priority": "0.7"})
+    
+    # Static pages
+    urls.append({"loc": "https://golfgatecatalunya.es/privacy", "lastmod": today, "changefreq": "yearly", "priority": "0.3"})
+    urls.append({"loc": "https://golfgatecatalunya.es/terms", "lastmod": today, "changefreq": "yearly", "priority": "0.3"})
+    
+    xml = '<?xml version="1.0" encoding="UTF-8"?>\n'
+    xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+    for u in urls:
+        xml += f'  <url>\n    <loc>{u["loc"]}</loc>\n    <lastmod>{u["lastmod"]}</lastmod>\n    <changefreq>{u["changefreq"]}</changefreq>\n    <priority>{u["priority"]}</priority>\n  </url>\n'
+    xml += '</urlset>'
+    
+    return PlainTextResponse(content=xml, media_type="application/xml")
+
 
 
 
