@@ -1,39 +1,73 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { ArrowLeft, Settings, FileText, LayoutGrid, Save, Pencil, Plus, Eye, EyeOff, Lock, LogOut, X, Trash2, Search, MapPin, ExternalLink, Image, Upload } from 'lucide-react';
 
 var API = process.env.REACT_APP_BACKEND_URL;
-var ADMIN_USER = 'admin';
-var ADMIN_PASS = 'golfgate2026';
 
 export default function CatalunyaAdminPanel() {
-  var authState = useState(false);
+  var authState = useState(null); // null=checking, true=auth, false=not auth
   var isAuth = authState[0];
   var setIsAuth = authState[1];
+  var userState = useState(null);
+  var user = userState[0];
+  var setUser = userState[1];
   var tabState = useState('courses');
   var tab = tabState[0];
   var setTab = tabState[1];
+  var location = useLocation();
+  var hasProcessed = useRef(false);
 
+  // Handle OAuth callback - session_id in URL hash
   useEffect(function() {
-    var session = sessionStorage.getItem('golfgate_admin');
-    if (session === 'true') setIsAuth(true);
+    if (hasProcessed.current) return;
+    var hash = window.location.hash;
+    if (hash && hash.includes('session_id=')) {
+      hasProcessed.current = true;
+      var sessionId = hash.split('session_id=')[1];
+      // REMINDER: DO NOT HARDCODE THE URL, OR ADD ANY FALLBACKS OR REDIRECT URLS, THIS BREAKS THE AUTH
+      axios.post(API + '/api/auth/session', { session_id: sessionId }, { withCredentials: true })
+        .then(function(res) {
+          setUser(res.data);
+          setIsAuth(true);
+          window.history.replaceState(null, '', window.location.pathname);
+        })
+        .catch(function() {
+          setIsAuth(false);
+          window.history.replaceState(null, '', window.location.pathname);
+        });
+      return;
+    }
+
+    // Check existing session
+    axios.get(API + '/api/auth/me', { withCredentials: true })
+      .then(function(res) { setUser(res.data); setIsAuth(true); })
+      .catch(function() { setIsAuth(false); });
   }, []);
 
   function handleLogout() {
-    sessionStorage.removeItem('golfgate_admin');
-    setIsAuth(false);
+    axios.post(API + '/api/auth/logout', {}, { withCredentials: true })
+      .then(function() { setUser(null); setIsAuth(false); })
+      .catch(function() { setUser(null); setIsAuth(false); });
   }
 
-  if (!isAuth) return <AdminLogin onSuccess={function() { sessionStorage.setItem('golfgate_admin', 'true'); setIsAuth(true); }} />;
+  if (isAuth === null) {
+    return (
+      <div className="min-h-screen bg-stone-100 flex items-center justify-center">
+        <div className="w-8 h-8 border-4 border-stone-300 border-t-blue-500 rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  if (!isAuth) return <AdminLogin />;
 
   return (
     <div className="min-h-screen bg-stone-100" data-testid="admin-panel">
       {/* GIM Header */}
       <div className="bg-[#1a1a1a] px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-stone-700 flex items-center justify-center">
-            <Settings className="w-5 h-5 text-stone-300" />
+          <div className="w-10 h-10 rounded-full bg-stone-700 flex items-center justify-center overflow-hidden">
+            {user && user.picture ? <img src={user.picture} alt="" className="w-full h-full object-cover" /> : <Settings className="w-5 h-5 text-stone-300" />}
           </div>
           <div>
             <h1 className="text-white font-bold text-xl" style={{ fontFamily: "'Playfair Display', Georgia, serif", fontStyle: 'italic' }}>Admin Dashboard</h1>
@@ -42,8 +76,8 @@ export default function CatalunyaAdminPanel() {
         </div>
         <div className="flex items-center gap-4">
           <div className="text-right hidden sm:block">
-            <p className="text-white text-sm font-medium">Admin</p>
-            <p className="text-stone-400 text-xs">golfgatecatalunya.es</p>
+            <p className="text-white text-sm font-medium">{user ? user.name : 'Admin'}</p>
+            <p className="text-stone-400 text-xs">{user ? user.email : 'golfgatecatalunya.es'}</p>
           </div>
           <Link to="/" className="w-8 h-8 flex items-center justify-center text-stone-400 hover:text-white transition-colors">
             <ExternalLink className="w-4 h-4" />
@@ -100,48 +134,35 @@ export default function CatalunyaAdminPanel() {
   );
 }
 
-function AdminLogin(props) {
-  var userState = useState('');
-  var user = userState[0];
-  var setUser = userState[1];
-  var passState = useState('');
-  var pass = passState[0];
-  var setPass = passState[1];
-  var errorState = useState('');
-  var error = errorState[0];
-  var setError = errorState[1];
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    if (user === ADMIN_USER && pass === ADMIN_PASS) {
-      props.onSuccess();
-    } else {
-      setError('Invalid credentials');
-    }
+function AdminLogin() {
+  function handleGoogleLogin() {
+    // REMINDER: DO NOT HARDCODE THE URL, OR ADD ANY FALLBACKS OR REDIRECT URLS, THIS BREAKS THE AUTH
+    var redirectUrl = window.location.origin + '/admin';
+    window.location.href = 'https://auth.emergentagent.com/?redirect=' + encodeURIComponent(redirectUrl);
   }
 
   return (
     <div className="min-h-screen bg-stone-100 flex items-center justify-center px-4" data-testid="admin-login">
       <div className="bg-white rounded-2xl shadow-xl border border-stone-200 p-8 w-full max-w-sm">
-        <div className="text-center mb-6">
-          <div className="w-14 h-14 bg-[#1a1a1a] rounded-xl flex items-center justify-center mx-auto mb-4">
-            <Lock className="w-6 h-6 text-[#CCFF00]" />
-          </div>
-          <h2 className="font-heading text-2xl text-stone-900 mb-1">Admin Access</h2>
-          <p className="text-stone-500 text-sm">GOLFGATE Catalunya</p>
+        <div className="text-center mb-8">
+          <img src="/golfgate-logo-nav.png" alt="GOLFGATE Catalunya" className="h-14 w-auto mx-auto mb-5" />
+          <h2 className="font-heading text-2xl text-stone-900 mb-1" style={{ fontFamily: "'Playfair Display', Georgia, serif", fontStyle: 'italic' }}>Admin Dashboard</h2>
+          <p className="text-stone-400 text-sm">Sign in to manage your site</p>
         </div>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-xs font-medium text-stone-600 mb-1.5">Username</label>
-            <input type="text" value={user} onChange={function(e) { setUser(e.target.value); setError(''); }} className="w-full px-3 py-2.5 rounded-lg border border-stone-300 text-sm focus:outline-none focus:ring-2 focus:ring-[#CCFF00]" placeholder="Enter username" data-testid="admin-username" />
-          </div>
-          <div>
-            <label className="block text-xs font-medium text-stone-600 mb-1.5">Password</label>
-            <input type="password" value={pass} onChange={function(e) { setPass(e.target.value); setError(''); }} className="w-full px-3 py-2.5 rounded-lg border border-stone-300 text-sm focus:outline-none focus:ring-2 focus:ring-[#CCFF00]" placeholder="Enter password" data-testid="admin-password" />
-          </div>
-          {error && <p className="text-red-500 text-xs text-center">{error}</p>}
-          <button type="submit" className="w-full bg-[#1a1a1a] text-[#CCFF00] py-2.5 rounded-lg font-semibold text-sm hover:bg-black transition-colors" data-testid="admin-login-btn">Sign In</button>
-        </form>
+        <button
+          onClick={handleGoogleLogin}
+          className="w-full flex items-center justify-center gap-3 px-4 py-3 rounded-lg border border-stone-300 bg-white hover:bg-stone-50 transition-colors shadow-sm"
+          data-testid="google-login-btn"
+        >
+          <svg className="w-5 h-5" viewBox="0 0 24 24">
+            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
+            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
+          </svg>
+          <span className="text-sm font-medium text-stone-700">Sign in with Google</span>
+        </button>
+        <p className="text-center text-stone-400 text-xs mt-6">Only authorized administrators can access this panel.</p>
       </div>
     </div>
   );

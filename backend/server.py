@@ -548,6 +548,116 @@ async def logout(request: Request, response: Response):
 async def root():
     return {"message": "Mallorca Golf Exclusive API"}
 
+# ============ GOOGLE OAUTH (EMERGENT AUTH) ============
+
+# REMINDER: DO NOT HARDCODE THE URL, OR ADD ANY FALLBACKS OR REDIRECT URLS, THIS BREAKS THE AUTH
+
+ADMIN_EMAILS = ["alarcon.twounder@gmail.com"]  # Authorized admin emails
+
+@api_router.post("/auth/session")
+async def process_auth_session(request: Request, response: Response):
+    """Exchange session_id for session_token after Google OAuth"""
+    body = await request.json()
+    session_id = body.get("session_id")
+    if not session_id:
+        raise HTTPException(status_code=400, detail="session_id required")
+
+    # Call Emergent Auth to get session data
+    async with httpx.AsyncClient() as client:
+        auth_resp = await client.get(
+            "https://demobackend.emergentagent.com/auth/v1/env/oauth/session-data",
+            headers={"X-Session-ID": session_id}
+        )
+    if auth_resp.status_code != 200:
+        raise HTTPException(status_code=401, detail="Invalid session")
+
+    user_data = auth_resp.json()
+    email = user_data.get("email", "")
+    name = user_data.get("name", "")
+    picture = user_data.get("picture", "")
+    session_token = user_data.get("session_token", "")
+
+    # Check if user is authorized admin
+    is_admin = email.lower() in [e.lower() for e in ADMIN_EMAILS]
+
+    # Upsert user in DB
+    user_id = f"user_{uuid.uuid4().hex[:12]}"
+    existing = await db.admin_users.find_one({"email": email}, {"_id": 0})
+    if existing:
+        user_id = existing["user_id"]
+        await db.admin_users.update_one({"email": email}, {"$set": {"name": name, "picture": picture}})
+    else:
+        await db.admin_users.insert_one({
+            "user_id": user_id,
+            "email": email,
+            "name": name,
+            "picture": picture,
+            "is_admin": is_admin,
+            "created_at": datetime.now(timezone.utc).isoformat()
+        })
+
+    # Store session
+    expires_at = datetime.now(timezone.utc) + timedelta(days=7)
+    await db.admin_sessions.insert_one({
+        "user_id": user_id,
+        "session_token": session_token,
+        "expires_at": expires_at.isoformat(),
+        "created_at": datetime.now(timezone.utc).isoformat()
+    })
+
+    # Set cookie
+    response.set_cookie(
+        key="session_token",
+        value=session_token,
+        max_age=7 * 24 * 60 * 60,
+        path="/",
+        secure=True,
+        httponly=True,
+        samesite="none"
+    )
+
+    return {"user_id": user_id, "email": email, "name": name, "picture": picture, "is_admin": is_admin}
+
+@api_router.get("/auth/me")
+async def get_current_user(request: Request):
+    """Get current authenticated user from session cookie"""
+    session_token = request.cookies.get("session_token")
+    if not session_token:
+        auth_header = request.headers.get("Authorization", "")
+        if auth_header.startswith("Bearer "):
+            session_token = auth_header[7:]
+    if not session_token:
+        raise HTTPException(status_code=401, detail="Not authenticated")
+
+    session = await db.admin_sessions.find_one({"session_token": session_token}, {"_id": 0})
+    if not session:
+        raise HTTPException(status_code=401, detail="Session not found")
+
+    expires_at = session.get("expires_at", "")
+    if isinstance(expires_at, str):
+        expires_at = datetime.fromisoformat(expires_at)
+    if expires_at.tzinfo is None:
+        expires_at = expires_at.replace(tzinfo=timezone.utc)
+    if expires_at < datetime.now(timezone.utc):
+        raise HTTPException(status_code=401, detail="Session expired")
+
+    user = await db.admin_users.find_one({"user_id": session["user_id"]}, {"_id": 0})
+    if not user:
+        raise HTTPException(status_code=401, detail="User not found")
+
+    return user
+
+@api_router.post("/auth/logout")
+async def logout_user(request: Request, response: Response):
+    """Logout and clear session"""
+    session_token = request.cookies.get("session_token")
+    if session_token:
+        await db.admin_sessions.delete_one({"session_token": session_token})
+    response.delete_cookie(key="session_token", path="/", secure=True, samesite="none")
+    return {"success": True}
+
+
+
 @api_router.get("/catalunya-courses", response_model=List[dict])
 async def get_catalunya_courses(include_inactive: bool = False):
     """Get all Catalunya golf courses for GOLFGATE CATALUNYA"""
