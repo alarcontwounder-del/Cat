@@ -45,8 +45,8 @@ export function CatalunyaQuickView(props) {
             </div>
           </div>
           {course.price_from && (
-            <div className="flex items-center gap-2 bg-[#CCFF00]/20 px-3 py-2 rounded-lg mb-3">
-              <Trophy className="w-4 h-4 text-[#38A711]" />
+            <div className="flex items-center gap-2 px-3 py-2 rounded-lg mb-3" style={{ backgroundColor: 'rgba(246,65,108,0.12)' }}>
+              <Trophy className="w-4 h-4" style={{ color: '#f6416c' }} />
               <span className="text-sm font-semibold">Green Fee from &euro;{course.price_from}</span>
             </div>
           )}

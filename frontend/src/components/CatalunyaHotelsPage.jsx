@@ -55,7 +55,7 @@ export default function CatalunyaHotelsPage() {
         <div className="max-w-5xl mx-auto px-6 text-center">
           <p className="text-stone-500 text-sm uppercase tracking-[0.2em] mb-4">Golf Resorts & Hotels</p>
           <h1 className="font-heading text-4xl md:text-5xl text-stone-900 mb-6">Luxury Golf Hotels in Catalunya</h1>
-          <p className="text-stone-600 max-w-2xl mx-auto text-lg">Stay and play at Catalunya's finest golf resorts and luxury hotels. Exclusive golf holiday packages with special rates for our clients.</p>
+          <p className="text-stone-600 max-w-2xl mx-auto text-lg">Stay and play at Catalunya's finest golf hotels and resorts. Book your accommodation at exclusive rates near the best championship courses in Barcelona, Costa Brava, Girona and Tarragona.</p>
         </div>
       </section>
 

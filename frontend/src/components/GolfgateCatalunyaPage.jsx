@@ -183,10 +183,10 @@ export default function GolfgateCatalunyaPage() {
             {/* Admin/Settings icon */}
             <Link
               to="/admin"
-              className="hidden sm:flex w-9 h-9 items-center justify-center rounded-full bg-black/10 backdrop-blur-sm text-black/70 hover:bg-black/15 transition-colors"
+              className="hidden sm:flex items-center justify-center text-black hover:text-black/70 transition-colors"
               title="Admin Panel"
             >
-              <Settings className="w-4 h-4" />
+              <Settings className="w-5 h-5" />
             </Link>
 
             {/* CTA */}
@@ -270,7 +270,7 @@ export default function GolfgateCatalunyaPage() {
             <p className="text-stone-500 text-sm uppercase tracking-[0.2em] mb-4">Golf Resorts & Hotels</p>
             <h2 className="font-heading text-3xl md:text-4xl text-stone-900 mb-4">Luxury Golf Hotels in Catalunya</h2>
             <div className="h-1 mx-auto rounded-full mb-6 accent-line" style={{ background: 'linear-gradient(90deg, #CCFF00, #FFFF00, #DFFF00)' }} />
-            <p className="text-stone-500 text-lg max-w-2xl mx-auto">Stay and play at Catalunya's finest golf resorts. Exclusive packages with special rates.</p>
+            <p className="text-stone-500 text-lg max-w-2xl mx-auto">Stay and play at Catalunya's finest golf hotels and resorts. Book your stay at exclusive rates near the best courses in the region.</p>
           </div>
           {hotelsLoading ? (
             <div className="flex items-center justify-center py-10">
