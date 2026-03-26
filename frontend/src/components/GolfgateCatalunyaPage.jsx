@@ -55,26 +55,30 @@ export default function GolfgateCatalunyaPage() {
 
   useEffect(function() {
     window.scrollTo(0, 0);
-    document.title = 'GOLFGATE Catalunya | Book Tee Times at 20 Premium Golf Courses in Catalunya';
+    document.title = 'Golf Catalunya | Book Tee Times at 20 Golf Courses in Catalunya, Spain';
 
     var setMeta = function(attr, name, content) {
       var el = document.querySelector('meta[' + attr + '="' + name + '"]');
       if (!el) { el = document.createElement('meta'); el.setAttribute(attr, name); document.head.appendChild(el); }
       el.setAttribute('content', content);
     };
-    setMeta('name', 'description', 'Book tee times at 20 premier golf courses in Catalunya Spain. Camiral Resort, El Prat, Infinitum, Emporda and more. Green fees from EUR35.');
-    setMeta('name', 'keywords', 'golf Catalunya, tee times Catalunya, golf courses Barcelona, PGA Catalunya, golf Costa Brava, golf Girona, book tee times Spain');
-    setMeta('property', 'og:title', 'GOLFGATE Catalunya | Book Tee Times');
-    setMeta('property', 'og:description', 'Book tee times at 20 premier golf courses across Catalunya.');
+    setMeta('name', 'description', 'Book tee times online at 20 golf courses in Catalunya, Spain. Golf near Barcelona, Costa Brava, Girona and Tarragona. Green fees from EUR35. Instant confirmation. Camiral, El Prat, Infinitum, Emporda and more.');
+    setMeta('name', 'keywords', 'golf catalunya, golf catalonia, book tee times catalonia, golf courses near barcelona, golf costa brava, golf girona spain, catalonia golf holidays, golf holidays catalonia, play golf catalonia, golf resorts catalonia, golf near barcelona, best golf courses catalonia, golf travel catalonia, catalonia golf green fees, online tee times catalonia, golf day trips from barcelona');
+    setMeta('property', 'og:title', 'Golf Catalunya | Book Tee Times at 20 Premier Golf Courses');
+    setMeta('property', 'og:description', 'Book tee times online at 20 golf courses across Catalunya, Spain. Golf near Barcelona, Costa Brava, Girona. Green fees from EUR35.');
     setMeta('property', 'og:type', 'website');
+    setMeta('property', 'og:site_name', 'GOLFGATE Catalunya');
+    setMeta('name', 'robots', 'index, follow');
+    setMeta('name', 'geo.region', 'ES-CT');
+    setMeta('name', 'geo.placename', 'Catalunya');
 
     var schema = document.getElementById('golfgate-schema');
     if (!schema) { schema = document.createElement('script'); schema.id = 'golfgate-schema'; schema.type = 'application/ld+json'; document.head.appendChild(schema); }
     schema.textContent = JSON.stringify({
       '@context': 'https://schema.org', '@type': 'WebSite', name: 'GOLFGATE Catalunya',
-      description: 'Book tee times at 20 premier golf courses in Catalunya Spain.',
+      description: 'Book tee times online at 20 premier golf courses in Catalunya, Spain. Golf near Barcelona, Costa Brava, Girona and Tarragona.',
       url: window.location.href,
-      provider: { '@type': 'Organization', name: 'GOLFGATE Catalunya' },
+      provider: { '@type': 'Organization', name: 'GOLFGATE Catalunya', areaServed: 'Catalunya, Spain' },
       offers: { '@type': 'AggregateOffer', priceCurrency: 'EUR', lowPrice: '35', highPrice: '137', offerCount: '20' }
     });
 

@@ -34,7 +34,36 @@ export default function CatalunyaCoursePage() {
 
   useEffect(function() {
     if (!course) return;
-    document.title = course.name + ' | GOLFGATE Catalunya';
+    document.title = course.name + ' | Book Tee Times | Golf Catalunya';
+
+    var setMeta = function(attr, name, content) {
+      var el = document.querySelector('meta[' + attr + '="' + name + '"]');
+      if (!el) { el = document.createElement('meta'); el.setAttribute(attr, name); document.head.appendChild(el); }
+      el.setAttribute('content', content);
+    };
+    var desc = getDesc(course);
+    setMeta('name', 'description', 'Book tee times at ' + course.name + ' in ' + course.location + ', Catalunya. ' + course.holes + ' holes, Par ' + course.par + '. Green fees from EUR' + course.price_from + '. Instant confirmation.');
+    setMeta('property', 'og:title', course.name + ' | Book Tee Times | Golf Catalunya');
+    setMeta('property', 'og:description', 'Book tee times at ' + course.name + '. ' + course.holes + ' holes, Par ' + course.par + '. From EUR' + course.price_from);
+
+    // Schema.org GolfCourse structured data
+    var schemaId = 'course-schema-' + course.id;
+    var schema = document.getElementById(schemaId);
+    if (!schema) { schema = document.createElement('script'); schema.id = schemaId; schema.type = 'application/ld+json'; document.head.appendChild(schema); }
+    schema.textContent = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'GolfCourse',
+      name: course.name,
+      description: desc,
+      address: { '@type': 'PostalAddress', addressLocality: course.location, addressRegion: 'Catalunya', addressCountry: 'ES' },
+      numberOfHoles: course.holes,
+      url: window.location.href,
+      image: course.image,
+      priceRange: 'EUR ' + course.price_from + '+',
+      offers: { '@type': 'Offer', priceCurrency: 'EUR', price: course.price_from, url: course.booking_url }
+    });
+
+    return function() { var s = document.getElementById(schemaId); if (s) s.remove(); };
   }, [course]);
 
   if (loading) return <Spinner />;

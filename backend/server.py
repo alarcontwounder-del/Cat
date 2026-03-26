@@ -857,6 +857,16 @@ async def get_sitemap():
     # Blog page
     urls.append({"loc": "https://golfgatecatalunya.es/blog", "lastmod": today, "changefreq": "weekly", "priority": "0.9"})
     
+    # Location pages (high SEO value)
+    for region in ["barcelona", "costa-brava", "girona", "tarragona"]:
+        urls.append({"loc": f"https://golfgatecatalunya.es/golf/{region}", "lastmod": today, "changefreq": "weekly", "priority": "0.9"})
+    
+    # Hotels page
+    urls.append({"loc": "https://golfgatecatalunya.es/hotels", "lastmod": today, "changefreq": "weekly", "priority": "0.8"})
+    
+    # All courses listing
+    urls.append({"loc": "https://golfgatecatalunya.es/courses", "lastmod": today, "changefreq": "weekly", "priority": "0.8"})
+    
     # Course pages
     from data.catalunya_courses import CATALUNYA_COURSES
     for course in CATALUNYA_COURSES:
