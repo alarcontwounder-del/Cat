@@ -140,14 +140,14 @@ export default function GolfgateCatalunyaPage() {
           </Link>
 
           {/* Nav links with separator */}
-          <div className="hidden lg:flex items-center gap-5 text-sm font-medium text-black/80">
-            <a href="#courses" className="hover:text-[#f6416c] transition-colors">{t.nav.courses}</a>
-            <Link to="/hotels" className="hover:text-[#f6416c] transition-colors">Hotels</Link>
-            <Link to="/compare" className="hover:text-[#f6416c] transition-colors">Compare</Link>
-            <span className="w-px h-5 bg-black/20 rounded-full" />
-            <a href="#about" className="hover:text-[#f6416c] transition-colors">{t.nav.about}</a>
-            <a href="#contact" className="hover:text-[#f6416c] transition-colors">{t.nav.contact}</a>
-            <Link to="/blog" className="hover:text-[#f6416c] transition-colors">{t.nav.blog}</Link>
+          <div className="hidden lg:flex items-center gap-5 text-sm font-medium" style={{ color: '#f6416c' }}>
+            <a href="#courses" className="hover:opacity-70 transition-opacity">{t.nav.courses}</a>
+            <Link to="/hotels" className="hover:opacity-70 transition-opacity">Hotels</Link>
+            <Link to="/compare" className="hover:opacity-70 transition-opacity">Compare</Link>
+            <span className="w-px h-5 rounded-full" style={{ backgroundColor: 'rgba(246,65,108,0.3)' }} />
+            <a href="#about" className="hover:opacity-70 transition-opacity">{t.nav.about}</a>
+            <a href="#contact" className="hover:opacity-70 transition-opacity">{t.nav.contact}</a>
+            <Link to="/blog" className="hover:opacity-70 transition-opacity">{t.nav.blog}</Link>
           </div>
 
           {/* Right side: Language + Weather + Admin */}
@@ -155,7 +155,7 @@ export default function GolfgateCatalunyaPage() {
             {/* Language dropdown - GIM exact structure */}
             <div className="relative" onMouseEnter={function() { setLangDropdown(true); }} onMouseLeave={function() { setLangDropdown(false); }}>
               <button
-                className="flex items-center gap-1.5 px-4 py-2 rounded-full border transition-colors duration-300 text-sm border-black/30 text-black/80 hover:border-black/50"
+                className="flex items-center gap-1.5 px-4 py-2 rounded-full text-sm transition-all duration-200 backdrop-blur-sm" style={{ background: 'rgba(246,65,108,0.1)', border: '1px solid rgba(246,65,108,0.25)', color: '#f6416c' }}
                 data-testid="language-selector"
               >
                 <span className="text-sm font-semibold">{currentLang.label}</span>
@@ -184,8 +184,9 @@ export default function GolfgateCatalunyaPage() {
             {/* Admin/Settings icon */}
             <Link
               to="/admin"
-              className="hidden sm:flex items-center justify-center text-black hover:text-black/70 transition-colors"
+              className="hidden sm:flex items-center justify-center hover:opacity-70 transition-opacity"
               title="Admin Panel"
+              style={{ color: '#f6416c' }}
             >
               <Settings className="w-5 h-5" />
             </Link>
