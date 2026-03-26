@@ -44,7 +44,7 @@ export function HotelCardBack(props) {
         <p className="text-sm font-medium text-black/80">Exclusive: Golf & Stay Package</p>
       </div>
       {h.nearest_golf && <p className="flex items-center gap-2 text-black/70 text-sm mb-6"><Navigation className="w-4 h-4" /> {h.nearest_golf}</p>}
-      <a href={h.booking_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-1.5 bg-black text-[#CCFF00] px-5 py-2.5 rounded-full text-xs font-semibold hover:bg-black/90 transition-all">
+      <a href={h.booking_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-1.5 bg-white text-black px-5 py-2.5 rounded-full text-xs font-semibold hover:bg-white/90 transition-all shadow-md">
         Book Now <ExternalLink className="w-3 h-3" />
       </a>
     </div>

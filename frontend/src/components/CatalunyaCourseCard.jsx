@@ -130,14 +130,14 @@ export function CatalunyaCourseCard({ course, onQuickView }) {
                 href={course.booking_url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full flex items-center justify-center gap-2 bg-black text-[#CCFF00] px-4 py-3 rounded-full text-sm font-semibold hover:bg-black/90 transition-all"
+                className="w-full flex items-center justify-center gap-2 bg-white text-black px-4 py-3 rounded-full text-sm font-semibold hover:bg-white/90 transition-all shadow-md"
                 data-testid={'book-btn-' + course.id}
               >
                 Book a Tee Time Now <ExternalLink className="w-3.5 h-3.5" />
               </a>
               <Link
                 to={'/courses/' + course.id}
-                className="w-full flex items-center justify-center gap-2 bg-white/30 text-black px-4 py-2.5 rounded-full text-xs font-medium hover:bg-white/50 transition-all"
+                className="w-full flex items-center justify-center gap-2 bg-black/20 text-black px-4 py-2.5 rounded-full text-xs font-medium hover:bg-black/30 transition-all"
                 data-testid={'details-btn-' + course.id}
               >
                 View Course Details
