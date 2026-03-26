@@ -206,18 +206,18 @@ export default function GolfgateCatalunyaPage() {
       </section>
 
       {/* About */}
-      <section id="about" className="max-w-5xl mx-auto px-6 md:px-12 py-16 md:py-20" data-testid="golfgate-about">
+      <section id="about" className="max-w-5xl mx-auto px-6 md:px-12 py-16 md:py-20" data-testid="golfgate-about" style={{ background: 'linear-gradient(180deg, white 0%, #FAFFF0 100%)' }}>
         <div className="text-center mb-12 fade-in-up">
           <h2 className="font-heading text-3xl md:text-4xl text-stone-900 mb-4">{t.about.subtitle}</h2>
-          <div className="h-1 bg-[#89F336] mx-auto rounded-full mb-6 accent-line" />
+          <div className="h-1 mx-auto rounded-full mb-6 accent-line" style={{ background: 'linear-gradient(90deg, #CCFF00, #FFFF00, #DFFF00)' }} />
           <p className="text-stone-600 text-lg max-w-3xl mx-auto leading-relaxed">
             {t.about.description}
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 stagger-children">
-          <FeatureBox icon={<Globe className="w-7 h-7" />} title={t.about.feat1Title} text={t.about.feat1Text} />
-          <FeatureBox icon={<Clock className="w-7 h-7" />} title={t.about.feat2Title} text={t.about.feat2Text} />
-          <FeatureBox icon={<Shield className="w-7 h-7" />} title={t.about.feat3Title} text={t.about.feat3Text} />
+          <FeatureBox icon={<Globe className="w-7 h-7" />} title={t.about.feat1Title} text={t.about.feat1Text} color="#CCFF00" />
+          <FeatureBox icon={<Clock className="w-7 h-7" />} title={t.about.feat2Title} text={t.about.feat2Text} color="#DFFF00" />
+          <FeatureBox icon={<Shield className="w-7 h-7" />} title={t.about.feat3Title} text={t.about.feat3Text} color="#FFFF00" />
         </div>
       </section>
 
@@ -226,7 +226,7 @@ export default function GolfgateCatalunyaPage() {
         <div className="max-w-6xl mx-auto px-6 md:px-12">
           <div className="text-center mb-12 fade-in-up">
             <h2 className="font-heading text-3xl md:text-4xl text-stone-900 mb-4">{t.courses.title}</h2>
-            <div className="h-1 bg-[#89F336] mx-auto rounded-full mb-6 accent-line" />
+            <div className="h-1 mx-auto rounded-full mb-6 accent-line" style={{ background: 'linear-gradient(90deg, #CCFF00, #FFFF00, #DFFF00)' }} />
             <p className="text-stone-500 text-lg max-w-2xl mx-auto">
               {t.courses.subtitle}
             </p>
@@ -246,7 +246,7 @@ export default function GolfgateCatalunyaPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-16 md:py-20" style={{ backgroundColor: '#CCFF00' }} data-testid="golfgate-cta">
+      <section className="py-16 md:py-20" style={{ background: 'linear-gradient(135deg, #CCFF00 0%, #DFFF00 50%, #FFFF00 100%)' }} data-testid="golfgate-cta">
         <div className="max-w-3xl mx-auto px-6 text-center">
           <h2 className="font-heading text-3xl md:text-4xl text-black mb-4">{t.cta.title}</h2>
           <p className="text-black/70 text-lg mb-8 max-w-2xl mx-auto">
@@ -292,12 +292,12 @@ export default function GolfgateCatalunyaPage() {
       <section id="contact" className="max-w-5xl mx-auto px-6 md:px-12 py-16 md:py-20" data-testid="golfgate-contact">
         <div className="text-center mb-10 fade-in-up">
           <h2 className="font-heading text-3xl md:text-4xl text-stone-900 mb-4">{t.contact.title}</h2>
-          <div className="h-1 bg-[#89F336] mx-auto rounded-full mb-6 accent-line" />
+          <div className="h-1 mx-auto rounded-full mb-6 accent-line" style={{ background: 'linear-gradient(90deg, #CCFF00, #FFFF00, #DFFF00)' }} />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
-          <ContactBox icon={<Mail className="w-6 h-6" />} title={t.contact.email} value="contact@golfgatecatalunya.es" href="mailto:contact@golfgatecatalunya.es" />
-          <ContactBox icon={<Phone className="w-6 h-6" />} title={t.contact.phone} value="+34 620 987 575" href="tel:+34620987575" />
-          <ContactBox icon={<MapPin className="w-6 h-6" />} title={t.contact.location} value="Barcelona, Catalunya, Spain" />
+          <ContactBox icon={<Mail className="w-6 h-6" />} title={t.contact.email} value="contact@golfgatecatalunya.es" href="mailto:contact@golfgatecatalunya.es" color="#CCFF00" />
+          <ContactBox icon={<Phone className="w-6 h-6" />} title={t.contact.phone} value="+34 620 987 575" href="tel:+34620987575" color="#DFFF00" />
+          <ContactBox icon={<MapPin className="w-6 h-6" />} title={t.contact.location} value="Barcelona, Catalunya, Spain" color="#FFFF00" />
         </div>
       </section>
 
@@ -380,7 +380,7 @@ export default function GolfgateCatalunyaPage() {
 function FeatureBox(props) {
   return (
     <div className="bg-white rounded-2xl p-6 border border-stone-100 shadow-sm text-center card-hover-lift">
-      <div className="w-14 h-14 rounded-xl flex items-center justify-center text-black mx-auto mb-4" style={{ backgroundColor: '#CCFF00' }}>
+      <div className="w-14 h-14 rounded-xl flex items-center justify-center text-black mx-auto mb-4" style={{ backgroundColor: props.color || '#CCFF00' }}>
         {props.icon}
       </div>
       <h3 className="font-heading text-lg text-stone-900 mb-2">{props.title}</h3>
@@ -397,7 +397,7 @@ function ContactBox(props) {
   );
   return (
     <div className="bg-white rounded-2xl p-6 border border-stone-100 shadow-sm text-center card-hover-lift">
-      <div className="w-12 h-12 rounded-xl flex items-center justify-center text-black mx-auto mb-3" style={{ backgroundColor: '#CCFF00' }}>
+      <div className="w-12 h-12 rounded-xl flex items-center justify-center text-black mx-auto mb-3" style={{ backgroundColor: props.color || '#CCFF00' }}>
         {props.icon}
       </div>
       <h3 className="font-heading text-base text-stone-900 mb-1">{props.title}</h3>
