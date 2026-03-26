@@ -741,6 +741,13 @@ async def get_catalunya_courses(include_inactive: bool = False):
         if include_inactive:
             return CATALUNYA_COURSES
         return [c for c in CATALUNYA_COURSES if c.get("active", True)]
+    # Merge static data fields (slope, rating, etc.) into DB courses
+    static_map = {c["id"]: c for c in CATALUNYA_COURSES}
+    for course in courses:
+        static = static_map.get(course["id"], {})
+        for key in ["slope_rating", "course_rating", "difficulty", "maintenance", "ranking", "designer"]:
+            if key not in course or course[key] is None:
+                course[key] = static.get(key, "")
     return courses
 
 
@@ -755,6 +762,12 @@ async def get_catalunya_course(course_id: str):
     if not course:
         from fastapi import HTTPException
         raise HTTPException(status_code=404, detail="Course not found")
+    # Merge static data fields
+    static_map = {c["id"]: c for c in CATALUNYA_COURSES}
+    static = static_map.get(course_id, {})
+    for key in ["slope_rating", "course_rating", "difficulty", "maintenance", "ranking", "designer"]:
+        if key not in course or course[key] is None:
+            course[key] = static.get(key, "")
     return course
 
 

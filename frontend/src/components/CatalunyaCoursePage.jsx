@@ -148,6 +148,20 @@ function ContentArea(props) {
               <InfoCard label="Par" val={String(c.par)} />
               <InfoCard label="Green Fee" val={'EUR' + c.price_from} />
             </div>
+            {(c.slope_rating || c.course_rating || c.difficulty) && (
+              <div className="grid grid-cols-3 gap-4 mt-4">
+                {c.slope_rating && <InfoCard label="Slope Rating" val={String(c.slope_rating)} />}
+                {c.course_rating && <InfoCard label="Course Rating" val={String(c.course_rating)} />}
+                {c.difficulty && <InfoCard label="Difficulty" val={c.difficulty} />}
+              </div>
+            )}
+            {(c.maintenance || c.designer || c.ranking) && (
+              <div className="grid grid-cols-3 gap-4 mt-4">
+                {c.maintenance && <InfoCard label="Maintenance" val={c.maintenance} />}
+                {c.designer && <InfoCard label="Designer" val={c.designer} />}
+                {c.ranking && <InfoCard label="Ranking" val={c.ranking} />}
+              </div>
+            )}
           </section>
           <FeatsSection feats={c.features} />
         </div>

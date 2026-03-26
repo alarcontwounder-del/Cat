@@ -128,6 +128,12 @@ function CompareTable(props) {
     { label: 'Holes', key: 'holes' },
     { label: 'Par', key: 'par' },
     { label: 'Green Fee From', key: 'price_from', prefix: '\u20ac' },
+    { label: 'Slope Rating', key: 'slope_rating' },
+    { label: 'Course Rating', key: 'course_rating' },
+    { label: 'Difficulty', key: 'difficulty' },
+    { label: 'Maintenance', key: 'maintenance' },
+    { label: 'Ranking', key: 'ranking' },
+    { label: 'Designer', key: 'designer' },
     { label: 'Features', key: 'features', type: 'features' }
   ];
 
