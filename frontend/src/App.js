@@ -6,6 +6,7 @@ var GolfgateCatalunyaPage = React.lazy(function() { return import('./components/
 var CatalunyaCoursePage = React.lazy(function() { return import('./components/CatalunyaCoursePage'); });
 var CatalunyaAdminPanel = React.lazy(function() { return import('./components/CatalunyaAdminPanel'); });
 var CatalunyaBlogPage = React.lazy(function() { return import('./components/CatalunyaBlogPage'); });
+var CatalunyaBlogPostPage = React.lazy(function() { return import('./components/CatalunyaBlogPostPage'); });
 var TermsPage = React.lazy(function() { return import('./components/TermsPage'); });
 var PrivacyPage = React.lazy(function() { return import('./components/PrivacyPage'); });
 
@@ -32,6 +33,7 @@ function App() {
         <Route path="/" element={<Wrap><GolfgateCatalunyaPage /></Wrap>} />
         <Route path="/courses/:courseId" element={<Wrap><CatalunyaCoursePage /></Wrap>} />
         <Route path="/blog" element={<Wrap><CatalunyaBlogPage /></Wrap>} />
+        <Route path="/blog/:postId" element={<Wrap><CatalunyaBlogPostPage /></Wrap>} />
         <Route path="/admin" element={<Wrap><CatalunyaAdminPanel /></Wrap>} />
         <Route path="/privacy" element={<Wrap><PrivacyPage /></Wrap>} />
         <Route path="/terms" element={<Wrap><TermsPage /></Wrap>} />
