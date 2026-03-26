@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { ArrowLeft } from 'lucide-react';
-import { HotelCardFront, HotelCardBack, HotelQuickView } from './HotelCardComponents';
+import { HotelCardFront, HotelCardBack } from './HotelCardComponents';
+import { HotelQuickView } from './HotelQuickView';
 
 var API = process.env.REACT_APP_BACKEND_URL;
 
