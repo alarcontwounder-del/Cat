@@ -309,7 +309,7 @@ export default function GolfgateCatalunyaPage() {
               <h4 className="font-heading text-white text-base mb-4">{t.footer.quickLinks}</h4>
               <ul className="space-y-2.5">
                 <li><a href="#hero" className="text-white/50 text-sm hover:text-white transition-colors">{t.footer.home}</a></li>
-                <li><a href="#courses" className="text-white/50 text-sm hover:text-white transition-colors">{t.footer.golfCourses}</a></li>
+                <li><Link to="/courses" className="text-white/50 text-sm hover:text-white transition-colors">{t.footer.golfCourses} Info</Link></li>
                 <li><Link to="/blog" className="text-white/50 text-sm hover:text-white transition-colors">{t.nav.blog}</Link></li>
                 <li><a href="#about" className="text-white/50 text-sm hover:text-white transition-colors">{t.nav.about}</a></li>
                 <li><a href="#contact" className="text-white/50 text-sm hover:text-white transition-colors">{t.nav.contact}</a></li>
@@ -322,16 +322,6 @@ export default function GolfgateCatalunyaPage() {
               <ul className="space-y-2.5">
                 <li><a href="#courses" className="text-white/50 text-sm hover:text-white transition-colors">{t.footer.bookTee}</a></li>
               </ul>
-              {courses.length > 0 && (
-                <div className="mt-5">
-                  <h4 className="font-heading text-white text-base mb-3">{t.footer.golfCourses}</h4>
-                  <ul className="space-y-1.5 max-h-[280px] overflow-y-auto pr-2" style={{ scrollbarWidth: 'thin', scrollbarColor: 'rgba(255,255,255,0.15) transparent' }}>
-                    {courses.map(function(c) {
-                      return <li key={c.id}><Link to={'/courses/' + c.id} className="text-white/40 text-xs hover:text-white/70 transition-colors">{c.name}</Link></li>;
-                    })}
-                  </ul>
-                </div>
-              )}
             </div>
           </div>
 
