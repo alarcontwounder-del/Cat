@@ -81,7 +81,7 @@ export function CatalunyaCourseCard({ course, onQuickView }) {
 
         {/* BACK - Electric Kiwi gradient with booking CTA */}
         <div className="flip-card-back">
-          <div className="rounded-2xl overflow-hidden h-full flex flex-col" style={{ background: 'linear-gradient(135deg, #CCFF00 0%, #DFFF00 40%, #FFFF00 80%, #DFFF00 100%)' }}>
+          <div className="rounded-2xl overflow-hidden h-full flex flex-col" style={{ background: 'linear-gradient(135deg, #CCFF00 0%, #89F336 40%, #38A711 100%)' }}>
             {/* Course name + location */}
             <div className="p-5 pb-2">
               <button
