@@ -74,7 +74,7 @@ export function CatalunyaCourseCard({ course, onQuickView }) {
               </div>
 
               {/* Hover hint */}
-              <p className="text-stone-400 text-xs italic flex-shrink-0">Hover for details &rarr;</p>
+              <p className="text-stone-400 text-xs italic flex-shrink-0 hidden md:block">Hover for details &rarr;</p>
             </div>
           </div>
         </div>

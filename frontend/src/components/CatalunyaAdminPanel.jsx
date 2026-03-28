@@ -20,6 +20,7 @@ export default function CatalunyaAdminPanel() {
 
   // Handle OAuth callback - session_id in URL hash
   useEffect(function() {
+    document.title = 'Admin Dashboard | GOLFGATE Catalunya';
     if (hasProcessed.current) return;
     var hash = window.location.hash;
     if (hash && hash.includes('session_id=')) {
