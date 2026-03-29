@@ -216,11 +216,11 @@ export default function GolfgateCatalunyaPage() {
         )}
       </nav>
 
-      {/* Hero - GIM style with warm charcoal overlay + grain texture */}
-      <section className="relative overflow-hidden grain-overlay" data-testid="golfgate-hero">
+      {/* Hero */}
+      <section className="relative overflow-hidden" data-testid="golfgate-hero">
         <div className="absolute inset-0">
           <img src={HERO_BG} alt="Golf Course Catalunya" className="w-full h-full object-cover" />
-          <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, rgba(45,45,45,0.3) 0%, rgba(45,45,45,0.4) 40%, rgba(45,45,45,0.6) 100%)' }} />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/70" />
         </div>
         <div className="relative max-w-6xl mx-auto px-6 py-28 md:py-40 text-center">
           <h1 className="font-heading text-4xl md:text-6xl lg:text-7xl text-white mb-6 drop-shadow-2xl leading-tight">
