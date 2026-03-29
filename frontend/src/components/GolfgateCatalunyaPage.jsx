@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { ChevronRight, ExternalLink, Globe, Clock, Shield, Mail, Phone, MapPin, Instagram, Facebook, Settings, ChevronDown } from 'lucide-react';
+import { ChevronRight, ExternalLink, Globe, Clock, Shield, Mail, Phone, MapPin, Instagram, Facebook, Settings, ChevronDown, Menu, X } from 'lucide-react';
 import { CatalunyaCourseCard } from './CatalunyaCourseCard';
 import { CatalunyaQuickView } from './CatalunyaQuickView';
 import { CatalunyaWeather } from './CatalunyaWeather';
@@ -53,6 +53,9 @@ export default function GolfgateCatalunyaPage() {
   var blogPostsState = useState([]);
   var blogPosts = blogPostsState[0];
   var setBlogPosts = blogPostsState[1];
+  var mobileMenuState = useState(false);
+  var mobileMenu = mobileMenuState[0];
+  var setMobileMenu = mobileMenuState[1];
 
   var t = TRANSLATIONS[lang] || TRANSLATIONS.en;
 
@@ -77,6 +80,7 @@ export default function GolfgateCatalunyaPage() {
     setMeta('property', 'og:description', 'Book tee times online at 20 golf courses across Catalunya, Spain. Golf near Barcelona, Costa Brava, Girona. Green fees from EUR35.');
     setMeta('property', 'og:type', 'website');
     setMeta('property', 'og:site_name', 'GOLFGATE Catalunya');
+    setMeta('property', 'og:image', 'https://res.cloudinary.com/greenfee365/image/upload/w_1200,h_630,c_fill/courses/camiral-golf-wellness-stadium/camiral-golf-wellness-stadium');
     setMeta('name', 'robots', 'index, follow');
     setMeta('name', 'geo.region', 'ES-CT');
     setMeta('name', 'geo.placename', 'Catalunya');
@@ -190,8 +194,26 @@ export default function GolfgateCatalunyaPage() {
             >
               <Settings className="w-5 h-5" />
             </Link>
+
+            {/* Mobile hamburger */}
+            <button onClick={function() { setMobileMenu(!mobileMenu); }} className="lg:hidden flex items-center justify-center" style={{ color: '#f6416c' }}>
+              {mobileMenu ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
           </div>
         </div>
+
+        {/* Mobile menu drawer */}
+        {mobileMenu && (
+          <div className="lg:hidden border-t border-black/10 px-6 py-4 space-y-3" style={{ backgroundColor: '#CCFF00' }}>
+            <a href="#courses" onClick={function() { setMobileMenu(false); }} className="block text-sm font-medium py-2 hover:opacity-70" style={{ color: '#f6416c' }}>{t.nav.courses}</a>
+            <Link to="/hotels" onClick={function() { setMobileMenu(false); }} className="block text-sm font-medium py-2 hover:opacity-70" style={{ color: '#f6416c' }}>Hotels</Link>
+            <Link to="/compare" onClick={function() { setMobileMenu(false); }} className="block text-sm font-medium py-2 hover:opacity-70" style={{ color: '#f6416c' }}>Compare</Link>
+            <div className="w-full h-px bg-black/10" />
+            <a href="#about" onClick={function() { setMobileMenu(false); }} className="block text-sm font-medium py-2 hover:opacity-70" style={{ color: '#f6416c' }}>{t.nav.about}</a>
+            <a href="#contact" onClick={function() { setMobileMenu(false); }} className="block text-sm font-medium py-2 hover:opacity-70" style={{ color: '#f6416c' }}>{t.nav.contact}</a>
+            <Link to="/blog" onClick={function() { setMobileMenu(false); }} className="block text-sm font-medium py-2 hover:opacity-70" style={{ color: '#f6416c' }}>{t.nav.blog}</Link>
+          </div>
+        )}
       </nav>
 
       {/* Hero */}
