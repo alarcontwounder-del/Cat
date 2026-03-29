@@ -26,6 +26,12 @@ export function CatalunyaCourseCard({ course, onQuickView }) {
                 className="w-full h-full object-cover object-center"
                 loading="lazy"
               />
+              {/* Editor's Pick badge */}
+              {course.editors_pick && (
+                <div className="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[10px] font-bold text-white shadow-md" style={{ backgroundColor: '#f6416c' }} data-testid={'editors-pick-' + course.id}>
+                  Editor's Pick
+                </div>
+              )}
               {/* Eye icon - quick view */}
               <button
                 onClick={function(e) { e.stopPropagation(); onQuickView(course); }}
@@ -40,6 +46,10 @@ export function CatalunyaCourseCard({ course, onQuickView }) {
                   <span className="text-sm font-semibold text-stone-800">From &euro;{course.price_from}</span>
                 </div>
               )}
+              {/* Mobile Quick Book button */}
+              <a href={course.booking_url} target="_blank" rel="noopener noreferrer" className="md:hidden absolute bottom-3 left-3 px-3 py-1.5 rounded-full text-xs font-semibold text-white shadow-md" style={{ backgroundColor: '#f6416c' }} onClick={function(e) { e.stopPropagation(); }}>
+                Book Now
+              </a>
             </div>
 
             {/* Text area below image */}

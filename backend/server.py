@@ -745,7 +745,7 @@ async def get_catalunya_courses(include_inactive: bool = False):
     static_map = {c["id"]: c for c in CATALUNYA_COURSES}
     for course in courses:
         static = static_map.get(course["id"], {})
-        for key in ["slope_rating", "course_rating", "difficulty", "maintenance", "ranking", "designer"]:
+        for key in ["slope_rating", "course_rating", "difficulty", "maintenance", "ranking", "designer", "editors_pick"]:
             if key not in course or course[key] is None:
                 course[key] = static.get(key, "")
     return courses
@@ -774,7 +774,7 @@ async def get_catalunya_course(course_id: str):
 @api_router.patch("/admin/catalunya-course/{course_id}")
 async def update_catalunya_course(course_id: str, update: dict):
     """Update a Catalunya course card (admin)"""
-    allowed_fields = {"name", "location", "price_from", "holes", "par", "active", "booking_url", "image", "description", "features", "full_address", "phone", "display_order"}
+    allowed_fields = {"name", "location", "price_from", "holes", "par", "active", "booking_url", "image", "description", "features", "full_address", "phone", "display_order", "editors_pick"}
     filtered = {k: v for k, v in update.items() if k in allowed_fields}
     if not filtered:
         from fastapi import HTTPException
@@ -890,6 +890,9 @@ async def get_sitemap():
     blog_posts = await cursor.to_list(length=100)
     for post in blog_posts:
         urls.append({"loc": f"https://golfgatecatalunya.es/blog/{post['id']}", "lastmod": post.get("updated_at", today)[:10], "changefreq": "monthly", "priority": "0.7"})
+    
+    # Best time to play guide
+    urls.append({"loc": "https://golfgatecatalunya.es/best-time-to-play", "lastmod": today, "changefreq": "monthly", "priority": "0.8"})
     
     # Static pages
     urls.append({"loc": "https://golfgatecatalunya.es/privacy", "lastmod": today, "changefreq": "yearly", "priority": "0.3"})

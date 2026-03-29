@@ -14,7 +14,12 @@ var REGIONS = {
     metaTitle: 'Golf Near Barcelona | Book Tee Times at Golf Courses Near Barcelona',
     metaDesc: 'Book tee times at golf courses near Barcelona, Spain. El Prat, Terramar Sitges, Vallromanes and more. Green fees from EUR65. Golf day trips from Barcelona. Instant confirmation.',
     metaKeywords: 'golf near barcelona, golf courses near barcelona, barcelona golf tee times, golf day trips from barcelona, best golf courses near barcelona, play golf near barcelona city, golf weekend barcelona, barcelona golf packages',
-    filter: ['Barcelona', 'Sitges', 'Sant Esteve Sesrovires', 'El Prat', 'Terrassa', 'Vallromanes']
+    filter: ['Barcelona', 'Sitges', 'Sant Esteve Sesrovires', 'El Prat', 'Terrassa', 'Vallromanes'],
+    faqs: [
+      { q: 'How much do green fees cost near Barcelona?', a: 'Green fees at golf courses near Barcelona range from EUR65 to EUR137. El Prat starts at EUR90, Terramar at EUR65, and Vallromanes at EUR55.' },
+      { q: 'How far are golf courses from Barcelona city center?', a: 'Most courses are 20-40 minutes from central Barcelona. El Prat is 20 minutes, Terramar in Sitges is 35 minutes, and Vallromanes is 25 minutes.' },
+      { q: 'Can I book a golf day trip from Barcelona?', a: 'Yes! All courses near Barcelona are perfect for day trips. Book your tee time online with instant confirmation and drive or take a transfer.' }
+    ]
   },
   'costa-brava': {
     name: 'Costa Brava',
@@ -24,7 +29,12 @@ var REGIONS = {
     metaTitle: 'Golf Costa Brava | Book Tee Times at Costa Brava Golf Courses',
     metaDesc: 'Book tee times at Costa Brava golf courses. Camiral Resort (PGA Catalunya), Emporda, Peralada and more. Luxury golf holidays on the Costa Brava. Green fees from EUR60.',
     metaKeywords: 'golf costa brava, best golf courses costa brava, costa brava golf holidays, golf resorts costa brava, luxury golf costa brava, costa brava golf packages, golf hotels costa brava, stay and play golf breaks costa brava',
-    filter: ['Caldes de Malavella', 'Girona', 'Gualta', 'Peralada', 'Santa Cristina', 'Pals']
+    filter: ['Caldes de Malavella', 'Girona', 'Gualta', 'Peralada', 'Santa Cristina', 'Pals'],
+    faqs: [
+      { q: 'What is the best golf course on the Costa Brava?', a: 'Camiral Resort (formerly PGA Catalunya) Stadium Course is rated #4 in Spain. Emporda Forest and Peralada are also top choices.' },
+      { q: 'Are there luxury golf hotels on the Costa Brava?', a: 'Yes. Camiral Resort offers 5-star on-site accommodation. Peralada Wine Spa & Golf is another premium option with vineyard views.' },
+      { q: 'When is the best time to play golf on the Costa Brava?', a: 'March to June and September to November offer ideal conditions — mild temperatures (18-25C), less crowds, and lower green fees.' }
+    ]
   },
   girona: {
     name: 'Girona',
@@ -34,7 +44,11 @@ var REGIONS = {
     metaTitle: 'Golf Girona Spain | Book Tee Times at Girona Golf Courses',
     metaDesc: 'Book tee times at golf courses in Girona, Spain. Camiral Resort, Emporda, Peralada and more. Golf holidays Girona with international airport access. Green fees from EUR55.',
     metaKeywords: 'golf girona spain, golf resorts girona, golf courses girona, play golf girona, girona golf holidays, golf hotels girona, best golf girona',
-    filter: ['Caldes de Malavella', 'Girona', 'Gualta', 'Peralada', 'Santa Cristina', 'Pals']
+    filter: ['Caldes de Malavella', 'Girona', 'Gualta', 'Peralada', 'Santa Cristina', 'Pals'],
+    faqs: [
+      { q: 'Can I fly directly to Girona for golf?', a: 'Yes. Girona-Costa Brava Airport receives flights from across Europe. Camiral Resort is just 20 minutes from the airport.' },
+      { q: 'How many golf courses are in the Girona region?', a: 'There are 8+ courses in the Girona region including Camiral Stadium & Tour, Emporda Forest & Links, Peralada, and Torremirona.' }
+    ]
   },
   tarragona: {
     name: 'Tarragona',
@@ -116,6 +130,16 @@ export default function CatalunyaLocationPage() {
     setMeta('name', 'keywords', region.metaKeywords);
     setMeta('property', 'og:title', region.metaTitle);
     setMeta('property', 'og:description', region.metaDesc);
+
+    // FAQ Schema.org
+    if (region.faqs && region.faqs.length > 0) {
+      var faqSchema = document.getElementById('faq-schema');
+      if (!faqSchema) { faqSchema = document.createElement('script'); faqSchema.id = 'faq-schema'; faqSchema.type = 'application/ld+json'; document.head.appendChild(faqSchema); }
+      faqSchema.textContent = JSON.stringify({
+        '@context': 'https://schema.org', '@type': 'FAQPage',
+        mainEntity: region.faqs.map(function(f) { return { '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } }; })
+      });
+    }
 
     axios.get(API + '/api/catalunya-courses')
       .then(function(res) {
@@ -205,6 +229,20 @@ export default function CatalunyaLocationPage() {
         </div>
       </section>
 
+      {/* FAQ Section */}
+      {region.faqs && region.faqs.length > 0 && (
+        <section className="py-12 md:py-16 bg-stone-50">
+          <div className="max-w-3xl mx-auto px-6">
+            <h2 className="font-heading text-2xl md:text-3xl text-stone-900 mb-8 text-center">Frequently Asked Questions</h2>
+            <div className="space-y-4">
+              {region.faqs[0] && <FaqItem q={region.faqs[0].q} a={region.faqs[0].a} />}
+              {region.faqs[1] && <FaqItem q={region.faqs[1].q} a={region.faqs[1].a} />}
+              {region.faqs[2] && <FaqItem q={region.faqs[2].q} a={region.faqs[2].a} />}
+            </div>
+          </div>
+        </section>
+      )}
+
       <section className="py-12 bg-stone-50">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <h2 className="font-heading text-2xl md:text-3xl text-stone-900 mb-4">Explore More Golf in Catalunya</h2>
@@ -227,6 +265,16 @@ export default function CatalunyaLocationPage() {
       <div className="text-center py-8 border-t border-stone-100">
         <Link to="/" className="text-stone-500 text-sm hover:text-stone-800 transition-colors">&larr; Back to GOLFGATE Catalunya</Link>
       </div>
+    </div>
+  );
+}
+
+
+function FaqItem(props) {
+  return (
+    <div className="bg-white rounded-xl p-5 border border-stone-100 shadow-sm">
+      <h3 className="font-semibold text-stone-900 text-sm mb-2">{props.q}</h3>
+      <p className="text-stone-600 text-sm leading-relaxed">{props.a}</p>
     </div>
   );
 }

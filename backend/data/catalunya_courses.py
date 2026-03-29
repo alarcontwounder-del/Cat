@@ -23,6 +23,7 @@ CATALUNYA_COURSES = [
         "maintenance": "Exceptional",
         "ranking": "#4 Spain (Top 100 Golf Courses 2026)",
         "designer": "Neil Coles & Angel Gallardo",
+        "editors_pick": True,
         "active": True,
         "display_order": 1
     },
@@ -75,6 +76,7 @@ CATALUNYA_COURSES = [
         "maintenance": "Exceptional",
         "ranking": "#8 Spain (Top 100 2026)",
         "designer": "Greg Norman",
+        "editors_pick": True,
         "active": True,
         "display_order": 3
     },
@@ -153,6 +155,7 @@ CATALUNYA_COURSES = [
         "maintenance": "Exceptional",
         "ranking": "Top 20 Spain",
         "designer": "Greg Norman",
+        "editors_pick": True,
         "active": True,
         "display_order": 6
     },
@@ -231,6 +234,7 @@ CATALUNYA_COURSES = [
         "maintenance": "Excellent",
         "ranking": "Top 30 Spain",
         "designer": "Robert von Hagge",
+        "editors_pick": True,
         "active": True,
         "display_order": 9
     },

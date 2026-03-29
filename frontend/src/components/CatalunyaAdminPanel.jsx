@@ -221,7 +221,8 @@ function CoursesTab() {
       par: course.par,
       booking_url: course.booking_url,
       full_address: course.full_address || '',
-      image: course.image || ''
+      image: course.image || '',
+      editors_pick: course.editors_pick || false
     });
   }
 
@@ -390,6 +391,10 @@ function CoursesTab() {
               <div>
                 <label className="block text-xs font-medium text-stone-600 mb-1">Booking URL</label>
                 <input type="text" value={editingCourse.booking_url} onChange={function(e) { setEditingCourse(Object.assign({}, editingCourse, { booking_url: e.target.value })); }} className="w-full px-3 py-2 rounded-lg border border-stone-300 text-sm" />
+              </div>
+              <div className="flex items-center gap-2">
+                <input type="checkbox" id="editors-pick" checked={editingCourse.editors_pick || false} onChange={function(e) { setEditingCourse(Object.assign({}, editingCourse, { editors_pick: e.target.checked })); }} />
+                <label htmlFor="editors-pick" className="text-sm font-medium" style={{ color: '#f6416c' }}>Editor's Pick</label>
               </div>
               <div className="flex gap-2 pt-2">
                 <button onClick={saveEdit} className="flex-1 flex items-center justify-center gap-2 bg-blue-600 text-white py-2.5 rounded-lg text-sm font-semibold hover:bg-blue-700 transition-colors">

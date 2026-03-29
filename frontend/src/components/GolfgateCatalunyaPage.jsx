@@ -274,8 +274,21 @@ export default function GolfgateCatalunyaPage() {
             </p>
           </div>
           {loading ? (
-            <div className="flex items-center justify-center py-20">
-              <div className="w-8 h-8 border-4 border-stone-300 border-t-[#89F336] rounded-full animate-spin" />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {[1,2,3,4,5,6].map(function(i) {
+                return (
+                  <div key={i} className="rounded-2xl overflow-hidden border border-stone-100">
+                    <div className="skeleton aspect-[4/3]" />
+                    <div className="p-4 space-y-3">
+                      <div className="skeleton h-3 w-20" />
+                      <div className="skeleton h-5 w-3/4" />
+                      <div className="skeleton h-3 w-full" />
+                      <div className="skeleton h-3 w-2/3" />
+                      <div className="skeleton h-8 w-24" />
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -413,10 +426,35 @@ export default function GolfgateCatalunyaPage() {
           <h2 className="font-heading text-3xl md:text-4xl text-stone-900 mb-4">{t.contact.title}</h2>
           <div className="h-1 mx-auto rounded-full mb-6 accent-line" style={{ background: 'linear-gradient(90deg, #CCFF00, #FFFF00, #DFFF00)' }} />
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto mb-12">
           <ContactBox icon={<Mail className="w-6 h-6" />} title={t.contact.email} value="contact@golfgatecatalunya.es" href="mailto:contact@golfgatecatalunya.es" color="#CCFF00" />
           <ContactBox icon={<Phone className="w-6 h-6" />} title={t.contact.phone} value="+34 620 987 575" href="tel:+34620987575" color="#DFFF00" />
           <ContactBox icon={<MapPin className="w-6 h-6" />} title={t.contact.location} value="Barcelona, Catalunya, Spain" color="#FFFF00" />
+        </div>
+        {/* Contact Form */}
+        <div className="max-w-lg mx-auto bg-white rounded-2xl p-6 border border-stone-100 shadow-sm fade-in-up">
+          <h3 className="font-heading text-xl text-stone-900 mb-4 text-center">Send us a Message</h3>
+          <form onSubmit={function(e) { e.preventDefault(); alert('Thank you! We will get back to you soon.'); e.target.reset(); }} className="space-y-3">
+            <div className="grid grid-cols-2 gap-3">
+              <input type="text" required placeholder="Name" className="px-3 py-2.5 rounded-lg border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#CCFF00] focus:border-transparent" data-testid="contact-name" />
+              <input type="email" required placeholder="Email" className="px-3 py-2.5 rounded-lg border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#CCFF00] focus:border-transparent" data-testid="contact-email" />
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <input type="text" placeholder="Travel dates" className="px-3 py-2.5 rounded-lg border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#CCFF00] focus:border-transparent" />
+              <select className="px-3 py-2.5 rounded-lg border border-stone-200 text-sm text-stone-500 focus:outline-none focus:ring-2 focus:ring-[#CCFF00]">
+                <option value="">Courses interested in</option>
+                <option value="camiral">Camiral Resort</option>
+                <option value="el-prat">El Prat</option>
+                <option value="infinitum">Infinitum</option>
+                <option value="emporda">Emporda</option>
+                <option value="other">Other / Not sure</option>
+              </select>
+            </div>
+            <textarea placeholder="Message (optional)" rows="3" className="w-full px-3 py-2.5 rounded-lg border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#CCFF00] focus:border-transparent" />
+            <button type="submit" className="w-full py-2.5 rounded-full text-sm font-bold text-white transition-all hover:opacity-90" style={{ backgroundColor: '#f6416c' }} data-testid="contact-submit">
+              Send Inquiry
+            </button>
+          </form>
         </div>
       </section>
 
