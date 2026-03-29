@@ -439,17 +439,7 @@ export default function GolfgateCatalunyaPage() {
               <input type="text" required placeholder="Name" className="px-3 py-2.5 rounded-lg border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#CCFF00] focus:border-transparent" data-testid="contact-name" />
               <input type="email" required placeholder="Email" className="px-3 py-2.5 rounded-lg border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#CCFF00] focus:border-transparent" data-testid="contact-email" />
             </div>
-            <div className="grid grid-cols-2 gap-3">
-              <input type="text" placeholder="Travel dates" className="px-3 py-2.5 rounded-lg border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#CCFF00] focus:border-transparent" />
-              <select className="px-3 py-2.5 rounded-lg border border-stone-200 text-sm text-stone-500 focus:outline-none focus:ring-2 focus:ring-[#CCFF00]">
-                <option value="">Courses interested in</option>
-                <option value="camiral">Camiral Resort</option>
-                <option value="el-prat">El Prat</option>
-                <option value="infinitum">Infinitum</option>
-                <option value="emporda">Emporda</option>
-                <option value="other">Other / Not sure</option>
-              </select>
-            </div>
+            <input type="text" placeholder="Travel dates" className="w-full px-3 py-2.5 rounded-lg border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#CCFF00] focus:border-transparent" />
             <textarea placeholder="Message (optional)" rows="3" className="w-full px-3 py-2.5 rounded-lg border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#CCFF00] focus:border-transparent" />
             <button type="submit" className="w-full py-2.5 rounded-full text-sm font-bold text-white transition-all hover:opacity-90" style={{ backgroundColor: '#f6416c' }} data-testid="contact-submit">
               Send Inquiry
@@ -490,6 +480,7 @@ export default function GolfgateCatalunyaPage() {
                 <li><Link to="/courses" className="text-white/50 text-sm hover:text-white transition-colors">{t.footer.golfCourses} Info</Link></li>
                 <li><Link to="/blog" className="text-white/50 text-sm hover:text-white transition-colors">{t.nav.blog}</Link></li>
                 <li><Link to="/compare" className="text-white/50 text-sm hover:text-white transition-colors">Compare Courses</Link></li>
+                <li><Link to="/best-time-to-play" className="text-white/50 text-sm hover:text-white transition-colors">Best Time to Play</Link></li>
                 <li><a href="#about" className="text-white/50 text-sm hover:text-white transition-colors">{t.nav.about}</a></li>
                 <li><a href="#contact" className="text-white/50 text-sm hover:text-white transition-colors">{t.nav.contact}</a></li>
               </ul>
