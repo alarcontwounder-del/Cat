@@ -11,8 +11,9 @@ export function CatalunyaCourseCard({ course, onQuickView }) {
 
   return (
     <div
-      className="flip-card group"
+      className={'flip-card group' + (isFlipped ? ' flipped' : '')}
       data-testid={'course-card-' + course.id}
+      onClick={function() { setIsFlipped(!isFlipped); }}
     >
       <div className="flip-card-inner">
         {/* FRONT - Matches GIM layout: image top, text below */}
@@ -46,10 +47,6 @@ export function CatalunyaCourseCard({ course, onQuickView }) {
                   <span className="text-sm font-semibold text-stone-800">From &euro;{course.price_from}</span>
                 </div>
               )}
-              {/* Mobile Quick Book button */}
-              <a href={course.booking_url} target="_blank" rel="noopener noreferrer" className="md:hidden absolute bottom-3 left-3 px-3 py-1.5 rounded-full text-xs font-semibold text-white shadow-md" style={{ backgroundColor: '#f6416c' }} onClick={function(e) { e.stopPropagation(); }}>
-                Book Now
-              </a>
             </div>
 
             {/* Text area below image */}
@@ -84,7 +81,7 @@ export function CatalunyaCourseCard({ course, onQuickView }) {
               </div>
 
               {/* Hover hint */}
-              <p className="text-stone-400 text-xs italic flex-shrink-0 hidden md:block">Hover for details &rarr;</p>
+              <p className="text-stone-400 text-xs italic flex-shrink-0"><span className="hidden md:inline">Hover</span><span className="md:hidden">Tap</span> for details &rarr;</p>
             </div>
           </div>
         </div>

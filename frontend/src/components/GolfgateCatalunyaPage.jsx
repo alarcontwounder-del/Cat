@@ -491,6 +491,10 @@ export default function GolfgateCatalunyaPage() {
               <h4 className="font-heading text-white text-base mb-4">{t.footer.services}</h4>
               <ul className="space-y-2.5">
                 <li><a href="#courses" className="text-white/50 text-sm hover:text-white transition-colors">{t.footer.bookTee}</a></li>
+                <li><Link to="/golf/barcelona" className="text-white/50 text-sm hover:text-white transition-colors">Golf Near Barcelona</Link></li>
+                <li><Link to="/golf/costa-brava" className="text-white/50 text-sm hover:text-white transition-colors">Golf Costa Brava</Link></li>
+                <li><Link to="/golf/girona" className="text-white/50 text-sm hover:text-white transition-colors">Golf Girona</Link></li>
+                <li><Link to="/golf/tarragona" className="text-white/50 text-sm hover:text-white transition-colors">Golf Tarragona</Link></li>
               </ul>
             </div>
           </div>

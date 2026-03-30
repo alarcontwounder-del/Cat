@@ -20,7 +20,7 @@ export function HotelCardFront(props) {
         <h3 className="font-heading text-lg text-stone-900 mb-1 flex-shrink-0" style={{ display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{h.name}</h3>
         <p className="text-stone-500 text-xs mb-3" style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', flexShrink: 0 }}>{h.description}</p>
         <p className="mb-2 flex-shrink-0 mt-auto"><span className="text-xs uppercase tracking-wider text-stone-400">From </span><span className="text-xl font-semibold text-stone-800">&euro;{h.price_from}</span>{h.price_original > h.price_from && <span className="text-sm text-stone-400 line-through ml-2">&euro;{h.price_original}</span>}</p>
-        <p className="text-xs text-stone-400 italic hidden md:block flex-shrink-0">Hover for details &rarr;</p>
+        <p className="text-xs text-stone-400 italic flex-shrink-0"><span className="hidden md:inline">Hover</span><span className="md:hidden">Tap</span> for details &rarr;</p>
       </div>
     </div>
   );

@@ -140,6 +140,11 @@
   transition-delay: 0.6s;
 }
 
+/* Tap-to-flip on mobile */
+.flip-card.flipped .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
 .flip-card-front,
 .flip-card-back {
   width: 100%;
