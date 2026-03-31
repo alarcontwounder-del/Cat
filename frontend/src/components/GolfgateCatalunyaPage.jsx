@@ -238,13 +238,13 @@ export default function GolfgateCatalunyaPage() {
             </a>
           </div>
         </div>
-        {/* Scroll indicator - GIM style */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-70">
+        {/* Scroll indicator - clickable, GIM size */}
+        <a href="#courses" onClick={function(e) { e.preventDefault(); document.getElementById('courses')?.scrollIntoView({behavior: 'smooth'}); }} className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-70 hover:opacity-100 transition-opacity cursor-pointer" data-testid="scroll-indicator">
           <span className="text-white/60 text-xs tracking-[0.3em] uppercase font-light">{t.scroll}</span>
-          <div className="scroll-mouse">
+          <div className="scroll-mouse" style={{ width: '28px', height: '46px', borderWidth: '2px' }}>
             <div className="scroll-mouse-dot" />
           </div>
-        </div>
+        </a>
       </section>
 
       {/* About */}

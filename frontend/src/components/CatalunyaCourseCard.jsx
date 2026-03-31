@@ -19,8 +19,8 @@ export function CatalunyaCourseCard({ course, onQuickView }) {
         {/* FRONT - Matches GIM layout: image top, text below */}
         <div className="flip-card-front">
           <div className="bg-white rounded-2xl overflow-hidden h-full flex flex-col shadow-sm hover:shadow-md transition-shadow">
-            {/* Image area - GIM style with margin and rounded top */}
-            <div className="relative aspect-[4/3] overflow-hidden rounded-t-2xl m-3 mb-0">
+            {/* Image area - GIM style with margin all sides */}
+            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl m-3">
               <img
                 src={course.image}
                 alt={course.name}
@@ -86,68 +86,58 @@ export function CatalunyaCourseCard({ course, onQuickView }) {
           </div>
         </div>
 
-        {/* BACK - Electric Kiwi gradient with booking CTA */}
+        {/* BACK - GIM exact structure */}
         <div className="flip-card-back">
           <div className="rounded-2xl overflow-hidden h-full flex flex-col" style={{ background: 'linear-gradient(135deg, #CCFF00 0%, #89F336 40%, #38A711 100%)' }}>
-            {/* Course name + location */}
-            <div className="p-5 pb-2">
-              <button
-                onClick={function() { window.open(mapsUrl, '_blank'); }}
-                className="flex items-center gap-1 text-black/50 text-xs mb-1 hover:text-black/80 transition-colors"
-              >
-                <MapPin className="w-3 h-3" />
-                <span>{course.location}</span>
-              </button>
-              <h3 className="font-heading text-xl text-black font-medium mb-2 leading-tight">{course.name}</h3>
+            <div className="p-5 pb-3">
+              <h3 className="font-heading text-2xl text-black mb-5 leading-tight">{course.name}</h3>
+              {/* LOCATION row */}
+              <div className="flex items-start gap-3 mb-3">
+                <div className="w-8 h-8 bg-black/10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <MapPin className="w-4 h-4 text-black/60" />
+                </div>
+                <div>
+                  <p className="text-black/50 text-[10px] uppercase tracking-wider font-semibold">Location</p>
+                  <p className="text-sm text-black/90">{course.location}</p>
+                </div>
+              </div>
+              {/* COURSE row */}
+              <div className="flex items-start gap-3 mb-4">
+                <div className="w-8 h-8 bg-black/10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <svg className="w-4 h-4 text-black/60" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" x2="4" y1="22" y2="15"/></svg>
+                </div>
+                <div>
+                  <p className="text-black/50 text-[10px] uppercase tracking-wider font-semibold">Course</p>
+                  <p className="text-sm text-black/90">{course.holes} Holes &bull; Par {course.par}</p>
+                </div>
+              </div>
             </div>
 
-            {/* Details */}
-            <div className="flex-1 px-5 space-y-3">
-              <p className="text-black/70 text-xs leading-relaxed line-clamp-3">
-                {typeof course.description === 'object' ? course.description.en : course.description}
-              </p>
-
-              <div className="flex items-center gap-3">
-                <div className="bg-black/10 rounded-lg px-2.5 py-1.5">
-                  <span className="text-xs font-medium text-black/80">{course.holes} Holes</span>
-                </div>
-                <div className="bg-black/10 rounded-lg px-2.5 py-1.5">
-                  <span className="text-xs font-medium text-black/80">Par {course.par}</span>
-                </div>
-                {course.price_from && (
-                  <div className="bg-black/10 rounded-lg px-2.5 py-1.5">
-                    <span className="text-xs font-semibold text-black/80">&euro;{course.price_from}</span>
-                  </div>
-                )}
-              </div>
-
-              {/* Features */}
+            <div className="flex-1 px-5">
+              {/* Feature tags */}
               {course.features && (
-                <div className="flex flex-wrap gap-1.5">
+                <div className="flex flex-wrap gap-1.5 mb-3">
                   {course.features.slice(0, 4).map(function(f) {
-                    return <span key={f} className="text-[10px] bg-white/30 text-black/70 px-2 py-0.5 rounded-full">{f}</span>;
+                    return <span key={f} className="text-[10px] bg-black/10 text-black/70 px-2.5 py-1 rounded-full">{f}</span>;
                   })}
+                </div>
+              )}
+              {/* Green Fee box */}
+              {course.price_from && (
+                <div className="bg-black/10 rounded-lg px-4 py-2.5 flex items-center gap-2">
+                  <svg className="w-4 h-4 text-black/60" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 18V6"/></svg>
+                  <span className="text-sm font-medium text-black/80">Green Fee from &euro;{course.price_from}</span>
                 </div>
               )}
             </div>
 
-            {/* Booking buttons */}
+            {/* Buttons */}
             <div className="p-5 pt-3 space-y-2">
-              <a
-                href={course.booking_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full flex items-center justify-center gap-2 bg-white text-black px-4 py-3 rounded-full text-sm font-semibold hover:bg-white/90 transition-all shadow-md"
-                data-testid={'book-btn-' + course.id}
-              >
-                Book a Tee Time Now <ExternalLink className="w-3.5 h-3.5" />
+              <a href={course.booking_url} target="_blank" rel="noopener noreferrer" className="w-full flex items-center justify-center gap-2 bg-white text-black px-4 py-3 rounded-full text-sm font-semibold hover:bg-white/90 transition-all shadow-md" data-testid={'book-btn-' + course.id}>
+                Book a Tee Time now! <ExternalLink className="w-3.5 h-3.5" />
               </a>
-              <Link
-                to={'/courses/' + course.id}
-                className="w-full flex items-center justify-center gap-2 bg-black/20 text-black px-4 py-2.5 rounded-full text-xs font-medium hover:bg-black/30 transition-all"
-                data-testid={'details-btn-' + course.id}
-              >
-                View Course Details
+              <Link to={'/courses/' + course.id} className="w-full flex items-center justify-center gap-2 bg-black/15 text-black px-4 py-2.5 rounded-full text-xs font-medium hover:bg-black/25 transition-all" data-testid={'details-btn-' + course.id}>
+                View Details
               </Link>
             </div>
           </div>
