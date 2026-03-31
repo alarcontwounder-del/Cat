@@ -36,7 +36,7 @@ export function HotelCardFront(props) {
 export function HotelCardBack(props) {
   var h = props.hotel;
   return (
-    <div className="flip-card-back rounded-2xl p-6 text-white flex flex-col justify-end" style={{ background: 'linear-gradient(135deg, #f6416c 0%, #e8365f 40%, #d42a52 100%)' }}>
+    <div className="flip-card-back rounded-2xl p-6 text-white flex flex-col items-center justify-center" style={{ background: 'linear-gradient(135deg, #f6416c 0%, #e8365f 40%, #d42a52 100%)' }}>
       <h3 className="font-heading text-2xl mb-5">{h.name}</h3>
       <div className="flex items-start gap-3 mb-4">
         <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
