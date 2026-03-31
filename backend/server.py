@@ -669,6 +669,13 @@ async def get_catalunya_hotels():
     hotels = await cursor.to_list(length=50)
     if not hotels:
         return [h for h in CATALUNYA_HOTELS if h.get("active", True)]
+    # Merge static data fields
+    static_map = {h["id"]: h for h in CATALUNYA_HOTELS}
+    for hotel in hotels:
+        static = static_map.get(hotel["id"], {})
+        for key in ["hotel_type", "region"]:
+            if key not in hotel or not hotel[key]:
+                hotel[key] = static.get(key, "")
     return hotels
 
 @api_router.get("/admin/catalunya-hotels")

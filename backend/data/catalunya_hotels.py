@@ -12,6 +12,8 @@ CATALUNYA_HOTELS = [
         "nearest_golf": "On-site (Camiral Stadium & Tour)",
         "booking_url": "https://www.camiral.com",
         "features": ["Spa", "2 Golf Courses", "Fine Dining", "Pool"],
+        "hotel_type": "Luxury Resort",
+        "region": "Costa Brava",
         "active": True,
         "display_order": 0
     },
@@ -28,6 +30,8 @@ CATALUNYA_HOTELS = [
         "nearest_golf": "3km to Club de Golf Terramar",
         "booking_url": "https://www.melia.com",
         "features": ["Beach", "Pool", "Spa", "Sea View"],
+        "hotel_type": "Beach Hotel",
+        "region": "Barcelona Coast",
         "active": True,
         "display_order": 1
     },
@@ -44,6 +48,8 @@ CATALUNYA_HOTELS = [
         "nearest_golf": "On-site (Golf Peralada)",
         "booking_url": "https://www.hotelperalada.com",
         "features": ["Golf On-site", "Wine Spa", "Casino", "Vineyard"],
+        "hotel_type": "Wine & Golf Resort",
+        "region": "Costa Brava",
         "active": True,
         "display_order": 2
     },
@@ -60,6 +66,8 @@ CATALUNYA_HOTELS = [
         "nearest_golf": "4km to Club de Golf Terramar",
         "booking_url": "https://www.wyndhamhotels.com",
         "features": ["Pool", "Spa", "Gardens", "Sea View"],
+        "hotel_type": "Luxury Hotel",
+        "region": "Barcelona Coast",
         "active": True,
         "display_order": 3
     },
@@ -76,6 +84,8 @@ CATALUNYA_HOTELS = [
         "nearest_golf": "1km to Club de Golf Vallromanes",
         "booking_url": "https://www.massalagros.com",
         "features": ["Eco", "Thermal Baths", "Organic Dining", "Nature"],
+        "hotel_type": "Eco Resort",
+        "region": "Barcelona",
         "active": True,
         "display_order": 4
     },
@@ -92,6 +102,8 @@ CATALUNYA_HOTELS = [
         "nearest_golf": "20km to El Prat Golf",
         "booking_url": "https://www.monumenthotel.com",
         "features": ["City Center", "Rooftop", "Michelin Dining", "Luxury"],
+        "hotel_type": "City Luxury",
+        "region": "Barcelona Center",
         "active": True,
         "display_order": 5
     }
