@@ -71,12 +71,8 @@ export default function CatalunyaHotelsPage() {
                 return (
                   <div key={hotel.id} className="flip-card" data-testid={'hotel-card-' + hotel.id} onClick={function(e) { e.currentTarget.classList.toggle('flipped'); }}>
                     <div className="flip-card-inner">
-                      <div className="flip-card-front">
-                        <HotelCardFront hotel={hotel} onQuickView={setQvHotel} />
-                      </div>
-                      <div className="flip-card-back">
-                        <HotelCardBack hotel={hotel} />
-                      </div>
+                      <HotelCardFront hotel={hotel} onQuickView={setQvHotel} />
+                      <HotelCardBack hotel={hotel} />
                     </div>
                   </div>
                 );
