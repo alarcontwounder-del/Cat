@@ -133,7 +133,7 @@ export default function GolfgateCatalunyaPage() {
   var currentLang = LANGUAGES.find(function(l) { return l.code === lang; }) || LANGUAGES[0];
 
   return (
-    <div className="min-h-screen bg-white" data-testid="golfgate-catalunya-page">
+    <div className="min-h-screen" data-testid="golfgate-catalunya-page">
 
       {/* Navbar - GIM style: logo, links, language, weather, admin, CTA */}
       <nav className="sticky top-0 z-40 shadow-md" style={{ backgroundColor: '#CCFF00' }}>
@@ -248,7 +248,7 @@ export default function GolfgateCatalunyaPage() {
       </section>
 
       {/* About */}
-      <section id="about" className="max-w-5xl mx-auto px-6 md:px-12 py-16 md:py-20" data-testid="golfgate-about" style={{ background: 'linear-gradient(180deg, white 0%, #FAFFF0 100%)' }}>
+      <section id="about" className="max-w-5xl mx-auto px-6 md:px-12 py-16 md:py-20" data-testid="golfgate-about">
         <div className="text-center mb-12 fade-in-up">
           <h2 className="font-heading text-3xl md:text-4xl text-stone-900 mb-4">{t.about.subtitle}</h2>
           <div className="h-1 mx-auto rounded-full mb-6 accent-line" style={{ background: 'linear-gradient(90deg, #CCFF00, #FFFF00, #DFFF00)' }} />
@@ -301,7 +301,7 @@ export default function GolfgateCatalunyaPage() {
       </section>
 
       {/* Hotels Section - on homepage */}
-      <section id="hotels" className="py-16 md:py-20 bg-stone-50" data-testid="golfgate-hotels">
+      <section id="hotels" className="py-16 md:py-20" data-testid="golfgate-hotels">
         <div className="max-w-6xl mx-auto px-6 md:px-12">
           <div className="text-center mb-12 fade-in-up">
             <p className="text-stone-500 text-sm uppercase tracking-[0.2em] mb-4">Golf Resorts & Hotels</p>

@@ -1,5 +1,10 @@
 /* Main App Styles */
 
+/* Unified light green background for entire site */
+body {
+  background-color: #F5FFF0;
+}
+
 /* Hide Emergent badge */
 #emergent-badge { display: none !important; }
 

@@ -18,9 +18,9 @@ export function CatalunyaCourseCard({ course, onQuickView }) {
       <div className="flip-card-inner">
         {/* FRONT - Matches GIM layout: image top, text below */}
         <div className="flip-card-front">
-          <div className="bg-white rounded-2xl border border-stone-200 overflow-hidden h-full flex flex-col shadow-sm hover:shadow-md transition-shadow">
-            {/* Image area */}
-            <div className="relative aspect-[4/3] overflow-hidden">
+          <div className="bg-white rounded-2xl overflow-hidden h-full flex flex-col shadow-sm hover:shadow-md transition-shadow">
+            {/* Image area - GIM style with margin and rounded top */}
+            <div className="relative aspect-[4/3] overflow-hidden rounded-t-2xl m-3 mb-0">
               <img
                 src={course.image}
                 alt={course.name}
@@ -61,23 +61,23 @@ export function CatalunyaCourseCard({ course, onQuickView }) {
                 <span>{course.location}</span>
               </button>
 
-              {/* Course name */}
+              {/* Course name - GIM size */}
               <Link to={'/courses/' + course.id} className="hover:opacity-80 transition-opacity flex-shrink-0">
-                <h3 className="font-heading text-base text-stone-900 mb-1.5 leading-snug" style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{course.name}</h3>
+                <h3 className="font-heading text-xl text-stone-900 mb-1.5 leading-snug" style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{course.name}</h3>
               </Link>
 
-              {/* Description - strict 2-line clamp */}
-              <p className="text-stone-500 text-xs leading-relaxed mb-3" style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', flexShrink: 0 }}>
+              {/* Description - GIM size */}
+              <p className="text-stone-500 text-sm leading-relaxed mb-3" style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', flexShrink: 0 }}>
                 {typeof course.description === 'object' ? course.description.en : course.description}
               </p>
 
-              {/* Holes / Par row */}
+              {/* Holes / Par row - GIM size */}
               <div className="flex items-center gap-1 text-stone-600 text-xs mb-2 flex-shrink-0 mt-auto">
                 <span className="uppercase tracking-wider text-stone-400 text-[10px]">Holes</span>
-                <span className="font-heading text-lg font-medium text-stone-800">{course.holes}</span>
+                <span className="font-heading text-xl font-medium text-stone-800">{course.holes}</span>
                 <span className="text-stone-300 mx-1.5">|</span>
                 <span className="uppercase tracking-wider text-stone-400 text-[10px]">Par</span>
-                <span className="font-heading text-lg font-medium text-stone-800">{course.par}</span>
+                <span className="font-heading text-xl font-medium text-stone-800">{course.par}</span>
               </div>
 
               {/* Hover hint */}
