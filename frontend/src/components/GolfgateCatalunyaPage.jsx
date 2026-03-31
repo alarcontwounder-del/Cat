@@ -434,17 +434,7 @@ export default function GolfgateCatalunyaPage() {
         {/* Contact Form */}
         <div className="max-w-lg mx-auto bg-white rounded-2xl p-6 border border-stone-100 shadow-sm fade-in-up">
           <h3 className="font-heading text-xl text-stone-900 mb-4 text-center">Send us a Message</h3>
-          <form onSubmit={function(e) { e.preventDefault(); alert('Thank you! We will get back to you soon.'); e.target.reset(); }} className="space-y-3">
-            <div className="grid grid-cols-2 gap-3">
-              <input type="text" required placeholder="Name" className="px-3 py-2.5 rounded-lg border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#CCFF00] focus:border-transparent" data-testid="contact-name" />
-              <input type="email" required placeholder="Email" className="px-3 py-2.5 rounded-lg border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#CCFF00] focus:border-transparent" data-testid="contact-email" />
-            </div>
-            <input type="text" placeholder="Travel dates" className="w-full px-3 py-2.5 rounded-lg border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#CCFF00] focus:border-transparent" />
-            <textarea placeholder="Message (optional)" rows="3" className="w-full px-3 py-2.5 rounded-lg border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#CCFF00] focus:border-transparent" />
-            <button type="submit" className="w-full py-2.5 rounded-full text-sm font-bold text-white transition-all hover:opacity-90" style={{ backgroundColor: '#f6416c' }} data-testid="contact-submit">
-              Send Inquiry
-            </button>
-          </form>
+          <ContactForm />
         </div>
       </section>
 
@@ -596,5 +586,54 @@ function CookieConsent() {
         >{t.cookie.prefs}</button>
       </div>
     </div>
+  );
+}
+
+
+function ContactForm() {
+  var nameState = useState('');
+  var name = nameState[0]; var setName = nameState[1];
+  var emailState = useState('');
+  var email = emailState[0]; var setEmail = emailState[1];
+  var datesState = useState('');
+  var dates = datesState[0]; var setDates = datesState[1];
+  var msgState = useState('');
+  var msg = msgState[0]; var setMsg = msgState[1];
+  var statusState = useState('idle');
+  var status = statusState[0]; var setStatus = statusState[1];
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    setStatus('sending');
+    axios.post(API + '/api/contact', { name: name, email: email, dates: dates, message: msg })
+      .then(function() { setStatus('sent'); setName(''); setEmail(''); setDates(''); setMsg(''); })
+      .catch(function() { setStatus('error'); });
+  }
+
+  if (status === 'sent') {
+    return (
+      <div className="text-center py-8">
+        <div className="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4" style={{ backgroundColor: '#CCFF00' }}>
+          <svg className="w-7 h-7 text-black" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M20 6L9 17l-5-5" /></svg>
+        </div>
+        <h4 className="font-heading text-lg text-stone-900 mb-1">Message Sent!</h4>
+        <p className="text-stone-500 text-sm">We will get back to you within 24 hours.</p>
+      </div>
+    );
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-3">
+      <div className="grid grid-cols-2 gap-3">
+        <input type="text" required placeholder="Name" value={name} onChange={function(e) { setName(e.target.value); }} className="px-3 py-2.5 rounded-lg border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#CCFF00]" data-testid="contact-name" />
+        <input type="email" required placeholder="Email" value={email} onChange={function(e) { setEmail(e.target.value); }} className="px-3 py-2.5 rounded-lg border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#CCFF00]" data-testid="contact-email" />
+      </div>
+      <input type="text" placeholder="Travel dates" value={dates} onChange={function(e) { setDates(e.target.value); }} className="w-full px-3 py-2.5 rounded-lg border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#CCFF00]" />
+      <textarea placeholder="Message (optional)" rows="3" value={msg} onChange={function(e) { setMsg(e.target.value); }} className="w-full px-3 py-2.5 rounded-lg border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#CCFF00]" />
+      {status === 'error' && <p className="text-red-500 text-xs text-center">Something went wrong. Please try again or email us directly.</p>}
+      <button type="submit" disabled={status === 'sending'} className="w-full py-2.5 rounded-full text-sm font-bold text-white transition-all hover:opacity-90 disabled:opacity-50" style={{ backgroundColor: '#f6416c' }} data-testid="contact-submit">
+        {status === 'sending' ? 'Sending...' : 'Send Inquiry'}
+      </button>
+    </form>
   );
 }

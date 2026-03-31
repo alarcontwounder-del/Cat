@@ -8,6 +8,7 @@ import os
 import logging
 import asyncio
 import resend
+import resend
 import httpx
 import requests as sync_requests
 from pathlib import Path
@@ -848,6 +849,75 @@ async def delete_blog_post(post_id: str):
 
 
 # Public blog posts endpoint (published only)
+
+# ============ CONTACT FORM EMAIL (RESEND) ============
+resend.api_key = os.environ.get("RESEND_API_KEY", "")
+SENDER_EMAIL = os.environ.get("SENDER_EMAIL", "onboarding@resend.dev")
+CONTACT_EMAIL = "contact@golfgatecatalunya.es"
+
+@api_router.post("/contact")
+async def send_contact_email(request: Request):
+    """Send contact form email via Resend"""
+    body = await request.json()
+    name = body.get("name", "")
+    email = body.get("email", "")
+    dates = body.get("dates", "")
+    message = body.get("message", "")
+
+    if not name or not email:
+        raise HTTPException(status_code=400, detail="Name and email required")
+
+    html_content = f"""
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+      <div style="background: #CCFF00; padding: 20px; text-align: center;">
+        <h1 style="margin: 0; font-size: 22px; color: #1a1a1a;">New Contact Inquiry</h1>
+        <p style="margin: 4px 0 0; color: #333; font-size: 13px;">GOLFGATE Catalunya</p>
+      </div>
+      <div style="padding: 24px; background: #ffffff;">
+        <table style="width: 100%; border-collapse: collapse;">
+          <tr><td style="padding: 8px 0; color: #888; font-size: 13px; width: 100px;">Name</td><td style="padding: 8px 0; font-size: 14px; color: #333; font-weight: bold;">{name}</td></tr>
+          <tr><td style="padding: 8px 0; color: #888; font-size: 13px;">Email</td><td style="padding: 8px 0; font-size: 14px;"><a href="mailto:{email}" style="color: #f6416c;">{email}</a></td></tr>
+          <tr><td style="padding: 8px 0; color: #888; font-size: 13px;">Travel Dates</td><td style="padding: 8px 0; font-size: 14px; color: #333;">{dates or 'Not specified'}</td></tr>
+        </table>
+        <div style="margin-top: 16px; padding: 16px; background: #f9f9f9; border-radius: 8px;">
+          <p style="margin: 0 0 4px; color: #888; font-size: 12px;">Message</p>
+          <p style="margin: 0; color: #333; font-size: 14px; line-height: 1.5;">{message or 'No message provided'}</p>
+        </div>
+      </div>
+      <div style="padding: 16px; background: #1a1a1a; text-align: center;">
+        <p style="margin: 0; color: #666; font-size: 11px;">Sent from golfgatecatalunya.es contact form</p>
+      </div>
+    </div>
+    """
+
+    try:
+        params = {
+            "from": f"GOLFGATE Catalunya <{SENDER_EMAIL}>",
+            "to": [CONTACT_EMAIL],
+            "reply_to": email,
+            "subject": f"New Golf Inquiry from {name}",
+            "html": html_content
+        }
+        result = await asyncio.to_thread(resend.Emails.send, params)
+        
+        # Store in DB for admin panel
+        await db.contact_inquiries.insert_one({
+            "name": name, "email": email, "dates": dates, "message": message,
+            "created_at": datetime.now(timezone.utc).isoformat(),
+            "email_sent": True
+        })
+        
+        return {"success": True, "message": "Email sent successfully"}
+    except Exception as e:
+        # Store anyway even if email fails
+        await db.contact_inquiries.insert_one({
+            "name": name, "email": email, "dates": dates, "message": message,
+            "created_at": datetime.now(timezone.utc).isoformat(),
+            "email_sent": False, "error": str(e)
+        })
+        raise HTTPException(status_code=500, detail=f"Failed to send email: {str(e)}")
+
+
 @api_router.get("/blog-posts")
 async def get_public_blog_posts():
     """Get published blog posts for public blog page"""
