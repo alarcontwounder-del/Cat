@@ -86,57 +86,48 @@ export function CatalunyaCourseCard({ course, onQuickView }) {
           </div>
         </div>
 
-        {/* BACK - GIM exact structure */}
+        {/* BACK - EXACT GIM structure */}
         <div className="flip-card-back">
-          <div className="rounded-2xl overflow-hidden h-full flex flex-col" style={{ background: 'linear-gradient(135deg, #CCFF00 0%, #89F336 40%, #38A711 100%)' }}>
-            <div className="p-5 pb-3">
-              <h3 className="font-heading text-2xl text-black mb-5 leading-tight">{course.name}</h3>
-              {/* LOCATION row */}
-              <div className="flex items-start gap-3 mb-3">
-                <div className="w-8 h-8 bg-black/10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <MapPin className="w-4 h-4 text-black/60" />
+          <div className="rounded-2xl overflow-hidden h-full flex flex-col p-5" style={{ background: 'linear-gradient(135deg, #CCFF00 0%, #89F336 40%, #38A711 100%)' }}>
+            <h3 className="font-heading text-2xl mb-5">{course.name}</h3>
+            <div className="space-y-3">
+              <div className="flex items-start gap-3 cursor-pointer hover:opacity-80 transition-opacity" onClick={function() { window.open(mapsUrl, '_blank'); }}>
+                <div className="w-9 h-9 bg-black/15 rounded-full flex items-center justify-center flex-shrink-0">
+                  <MapPin className="w-4 h-4" />
                 </div>
                 <div>
-                  <p className="text-black/50 text-[10px] uppercase tracking-wider font-semibold">Location</p>
-                  <p className="text-sm text-black/90">{course.location}</p>
+                  <p className="text-black/60 text-xs uppercase tracking-wider mb-0.5">Location</p>
+                  <p className="text-sm">{course.location}</p>
                 </div>
               </div>
-              {/* COURSE row */}
-              <div className="flex items-start gap-3 mb-4">
-                <div className="w-8 h-8 bg-black/10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <svg className="w-4 h-4 text-black/60" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" x2="4" y1="22" y2="15"/></svg>
+              <div className="flex items-start gap-3">
+                <div className="w-9 h-9 bg-black/15 rounded-full flex items-center justify-center flex-shrink-0">
+                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" /><line x1="4" x2="4" y1="22" y2="15" /></svg>
                 </div>
                 <div>
-                  <p className="text-black/50 text-[10px] uppercase tracking-wider font-semibold">Course</p>
-                  <p className="text-sm text-black/90">{course.holes} Holes &bull; Par {course.par}</p>
+                  <p className="text-black/60 text-xs uppercase tracking-wider mb-0.5">Course</p>
+                  <p className="text-sm">{course.holes} Holes &bull; Par {course.par}</p>
                 </div>
               </div>
-            </div>
-
-            <div className="flex-1 px-5">
-              {/* Feature tags */}
               {course.features && (
-                <div className="flex flex-wrap gap-1.5 mb-3">
-                  {course.features.slice(0, 4).map(function(f) {
-                    return <span key={f} className="text-[10px] bg-black/10 text-black/70 px-2.5 py-1 rounded-full">{f}</span>;
-                  })}
+                <div className="flex flex-wrap gap-1.5 mt-3">
+                  {course.features.slice(0, 4).map(function(f) { return <span key={f} className="text-xs px-2 py-1 bg-black/10 rounded-full">{f}</span>; })}
                 </div>
               )}
-              {/* Green Fee box */}
               {course.price_from && (
-                <div className="bg-black/10 rounded-lg px-4 py-2.5 flex items-center gap-2">
-                  <svg className="w-4 h-4 text-black/60" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 18V6"/></svg>
-                  <span className="text-sm font-medium text-black/80">Green Fee from &euro;{course.price_from}</span>
+                <div className="bg-black/10 rounded-lg p-3 mt-3">
+                  <p className="text-sm font-medium flex items-center gap-2">
+                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" /><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" /><path d="M4 22h16" /><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22" /><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22" /><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z" /></svg>
+                    Green Fee from &euro;{course.price_from}
+                  </p>
                 </div>
               )}
             </div>
-
-            {/* Buttons */}
-            <div className="p-5 pt-3 space-y-2">
-              <a href={course.booking_url} target="_blank" rel="noopener noreferrer" className="w-full flex items-center justify-center gap-2 bg-white text-black px-4 py-3 rounded-full text-sm font-semibold hover:bg-white/90 transition-all shadow-md" data-testid={'book-btn-' + course.id}>
-                Book a Tee Time now! <ExternalLink className="w-3.5 h-3.5" />
+            <div className="flex flex-col gap-2 mt-5">
+              <a href={course.booking_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-1.5 bg-white text-stone-800 px-4 py-2 rounded-full text-xs font-semibold hover:bg-white/90 transition-all" data-testid={'book-btn-' + course.id}>
+                Book a Tee Time now! <ExternalLink className="w-3 h-3" />
               </a>
-              <Link to={'/courses/' + course.id} className="w-full flex items-center justify-center gap-2 bg-black/15 text-black px-4 py-2.5 rounded-full text-xs font-medium hover:bg-black/25 transition-all" data-testid={'details-btn-' + course.id}>
+              <Link to={'/courses/' + course.id} className="inline-flex items-center justify-center gap-1.5 bg-black/15 px-4 py-2 rounded-full text-xs font-medium hover:bg-black/25 transition-all border border-black/20" data-testid={'details-btn-' + course.id}>
                 View Details
               </Link>
             </div>
