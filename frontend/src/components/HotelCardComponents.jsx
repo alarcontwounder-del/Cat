@@ -38,32 +38,30 @@ export function HotelCardBack(props) {
   var h = props.hotel;
   return (
     <div className="flip-card-back rounded-2xl p-6 text-white" style={{ background: 'linear-gradient(135deg, #f6416c 0%, #e8365f 40%, #d42a52 100%)' }}>
-      <h3 className="font-heading text-2xl mb-6 text-center">{h.name}</h3>
-      <div className="space-y-4 text-center">
-        <div className="flex items-center justify-center gap-3 cursor-pointer hover:opacity-80 transition-opacity">
+      <h3 className="font-heading text-2xl mb-6">{h.name}</h3>
+      <div className="space-y-4">
+        <div className="flex items-start gap-3 cursor-pointer hover:opacity-80 transition-opacity">
           <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
             <Navigation className="w-5 h-5" />
           </div>
-          <div className="text-left">
+          <div>
             <p className="text-white/70 text-xs uppercase tracking-wider mb-1">Location</p>
             <p className="text-sm">{h.location}</p>
           </div>
         </div>
-        <div className="bg-white/10 rounded-lg p-3">
+        <div className="bg-white/10 rounded-lg p-3 mt-4">
           <p className="text-sm font-medium">Exclusive: Golf & Stay Package</p>
         </div>
         {h.nearest_golf && (
-          <div className="flex items-center justify-center gap-2 text-white/80 text-sm">
+          <div className="flex items-center gap-2 text-white/80 text-sm mt-3">
             <Navigation className="w-4 h-4" />
             <span>{h.nearest_golf}</span>
           </div>
         )}
       </div>
-      <div className="text-center mt-6">
-        <a href={h.booking_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 bg-white text-stone-800 px-5 py-2.5 rounded-full text-sm font-medium hover:bg-white/90 transition-all">
-          Book Now <ExternalLink className="w-3.5 h-3.5" />
-        </a>
-      </div>
+      <a href={h.booking_url} target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex items-center justify-center gap-2 bg-white text-stone-800 px-5 py-2.5 rounded-full text-sm font-medium hover:bg-white/90 transition-all">
+        Book Now <ExternalLink className="w-3.5 h-3.5" />
+      </a>
     </div>
   );
 }
