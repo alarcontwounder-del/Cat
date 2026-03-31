@@ -60,7 +60,7 @@ export default function CatalunyaHotelsPage() {
       </section>
 
       <section className="py-12 md:py-16">
-        <div className="max-w-6xl mx-auto px-6">
+        <div className="max-w-6xl mx-auto px-6 md:px-12">
           {loading ? (
             <div className="flex items-center justify-center py-20">
               <div className="w-8 h-8 border-4 border-stone-300 border-t-stone-600 rounded-full animate-spin" />
