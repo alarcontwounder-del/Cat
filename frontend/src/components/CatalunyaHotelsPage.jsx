@@ -69,7 +69,7 @@ export default function CatalunyaHotelsPage() {
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {hotels.map(function(hotel) {
                 return (
-                  <div key={hotel.id} className="flip-card" data-testid={'hotel-card-' + hotel.id} onClick={function(e) { e.currentTarget.classList.toggle('flipped'); }}>
+                  <div key={hotel.id} className="flip-card" data-testid={'hotel-card-' + hotel.id} onClick={function(e) { if (e.target.closest('a') || e.target.closest('button')) return; e.currentTarget.classList.toggle('flipped'); }}>
                     <div className="flip-card-inner">
                       <HotelCardFront hotel={hotel} onQuickView={setQvHotel} />
                       <HotelCardBack hotel={hotel} />

@@ -13,7 +13,7 @@ export function CatalunyaCourseCard({ course, onQuickView }) {
     <div
       className={'flip-card group' + (isFlipped ? ' flipped' : '')}
       data-testid={'course-card-' + course.id}
-      onClick={function() { setIsFlipped(!isFlipped); }}
+      onClick={function(e) { if (e.target.closest('a') || e.target.closest('button')) return; setIsFlipped(!isFlipped); }}
     >
       <div className="flip-card-inner">
         {/* FRONT - Matches GIM layout: image top, text below */}
