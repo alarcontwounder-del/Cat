@@ -13,10 +13,9 @@ export function HotelCardFront(props) {
         </button>
       </div>
       <div className="p-5 pt-4">
-        {/* Hotel type + Region badges - GIM style */}
         <div className="flex flex-wrap gap-2 mb-3">
-          {h.hotel_type && <span className="text-xs text-stone-600 border border-stone-200 rounded-full px-2.5 py-1">{h.hotel_type}</span>}
-          {h.region && <span className="text-xs text-stone-600 border border-stone-200 rounded-full px-2.5 py-1">{h.region}</span>}
+          {h.hotel_type && <span className="text-xs text-stone-500 rounded-full px-2.5 py-1" style={{ backgroundColor: 'rgba(246,65,108,0.08)' }}>{h.hotel_type}</span>}
+          {h.region && <span className="text-xs text-stone-500 rounded-full px-2.5 py-1" style={{ backgroundColor: 'rgba(246,65,108,0.08)' }}>{h.region}</span>}
         </div>
         {h.nearest_golf && <div className="flex items-center gap-1.5 text-xs text-stone-500 mb-2"><Navigation className="w-3 h-3" /><span>{h.nearest_golf}</span></div>}
         <div className="flex items-center gap-2 text-stone-400 text-xs mb-2 cursor-pointer"><MapPin className="w-3.5 h-3.5" /><span>{h.location}</span></div>
@@ -37,29 +36,27 @@ export function HotelCardFront(props) {
 export function HotelCardBack(props) {
   var h = props.hotel;
   return (
-    <div className="flip-card-back rounded-2xl p-6 text-white" style={{ background: 'linear-gradient(135deg, #f6416c 0%, #e8365f 40%, #d42a52 100%)' }}>
-      <h3 className="font-heading text-2xl mb-6">{h.name}</h3>
-      <div className="space-y-4">
-        <div className="flex items-start gap-3 cursor-pointer hover:opacity-80 transition-opacity">
-          <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
-            <Navigation className="w-5 h-5" />
-          </div>
-          <div>
-            <p className="text-white/70 text-xs uppercase tracking-wider mb-1">Location</p>
-            <p className="text-sm">{h.location}</p>
-          </div>
+    <div className="flip-card-back rounded-2xl p-6 text-white flex flex-col justify-end" style={{ background: 'linear-gradient(135deg, #f6416c 0%, #e8365f 40%, #d42a52 100%)' }}>
+      <h3 className="font-heading text-2xl mb-5">{h.name}</h3>
+      <div className="flex items-start gap-3 mb-4">
+        <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
+          <Navigation className="w-5 h-5" />
         </div>
-        <div className="bg-white/10 rounded-lg p-3 mt-4">
-          <p className="text-sm font-medium">Exclusive: Golf & Stay Package</p>
+        <div>
+          <p className="text-white/70 text-xs uppercase tracking-wider mb-1">Location</p>
+          <p className="text-sm">{h.location}</p>
         </div>
-        {h.nearest_golf && (
-          <div className="flex items-center gap-2 text-white/80 text-sm mt-3">
-            <Navigation className="w-4 h-4" />
-            <span>{h.nearest_golf}</span>
-          </div>
-        )}
       </div>
-      <a href={h.booking_url} target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex items-center justify-center gap-2 bg-white text-stone-800 px-5 py-2.5 rounded-full text-sm font-medium hover:bg-white/90 transition-all">
+      <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 mb-4">
+        <p className="text-sm font-medium">Exclusive: Golf & Stay Package</p>
+      </div>
+      {h.nearest_golf && (
+        <div className="flex items-center gap-2 text-white/80 text-sm mb-5">
+          <Navigation className="w-4 h-4" />
+          <span>{h.nearest_golf}</span>
+        </div>
+      )}
+      <a href={h.booking_url} target="_blank" rel="noopener noreferrer" className="w-full inline-flex items-center justify-center gap-2 bg-white text-stone-800 px-5 py-2.5 rounded-full text-sm font-medium hover:bg-white/90 transition-all">
         Book Now <ExternalLink className="w-3.5 h-3.5" />
       </a>
     </div>
