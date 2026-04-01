@@ -91,12 +91,12 @@ export function ScrollIndicator() {
         top: '80px',
         bottom: '20px',
         width: '18px',
-        background: 'rgba(255,255,255,0.5)',
-        backdropFilter: 'blur(10px)',
-        WebkitBackdropFilter: 'blur(10px)',
+        background: 'transparent',
+        backdropFilter: 'none',
+        WebkitBackdropFilter: 'none',
         borderRadius: '100px 0 0 100px',
-        borderLeft: '1px solid rgba(255,255,255,0.6)',
-        transform: showing ? 'translateX(0)' : 'translateX(14px)',
+        border: 'none',
+        transform: showing ? 'translateX(0)' : 'translateX(22px)',
         transition: 'transform 0.35s ease',
         pointerEvents: showing ? 'auto' : 'auto'
       }}
