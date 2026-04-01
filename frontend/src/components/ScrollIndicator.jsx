@@ -7,12 +7,9 @@ export function ScrollIndicator() {
   var draggingState = useState(false);
   var isDragging = draggingState[0];
   var setIsDragging = draggingState[1];
-  var visibleState = useState(false);
-  var visible = visibleState[0];
-  var setVisible = visibleState[1];
-  var hoveringState = useState(false);
-  var hovering = hoveringState[0];
-  var setHovering = hoveringState[1];
+  var activeState = useState(false);
+  var isActive = activeState[0];
+  var setIsActive = activeState[1];
   var pastHeroState = useState(false);
   var pastHero = pastHeroState[0];
   var setPastHero = pastHeroState[1];
@@ -20,57 +17,50 @@ export function ScrollIndicator() {
   var hideTimer = useRef(null);
 
   useEffect(function() {
+    function showBar() {
+      setIsActive(true);
+      clearTimeout(hideTimer.current);
+      hideTimer.current = setTimeout(function() {
+        if (!isDragging) setIsActive(false);
+      }, 1800);
+    }
+
     function onScroll() {
       var coursesEl = document.getElementById('courses');
       var startY = coursesEl ? coursesEl.offsetTop * 0.5 : 300;
-      var scrollTop = window.scrollY;
+      setPastHero(window.scrollY > startY);
+
       var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if (docHeight > 0) setProgress(Math.max(0, Math.min(1, window.scrollY / docHeight)));
 
-      setPastHero(scrollTop > startY);
-
-      if (docHeight > 0) {
-        setProgress(Math.max(0, Math.min(1, scrollTop / docHeight)));
-      }
-
-      // Show on scroll
-      setVisible(true);
-      clearTimeout(hideTimer.current);
-      hideTimer.current = setTimeout(function() { setVisible(false); }, 2000);
+      showBar();
     }
 
-    // Detect mouse near right edge
     function onMouseMove(e) {
-      if (e.clientX > window.innerWidth - 40) {
-        setHovering(true);
-        clearTimeout(hideTimer.current);
-      } else {
-        setHovering(false);
-      }
+      if (e.clientX > window.innerWidth - 30) showBar();
     }
 
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('mousemove', onMouseMove, { passive: true });
-    onScroll();
     return function() {
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('mousemove', onMouseMove);
       clearTimeout(hideTimer.current);
     };
-  }, []);
+  }, [isDragging]);
 
   function scrollToRatio(clientY) {
     if (!trackRef.current) return;
     var rect = trackRef.current.getBoundingClientRect();
     var y = Math.max(0, Math.min(clientY - rect.top, rect.height));
-    var ratio = y / rect.height;
     var docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    window.scrollTo({ top: ratio * docHeight });
+    window.scrollTo({ top: (y / rect.height) * docHeight });
   }
 
   function onMouseDown(e) {
     e.preventDefault();
-    e.stopPropagation();
     setIsDragging(true);
+    setIsActive(true);
     scrollToRatio(e.clientY);
     function onMove(ev) { ev.preventDefault(); scrollToRatio(ev.clientY); }
     function onUp() { setIsDragging(false); document.removeEventListener('mousemove', onMove); document.removeEventListener('mouseup', onUp); }
@@ -80,6 +70,7 @@ export function ScrollIndicator() {
 
   function onTouchStart(e) {
     setIsDragging(true);
+    setIsActive(true);
     scrollToRatio(e.touches[0].clientY);
     function onMove(ev) { ev.preventDefault(); scrollToRatio(ev.touches[0].clientY); }
     function onEnd() { setIsDragging(false); document.removeEventListener('touchmove', onMove); document.removeEventListener('touchend', onEnd); }
@@ -89,43 +80,44 @@ export function ScrollIndicator() {
 
   if (!pastHero && !isDragging) return null;
 
-  var isShowing = visible || hovering || isDragging;
+  var showing = isActive || isDragging;
 
   return (
     <div
       ref={trackRef}
       className="fixed z-50 cursor-pointer"
       style={{
-        right: '4px',
+        right: '0px',
         top: '80px',
         bottom: '20px',
-        width: '20px',
-        background: 'rgba(255,255,255,0.45)',
-        backdropFilter: 'blur(12px)',
-        WebkitBackdropFilter: 'blur(12px)',
-        borderRadius: '100px',
-        border: '1px solid rgba(255,255,255,0.5)',
-        opacity: isShowing ? 1 : 0,
-        transition: 'opacity 0.4s ease',
-        pointerEvents: isShowing ? 'auto' : 'none'
+        width: '18px',
+        background: 'rgba(255,255,255,0.5)',
+        backdropFilter: 'blur(10px)',
+        WebkitBackdropFilter: 'blur(10px)',
+        borderRadius: '100px 0 0 100px',
+        borderLeft: '1px solid rgba(255,255,255,0.6)',
+        transform: showing ? 'translateX(0)' : 'translateX(14px)',
+        transition: 'transform 0.35s ease',
+        pointerEvents: showing ? 'auto' : 'auto'
       }}
       onMouseDown={onMouseDown}
       onTouchStart={onTouchStart}
-      data-testid="scroll-indicator-bar"
+      onMouseEnter={function() { setIsActive(true); clearTimeout(hideTimer.current); }}
+      onMouseLeave={function() { if (!isDragging) { hideTimer.current = setTimeout(function() { setIsActive(false); }, 800); } }}
     >
       <div
         style={{
           position: 'absolute',
           left: '3px',
           right: '3px',
-          height: '40px',
-          top: 'calc(' + (progress * 100) + '% - ' + (progress * 40) + 'px)',
-          background: 'rgba(246,65,108,0.55)',
-          backdropFilter: 'blur(8px)',
-          WebkitBackdropFilter: 'blur(8px)',
+          height: '36px',
+          top: 'calc(' + (progress * 100) + '% - ' + (progress * 36) + 'px)',
+          background: 'rgba(246,65,108,0.6)',
+          backdropFilter: 'blur(6px)',
+          WebkitBackdropFilter: 'blur(6px)',
           borderRadius: '100px',
-          border: '1px solid rgba(246,65,108,0.4)',
-          transition: isDragging ? 'none' : 'top 0.15s ease-out'
+          border: '1px solid rgba(246,65,108,0.35)',
+          transition: isDragging ? 'none' : 'top 0.12s ease-out'
         }}
       />
     </div>
