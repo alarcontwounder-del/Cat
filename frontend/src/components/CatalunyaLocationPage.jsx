@@ -157,7 +157,7 @@ export default function CatalunyaLocationPage() {
 
   if (!region) {
     return (
-      <div className="min-h-screen bg-white flex flex-col items-center justify-center">
+      <div className="min-h-screen flex flex-col items-center justify-center">
         <p className="text-stone-500 text-lg mb-4">Region not found.</p>
         <Link to="/" className="text-stone-800 font-medium hover:underline">Back to Home</Link>
       </div>
@@ -165,19 +165,19 @@ export default function CatalunyaLocationPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white" data-testid="location-page">
-      <nav className="sticky top-0 z-40 shadow-sm" style={{ backgroundColor: '#CCFF00' }}>
-        <div className="max-w-6xl mx-auto px-4 md:px-6 py-3 flex items-center justify-between">
+    <div className="min-h-screen" data-testid="location-page">
+      <nav className="sticky top-0 z-40 shadow-md" style={{ backgroundColor: '#CCFF00' }}>
+        <div className="max-w-6xl mx-auto px-4 md:px-6 py-4 flex items-center justify-between">
           <Link to="/" className="flex-shrink-0">
-            <img src="/golfgate-logo-nav.png" alt="GOLFGATE Catalunya" className="h-12 md:h-14 w-auto" />
+            <img src="/golfgate-logo-nav.png" alt="GOLFGATE Catalunya" className="h-12 md:h-20 w-auto" />
           </Link>
-          <Link to="/" className="inline-flex items-center gap-2 text-black/70 text-sm font-medium hover:text-black transition-colors">
+          <Link to="/" className="inline-flex items-center gap-2 text-sm font-medium hover:opacity-70 transition-opacity" style={{ color: '#f6416c' }}>
             <ArrowLeft className="w-4 h-4" /> Back to Home
           </Link>
         </div>
       </nav>
 
-      <section className="py-16 md:py-20 bg-stone-50">
+      <section className="py-16 md:py-20" >
         <div className="max-w-5xl mx-auto px-6 text-center">
           <p className="text-stone-500 text-sm uppercase tracking-[0.2em] mb-4">{region.subtitle}</p>
           <h1 className="font-heading text-4xl md:text-5xl text-stone-900 mb-6">{region.title}</h1>
@@ -231,7 +231,7 @@ export default function CatalunyaLocationPage() {
 
       {/* FAQ Section */}
       {region.faqs && region.faqs.length > 0 && (
-        <section className="py-12 md:py-16 bg-stone-50">
+        <section className="py-12 md:py-16" >
           <div className="max-w-3xl mx-auto px-6">
             <h2 className="font-heading text-2xl md:text-3xl text-stone-900 mb-8 text-center">Frequently Asked Questions</h2>
             <div className="space-y-4">
@@ -243,7 +243,7 @@ export default function CatalunyaLocationPage() {
         </section>
       )}
 
-      <section className="py-12 bg-stone-50">
+      <section className="py-12" >
         <div className="max-w-4xl mx-auto px-6 text-center">
           <h2 className="font-heading text-2xl md:text-3xl text-stone-900 mb-4">Explore More Golf in Catalunya</h2>
           <div className="flex flex-wrap justify-center gap-3 mt-6">

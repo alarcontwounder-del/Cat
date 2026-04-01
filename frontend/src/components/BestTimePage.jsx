@@ -11,15 +11,15 @@ export default function BestTimePage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white">
-      <nav className="sticky top-0 z-40 shadow-sm" style={{ backgroundColor: '#CCFF00' }}>
-        <div className="max-w-6xl mx-auto px-4 md:px-6 py-3 flex items-center justify-between">
-          <Link to="/" className="flex-shrink-0"><img src="/golfgate-logo-nav.png" alt="GOLFGATE Catalunya" className="h-12 md:h-14 w-auto" /></Link>
+    <div className="min-h-screen">
+      <nav className="sticky top-0 z-40 shadow-md" style={{ backgroundColor: '#CCFF00' }}>
+        <div className="max-w-6xl mx-auto px-4 md:px-6 py-4 flex items-center justify-between">
+          <Link to="/" className="flex-shrink-0"><img src="/golfgate-logo-nav.png" alt="GOLFGATE Catalunya" className="h-12 md:h-20 w-auto" /></Link>
           <Link to="/" className="inline-flex items-center gap-2 text-sm font-medium hover:opacity-70" style={{ color: '#f6416c' }}><ArrowLeft className="w-4 h-4" /> Home</Link>
         </div>
       </nav>
 
-      <section className="py-16 md:py-20 bg-stone-50">
+      <section className="py-16 md:py-20" >
         <div className="max-w-5xl mx-auto px-6 text-center">
           <p className="text-stone-500 text-sm uppercase tracking-[0.2em] mb-4">Seasonal Guide</p>
           <h1 className="font-heading text-4xl md:text-5xl text-stone-900 mb-4">Best Time to Play Golf in Catalunya</h1>

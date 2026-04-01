@@ -42,15 +42,15 @@ export default function CatalunyaComparePage() {
   var available = courses.filter(function(c) { return !selected.find(function(s) { return s.id === c.id; }); });
 
   return (
-    <div className="min-h-screen bg-white" data-testid="compare-page">
-      <nav className="sticky top-0 z-40 shadow-sm" style={{ backgroundColor: '#CCFF00' }}>
-        <div className="max-w-6xl mx-auto px-4 md:px-6 py-3 flex items-center justify-between">
-          <Link to="/" className="flex-shrink-0"><img src="/golfgate-logo-nav.png" alt="GOLFGATE Catalunya" className="h-12 md:h-14 w-auto" /></Link>
-          <Link to="/" className="inline-flex items-center gap-2 text-black/70 text-sm font-medium hover:text-black transition-colors"><ArrowLeft className="w-4 h-4" /> Back to Home</Link>
+    <div className="min-h-screen" data-testid="compare-page">
+      <nav className="sticky top-0 z-40 shadow-md" style={{ backgroundColor: '#CCFF00' }}>
+        <div className="max-w-6xl mx-auto px-4 md:px-6 py-4 flex items-center justify-between">
+          <Link to="/" className="flex-shrink-0"><img src="/golfgate-logo-nav.png" alt="GOLFGATE Catalunya" className="h-12 md:h-20 w-auto" /></Link>
+          <Link to="/" className="inline-flex items-center gap-2 text-sm font-medium hover:opacity-70 transition-opacity" style={{ color: '#f6416c' }}><ArrowLeft className="w-4 h-4" /> Back to Home</Link>
         </div>
       </nav>
 
-      <section className="py-12 md:py-16 bg-stone-50">
+      <section className="py-12 md:py-16" >
         <div className="max-w-5xl mx-auto px-6 text-center">
           <p className="text-stone-500 text-sm uppercase tracking-[0.2em] mb-4">Course Comparison</p>
           <h1 className="font-heading text-4xl md:text-5xl text-stone-900 mb-4">Compare Golf Courses</h1>
@@ -79,7 +79,7 @@ export default function CatalunyaComparePage() {
                 );
               }
               return (
-                <button key={slot} onClick={function() { setPickerSlot(slot); }} className="bg-stone-50 rounded-2xl border-2 border-dashed border-stone-200 h-52 flex flex-col items-center justify-center gap-2 hover:border-[#CCFF00] hover:bg-[#CCFF00]/5 transition-all cursor-pointer" data-testid={'add-slot-' + slot}>
+                <button key={slot} onClick={function() { setPickerSlot(slot); }} className="bg-stone-50 rounded-2xl border-2 border-dashed border-stone-200 h-52 flex flex-col items-center justify-center gap-2 transition-all cursor-pointer" style={{ }} onMouseEnter={function(e) { e.currentTarget.style.borderColor = 'rgba(246,65,108,0.5)'; e.currentTarget.style.backgroundColor = 'rgba(246,65,108,0.04)'; }} onMouseLeave={function(e) { e.currentTarget.style.borderColor = ''; e.currentTarget.style.backgroundColor = ''; }} data-testid={'add-slot-' + slot}>
                   <div className="w-10 h-10 rounded-full bg-stone-200 flex items-center justify-center"><Plus className="w-5 h-5 text-stone-500" /></div>
                   <p className="text-sm text-stone-400 font-medium">Select Course {slot + 1}</p>
                 </button>

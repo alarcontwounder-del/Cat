@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { MapPin, Flag, Trophy, ChevronRight, ExternalLink, Navigation, Star } from 'lucide-react';
+import { MapPin, Flag, Trophy, ChevronRight, ExternalLink, Navigation, Star, ArrowLeft } from 'lucide-react';
 import axios from 'axios';
 
 var API = process.env.REACT_APP_BACKEND_URL;
@@ -73,7 +73,7 @@ export default function CatalunyaCoursePage() {
   var mapsUrl = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(course.full_address || course.name + ' Catalunya Spain');
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen">
       <NavBarSimple />
       <BreadcrumbHero course={course} />
       <ContentArea course={course} desc={desc} mapsUrl={mapsUrl} />
@@ -84,7 +84,7 @@ export default function CatalunyaCoursePage() {
 
 function Spinner() {
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center">
+    <div className="min-h-screen flex items-center justify-center">
       <div className="w-8 h-8 border-4 border-stone-300 border-t-[#EF476F] rounded-full animate-spin" />
     </div>
   );
@@ -93,12 +93,12 @@ function Spinner() {
 function NavBarSimple() {
   return (
     <nav className="sticky top-0 z-40 shadow-md" style={{ backgroundColor: '#CCFF00' }}>
-      <div className="max-w-7xl mx-auto px-6 py-2 flex items-center justify-between">
+      <div className="max-w-6xl mx-auto px-4 md:px-6 py-4 flex items-center justify-between">
         <Link to="/">
-          <img src={LOGO} alt="GOLFGATE Catalunya" className="h-16 md:h-20 w-auto" />
+          <img src="/golfgate-logo-nav.png" alt="GOLFGATE Catalunya" className="h-12 md:h-20 w-auto" />
         </Link>
-        <Link to="/#courses" className="bg-black text-[#CCFF00] px-6 py-2.5 rounded-full text-sm font-bold hover:bg-black/80 transition-all">
-          Book a Tee Time Now
+        <Link to="/" className="inline-flex items-center gap-2 text-sm font-medium hover:opacity-70 transition-opacity" style={{ color: '#f6416c' }}>
+          <ArrowLeft className="w-4 h-4" /> Back to Home
         </Link>
       </div>
     </nav>

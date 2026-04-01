@@ -30,7 +30,7 @@ export default function CatalunyaBlogPostPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center">
         <div className="w-8 h-8 border-4 border-stone-300 border-t-stone-600 rounded-full animate-spin" />
       </div>
     );
@@ -38,7 +38,7 @@ export default function CatalunyaBlogPostPage() {
 
   if (!post) {
     return (
-      <div className="min-h-screen bg-white flex flex-col items-center justify-center gap-4">
+      <div className="min-h-screen flex flex-col items-center justify-center gap-4">
         <p className="text-stone-500 text-lg">Post not found.</p>
         <Link to="/blog" className="text-stone-800 font-medium hover:underline">Back to Blog</Link>
       </div>
@@ -46,14 +46,14 @@ export default function CatalunyaBlogPostPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white" data-testid="blog-post-page">
+    <div className="min-h-screen" data-testid="blog-post-page">
       {/* Nav */}
-      <nav className="sticky top-0 z-40 shadow-sm" style={{ backgroundColor: '#CCFF00' }}>
-        <div className="max-w-6xl mx-auto px-4 md:px-6 py-3 flex items-center justify-between">
+      <nav className="sticky top-0 z-40 shadow-md" style={{ backgroundColor: '#CCFF00' }}>
+        <div className="max-w-6xl mx-auto px-4 md:px-6 py-4 flex items-center justify-between">
           <Link to="/" className="flex-shrink-0">
-            <img src="/golfgate-logo-nav.png" alt="GOLFGATE Catalunya" className="h-12 md:h-14 w-auto" />
+            <img src="/golfgate-logo-nav.png" alt="GOLFGATE Catalunya" className="h-12 md:h-20 w-auto" />
           </Link>
-          <Link to="/blog" className="inline-flex items-center gap-2 text-black/70 text-sm font-medium hover:text-black transition-colors">
+          <Link to="/blog" className="inline-flex items-center gap-2 text-sm font-medium hover:opacity-70 transition-opacity" style={{ color: '#f6416c' }}>
             <ArrowLeft className="w-4 h-4" /> Back to Blog
           </Link>
         </div>
