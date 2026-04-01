@@ -1,94 +1,110 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 export function ScrollIndicator() {
   var progressState = useState(0);
   var progress = progressState[0];
   var setProgress = progressState[1];
-  var visibleState = useState(false);
-  var visible = visibleState[0];
-  var setVisible = visibleState[1];
-
-  var dragging = useState(false);
-  var isDragging = dragging[0];
-  var setIsDragging = dragging[1];
+  var draggingState = useState(false);
+  var isDragging = draggingState[0];
+  var setIsDragging = draggingState[1];
+  var trackRef = useRef(null);
+  var showState = useState(false);
+  var show = showState[0];
+  var setShow = showState[1];
 
   useEffect(function() {
-    var timeout;
     function onScroll() {
+      // Get courses section top as the start point
+      var coursesEl = document.getElementById('courses');
+      var startY = coursesEl ? coursesEl.offsetTop : 0;
       var scrollTop = window.scrollY;
       var docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      if (docHeight > 0) {
-        setProgress(scrollTop / docHeight);
+
+      // Only show after hero
+      if (scrollTop > startY * 0.5) {
+        setShow(true);
+      } else {
+        setShow(false);
       }
-      setVisible(true);
-      clearTimeout(timeout);
-      timeout = setTimeout(function() { if (!isDragging) setVisible(false); }, 1500);
+
+      if (docHeight > 0) {
+        setProgress(Math.max(0, Math.min(1, scrollTop / docHeight)));
+      }
     }
     window.addEventListener('scroll', onScroll, { passive: true });
-    return function() { window.removeEventListener('scroll', onScroll); clearTimeout(timeout); };
-  }, [isDragging]);
+    onScroll();
+    return function() { window.removeEventListener('scroll', onScroll); };
+  }, []);
 
-  function scrollToPosition(clientY) {
-    var track = document.getElementById('scroll-track');
-    if (!track) return;
-    var rect = track.getBoundingClientRect();
-    var clickY = Math.max(0, Math.min(clientY - rect.top, rect.height));
-    var ratio = clickY / rect.height;
+  function scrollToRatio(clientY) {
+    if (!trackRef.current) return;
+    var rect = trackRef.current.getBoundingClientRect();
+    var y = Math.max(0, Math.min(clientY - rect.top, rect.height));
+    var ratio = y / rect.height;
     var docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    window.scrollTo({ top: ratio * docHeight, behavior: 'smooth' });
+    window.scrollTo({ top: ratio * docHeight });
   }
 
-  function handleMouseDown(e) {
+  function onMouseDown(e) {
     e.preventDefault();
+    e.stopPropagation();
     setIsDragging(true);
-    setVisible(true);
-    scrollToPosition(e.clientY);
-
-    function onMove(ev) { scrollToPosition(ev.clientY); }
-    function onUp() {
-      setIsDragging(false);
-      document.removeEventListener('mousemove', onMove);
-      document.removeEventListener('mouseup', onUp);
-    }
+    scrollToRatio(e.clientY);
+    function onMove(ev) { ev.preventDefault(); scrollToRatio(ev.clientY); }
+    function onUp() { setIsDragging(false); document.removeEventListener('mousemove', onMove); document.removeEventListener('mouseup', onUp); }
     document.addEventListener('mousemove', onMove);
     document.addEventListener('mouseup', onUp);
   }
 
-  function handleTouchStart(e) {
+  function onTouchStart(e) {
     setIsDragging(true);
-    setVisible(true);
-    scrollToPosition(e.touches[0].clientY);
-
-    function onMove(ev) { ev.preventDefault(); scrollToPosition(ev.touches[0].clientY); }
-    function onEnd() {
-      setIsDragging(false);
-      document.removeEventListener('touchmove', onMove);
-      document.removeEventListener('touchend', onEnd);
-    }
+    scrollToRatio(e.touches[0].clientY);
+    function onMove(ev) { ev.preventDefault(); scrollToRatio(ev.touches[0].clientY); }
+    function onEnd() { setIsDragging(false); document.removeEventListener('touchmove', onMove); document.removeEventListener('touchend', onEnd); }
     document.addEventListener('touchmove', onMove, { passive: false });
     document.addEventListener('touchend', onEnd);
   }
 
+  if (!show && !isDragging) return null;
+
+  var pillHeight = 40;
+
   return (
     <div
-      id="scroll-track"
-      className="fixed right-1.5 top-1/2 -translate-y-1/2 z-50 transition-opacity duration-300 cursor-pointer"
-      style={{ opacity: visible || isDragging ? 1 : 0.25, height: '40vh', width: '10px' }}
-      onMouseDown={handleMouseDown}
-      onTouchStart={handleTouchStart}
+      ref={trackRef}
+      className="fixed z-50 cursor-pointer"
+      style={{
+        right: '6px',
+        top: '80px',
+        bottom: '20px',
+        width: '14px',
+        background: 'rgba(255,255,255,0.3)',
+        backdropFilter: 'blur(8px)',
+        WebkitBackdropFilter: 'blur(8px)',
+        borderRadius: '100px',
+        border: '1px solid rgba(255,255,255,0.4)',
+        opacity: isDragging ? 1 : 0.7,
+        transition: 'opacity 0.3s'
+      }}
+      onMouseDown={onMouseDown}
+      onTouchStart={onTouchStart}
       data-testid="scroll-indicator-bar"
     >
-      <div className="w-full h-full rounded-full relative" style={{ backgroundColor: 'rgba(246,65,108,0.15)' }}>
-        <div
-          className="absolute left-0 w-full rounded-full transition-all duration-100"
-          style={{
-            backgroundColor: '#f6416c',
-            height: '18%',
-            top: (progress * 82) + '%',
-            borderRadius: '100px'
-          }}
-        />
-      </div>
+      <div
+        style={{
+          position: 'absolute',
+          left: '2px',
+          right: '2px',
+          height: pillHeight + 'px',
+          top: 'calc(' + (progress * 100) + '% - ' + (progress * pillHeight) + 'px)',
+          background: 'rgba(246,65,108,0.4)',
+          backdropFilter: 'blur(6px)',
+          WebkitBackdropFilter: 'blur(6px)',
+          borderRadius: '100px',
+          border: '1px solid rgba(246,65,108,0.3)',
+          transition: isDragging ? 'none' : 'top 0.15s ease-out'
+        }}
+      />
     </div>
   );
 }
