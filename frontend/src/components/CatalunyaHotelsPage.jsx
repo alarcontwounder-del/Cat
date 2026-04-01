@@ -17,6 +17,9 @@ export default function CatalunyaHotelsPage() {
   var qvState = useState(null);
   var qvHotel = qvState[0];
   var setQvHotel = qvState[1];
+  var quoteState = useState(null);
+  var quoteHotel = quoteState[0];
+  var setQuoteHotel = quoteState[1];
 
   useEffect(function() {
     window.scrollTo(0, 0);
@@ -72,7 +75,7 @@ export default function CatalunyaHotelsPage() {
                   <div key={hotel.id} className="flip-card" data-testid={'hotel-card-' + hotel.id} onClick={function(e) { if (e.target.closest('a') || e.target.closest('button')) return; e.currentTarget.classList.toggle('flipped'); }}>
                     <div className="flip-card-inner">
                       <HotelCardFront hotel={hotel} onQuickView={setQvHotel} />
-                      <HotelCardBack hotel={hotel} />
+                      <HotelCardBack hotel={hotel} onRequestQuote={setQuoteHotel} />
                     </div>
                   </div>
                 );
@@ -87,6 +90,30 @@ export default function CatalunyaHotelsPage() {
       </div>
 
       {qvHotel && <HotelQuickView hotel={qvHotel} onClose={function() { setQvHotel(null); }} />}
+
+      {quoteHotel && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4" onClick={function() { setQuoteHotel(null); }}>
+          <div className="absolute inset-0 bg-black/60" />
+          <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-md p-6" onClick={function(e) { e.stopPropagation(); }}>
+            <button onClick={function() { setQuoteHotel(null); }} className="absolute top-4 right-4 text-stone-400 hover:text-stone-600 text-lg">&times;</button>
+            <h3 className="font-heading text-xl text-stone-900 mb-1">Request a Quote</h3>
+            <p className="text-stone-400 text-sm mb-5">Golf & Stay Package — {quoteHotel}</p>
+            <form onSubmit={function(e) {
+              e.preventDefault();
+              var fd = new FormData(e.target);
+              axios.post(API + '/api/contact', { name: fd.get('name'), email: fd.get('email'), dates: fd.get('dates'), message: 'Hotel quote request: ' + quoteHotel + '. ' + (fd.get('message') || '') })
+                .then(function() { setQuoteHotel(null); alert('Quote request sent! We will get back to you within 24 hours.'); })
+                .catch(function() { alert('Something went wrong. Please email us at contact@golfgatecatalunya.es'); });
+            }} className="space-y-3">
+              <input name="name" type="text" required placeholder="Name" className="w-full px-3 py-2.5 rounded-lg border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#CCFF00]" />
+              <input name="email" type="email" required placeholder="Email" className="w-full px-3 py-2.5 rounded-lg border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#CCFF00]" />
+              <input name="dates" type="text" placeholder="Travel dates" className="w-full px-3 py-2.5 rounded-lg border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#CCFF00]" />
+              <textarea name="message" placeholder="Any special requests?" rows="3" className="w-full px-3 py-2.5 rounded-lg border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#CCFF00]" />
+              <button type="submit" className="w-full py-2.5 rounded-full text-sm font-bold text-white" style={{ backgroundColor: '#f6416c' }}>Send Quote Request</button>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
