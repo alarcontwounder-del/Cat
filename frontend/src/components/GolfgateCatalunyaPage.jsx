@@ -109,17 +109,12 @@ export default function GolfgateCatalunyaPage() {
       .then(function(res) { setBlogPosts(res.data); })
       .catch(function() {});
 
-    // Handle scroll-to-contact from hotel "Request a Quote"
-    if (sessionStorage.getItem('scrollToContact')) {
-      sessionStorage.removeItem('scrollToContact');
-      var checkContact = setInterval(function() {
+    // Handle #contact hash from hotel "Request a Quote"
+    if (window.location.hash === '#contact') {
+      window.addEventListener('load', function() {
         var el = document.getElementById('contact');
-        if (el) {
-          clearInterval(checkContact);
-          el.scrollIntoView({ behavior: 'smooth' });
-        }
-      }, 200);
-      setTimeout(function() { clearInterval(checkContact); }, 10000);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      });
     }
 
     return function() {
