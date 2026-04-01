@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
-import { ArrowLeft, Settings, FileText, LayoutGrid, Save, Pencil, Plus, Eye, EyeOff, Lock, LogOut, X, Trash2, Search, MapPin, ExternalLink, Image, Upload } from 'lucide-react';
+import { ArrowLeft, Settings, FileText, LayoutGrid, Save, Pencil, Plus, Eye, EyeOff, Lock, LogOut, X, Trash2, Search, MapPin, ExternalLink, Image, Upload, Mail } from 'lucide-react';
 
 var API = process.env.REACT_APP_BACKEND_URL;
 
@@ -106,6 +106,13 @@ export default function CatalunyaAdminPanel() {
           >
             <FileText className="w-4 h-4" /> Blog Posts
           </button>
+          <button
+            onClick={function() { setTab('inquiries'); }}
+            className={'px-6 py-4 text-sm font-medium border-b-2 transition-colors flex items-center gap-2 ' + (tab === 'inquiries' ? 'border-blue-500 text-stone-900' : 'border-transparent text-stone-400 hover:text-stone-600')}
+            data-testid="admin-tab-inquiries"
+          >
+            <Mail className="w-4 h-4" /> Inquiries
+          </button>
         </div>
       </div>
 
@@ -127,6 +134,7 @@ export default function CatalunyaAdminPanel() {
         {tab === 'courses' && <CoursesTab />}
         {tab === 'hotels' && <HotelsTab />}
         {tab === 'blog' && <BlogTab />}
+        {tab === 'inquiries' && <InquiriesTab />}
       </div>
 
       {/* Bottom Stats Bar */}
@@ -722,6 +730,71 @@ function HotelsTab() {
               </div>
             </div>
           </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+
+function InquiriesTab() {
+  var inquiriesState = useState([]);
+  var inquiries = inquiriesState[0];
+  var setInquiries = inquiriesState[1];
+  var loadingState = useState(true);
+  var loading = loadingState[0];
+  var setLoading = loadingState[1];
+
+  useEffect(function() {
+    setLoading(true);
+    axios.get(API + '/api/contact')
+      .then(function(res) { setInquiries(res.data); })
+      .catch(function() { setInquiries([]); })
+      .finally(function() { setLoading(false); });
+  }, []);
+
+  if (loading) {
+    return <div className="flex items-center justify-center py-20"><div className="w-8 h-8 border-4 border-stone-300 border-t-blue-500 rounded-full animate-spin" /></div>;
+  }
+
+  return (
+    <div className="pb-24" data-testid="admin-inquiries">
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-xl font-bold text-stone-900">Contact Inquiries ({inquiries.length})</h2>
+      </div>
+      {inquiries.length === 0 ? (
+        <div className="bg-white rounded-xl border border-stone-200 p-12 text-center">
+          <Mail className="w-12 h-12 text-stone-300 mx-auto mb-4" />
+          <h3 className="text-lg font-semibold text-stone-700 mb-2">No inquiries yet</h3>
+          <p className="text-stone-400 text-sm">Inquiries from the contact form will appear here.</p>
+        </div>
+      ) : (
+        <div className="space-y-3">
+          {inquiries.map(function(inq, i) {
+            return (
+              <div key={i} className="bg-white rounded-xl border border-stone-100 p-5 hover:shadow-sm transition-shadow">
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-2">
+                      <h3 className="text-sm font-bold text-stone-900">{inq.name}</h3>
+                      <a href={'mailto:' + inq.email} className="text-xs text-blue-500 hover:underline">{inq.email}</a>
+                      {inq.email_sent ? (
+                        <span className="inline-flex px-2 py-0.5 rounded-full text-[10px] font-medium bg-green-100 text-green-700">Email Sent</span>
+                      ) : (
+                        <span className="inline-flex px-2 py-0.5 rounded-full text-[10px] font-medium bg-red-100 text-red-600">Failed</span>
+                      )}
+                    </div>
+                    {inq.dates && <p className="text-xs text-stone-400 mb-1">Travel dates: {inq.dates}</p>}
+                    {inq.message && <p className="text-sm text-stone-600">{inq.message}</p>}
+                  </div>
+                  <div className="text-right flex-shrink-0">
+                    <p className="text-xs text-stone-400">{inq.created_at ? new Date(inq.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : ''}</p>
+                    <p className="text-[10px] text-stone-300">{inq.created_at ? new Date(inq.created_at).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }) : ''}</p>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
       )}
     </div>
