@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import '@/App.css';
+import { ScrollIndicator } from './components/ScrollIndicator';
 
 var GolfgateCatalunyaPage = React.lazy(function() { return import('./components/GolfgateCatalunyaPage'); });
 var CatalunyaCoursePage = React.lazy(function() { return import('./components/CatalunyaCoursePage'); });
@@ -34,6 +35,7 @@ function Wrap(props) {
 function App() {
   return (
     <BrowserRouter>
+      <ScrollIndicator />
       <Routes>
         <Route path="/" element={<Wrap><GolfgateCatalunyaPage /></Wrap>} />
         <Route path="/courses" element={<Wrap><CatalunyaCoursesListPage /></Wrap>} />
