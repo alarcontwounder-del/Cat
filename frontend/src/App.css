@@ -5,6 +5,30 @@ body {
   background-color: #F5FFF0;
 }
 
+/* iOS-style custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(246, 65, 108, 0.35);
+  border-radius: 100px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(246, 65, 108, 0.55);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(246, 65, 108, 0.35) transparent;
+}
+
 /* Hide Emergent badge */
 #emergent-badge { display: none !important; }
 
