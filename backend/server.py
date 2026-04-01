@@ -875,24 +875,57 @@ async def send_contact_email(request: Request):
         raise HTTPException(status_code=400, detail="Name and email required")
 
     html_content = f"""
-    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-      <div style="background: #CCFF00; padding: 20px; text-align: center;">
-        <h1 style="margin: 0; font-size: 22px; color: #1a1a1a;">New Contact Inquiry</h1>
-        <p style="margin: 4px 0 0; color: #333; font-size: 13px;">GOLFGATE Catalunya</p>
+    <div style="font-family: 'Helvetica Neue', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+      <div style="background: #f6416c; padding: 20px 30px; border-radius: 16px 16px 0 0; text-align: center;">
+        <h1 style="margin: 0; font-size: 20px; color: #ffffff; letter-spacing: 1px;">NEW CONTACT INQUIRY</h1>
+        <p style="margin: 6px 0 0; color: rgba(255,255,255,0.8); font-size: 12px;">GOLFGATE Catalunya</p>
       </div>
-      <div style="padding: 24px; background: #ffffff;">
+      <div style="padding: 30px; background: #ffffff; border-left: 1px solid #eee; border-right: 1px solid #eee;">
         <table style="width: 100%; border-collapse: collapse;">
-          <tr><td style="padding: 8px 0; color: #888; font-size: 13px; width: 100px;">Name</td><td style="padding: 8px 0; font-size: 14px; color: #333; font-weight: bold;">{name}</td></tr>
-          <tr><td style="padding: 8px 0; color: #888; font-size: 13px;">Email</td><td style="padding: 8px 0; font-size: 14px;"><a href="mailto:{email}" style="color: #f6416c;">{email}</a></td></tr>
-          <tr><td style="padding: 8px 0; color: #888; font-size: 13px;">Travel Dates</td><td style="padding: 8px 0; font-size: 14px; color: #333;">{dates or 'Not specified'}</td></tr>
+          <tr>
+            <td style="padding: 10px 0; border-bottom: 1px solid #f0f0f0; color: #999; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; width: 110px;">Name</td>
+            <td style="padding: 10px 0; border-bottom: 1px solid #f0f0f0; color: #333; font-size: 15px; font-weight: 600;">{name}</td>
+          </tr>
+          <tr>
+            <td style="padding: 10px 0; border-bottom: 1px solid #f0f0f0; color: #999; font-size: 11px; text-transform: uppercase; letter-spacing: 1px;">Email</td>
+            <td style="padding: 10px 0; border-bottom: 1px solid #f0f0f0; color: #333; font-size: 15px;"><a href="mailto:{email}" style="color: #333; text-decoration: none;">{email}</a></td>
+          </tr>
+          <tr>
+            <td style="padding: 10px 0; border-bottom: 1px solid #f0f0f0; color: #999; font-size: 11px; text-transform: uppercase; letter-spacing: 1px;">Travel Dates</td>
+            <td style="padding: 10px 0; border-bottom: 1px solid #f0f0f0; color: #333; font-size: 15px;">{dates or 'Not specified'}</td>
+          </tr>
         </table>
-        <div style="margin-top: 16px; padding: 16px; background: #f9f9f9; border-radius: 8px;">
-          <p style="margin: 0 0 4px; color: #888; font-size: 12px;">Message</p>
-          <p style="margin: 0; color: #333; font-size: 14px; line-height: 1.5;">{message or 'No message provided'}</p>
+        <div style="margin-top: 20px; padding: 16px; background: #f9f9f9; border-radius: 8px; border-left: 3px solid #f6416c;">
+          <p style="margin: 0 0 6px; color: #999; font-size: 11px; text-transform: uppercase; letter-spacing: 1px;">Message</p>
+          <p style="margin: 0; color: #333; font-size: 14px; line-height: 1.6;">{message or 'No message provided'}</p>
         </div>
       </div>
-      <div style="padding: 16px; background: #1a1a1a; text-align: center;">
-        <p style="margin: 0; color: #666; font-size: 11px;">Sent from golfgatecatalunya.es contact form</p>
+      <div style="background: #1a1a1a; padding: 20px 30px; border-radius: 0 0 16px 16px; text-align: center;">
+        <p style="margin: 0; color: rgba(255,255,255,0.5); font-size: 12px;"><a href="https://golfgatecatalunya.es" style="color: rgba(255,255,255,0.5); text-decoration: none;">golfgatecatalunya.es</a></p>
+        <p style="margin: 6px 0 0; color: rgba(255,255,255,0.3); font-size: 11px;"><a href="mailto:contact@golfgatecatalunya.es" style="color: rgba(255,255,255,0.3); text-decoration: none;">contact@golfgatecatalunya.es</a> | <a href="tel:+34620987575" style="color: rgba(255,255,255,0.3); text-decoration: none;">+34 620 987 575</a></p>
+      </div>
+    </div>
+    """
+
+    # Client confirmation email
+    client_html = f"""
+    <div style="font-family: 'Helvetica Neue', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+      <div style="background: #CCFF00; padding: 24px 30px; border-radius: 16px 16px 0 0; text-align: center;">
+        <h1 style="margin: 0; font-size: 18px; color: #1a1a1a; letter-spacing: 1px;">GOLFGATE CATALUNYA</h1>
+      </div>
+      <div style="padding: 30px; background: #ffffff; border-left: 1px solid #eee; border-right: 1px solid #eee; text-align: center;">
+        <div style="width: 50px; height: 50px; background: #CCFF00; border-radius: 50%; margin: 0 auto 16px; line-height: 50px; font-size: 24px;">&#10003;</div>
+        <h2 style="margin: 0 0 8px; color: #333; font-size: 22px;">Thank you, {name}!</h2>
+        <p style="margin: 0 0 20px; color: #888; font-size: 14px;">We received your message and will get back to you within 24 hours.</p>
+        <div style="background: #f9f9f9; padding: 16px; border-radius: 8px; text-align: left;">
+          <p style="margin: 0 0 4px; color: #999; font-size: 11px; text-transform: uppercase; letter-spacing: 1px;">Your message</p>
+          <p style="margin: 0; color: #555; font-size: 13px; line-height: 1.5;">{message or 'No message provided'}</p>
+        </div>
+        <p style="margin: 20px 0 0; color: #888; font-size: 13px;">In the meantime, explore our <a href="https://golfgatecatalunya.es" style="color: #f6416c; text-decoration: none; font-weight: 600;">golf courses</a> and <a href="https://golfgatecatalunya.es/hotels" style="color: #f6416c; text-decoration: none; font-weight: 600;">hotels</a>.</p>
+      </div>
+      <div style="background: #1a1a1a; padding: 20px 30px; border-radius: 0 0 16px 16px; text-align: center;">
+        <p style="margin: 0; color: rgba(255,255,255,0.5); font-size: 12px;"><a href="https://golfgatecatalunya.es" style="color: rgba(255,255,255,0.5); text-decoration: none;">golfgatecatalunya.es</a></p>
+        <p style="margin: 6px 0 0; color: rgba(255,255,255,0.3); font-size: 11px;"><a href="mailto:contact@golfgatecatalunya.es" style="color: rgba(255,255,255,0.3); text-decoration: none;">contact@golfgatecatalunya.es</a> | <a href="tel:+34620987575" style="color: rgba(255,255,255,0.3); text-decoration: none;">+34 620 987 575</a></p>
       </div>
     </div>
     """
@@ -906,6 +939,18 @@ async def send_contact_email(request: Request):
             "html": html_content
         }
         result = await asyncio.to_thread(resend.Emails.send, params)
+        
+        # Send confirmation to client
+        try:
+            client_params = {
+                "from": f"GOLFGATE Catalunya <{SENDER_EMAIL}>",
+                "to": [email],
+                "subject": "Thank you for your inquiry — GOLFGATE Catalunya",
+                "html": client_html
+            }
+            await asyncio.to_thread(resend.Emails.send, client_params)
+        except Exception:
+            pass
         
         # Store in DB for admin panel
         await db.contact_inquiries.insert_one({
