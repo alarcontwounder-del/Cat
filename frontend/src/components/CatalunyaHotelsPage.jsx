@@ -96,24 +96,68 @@ export default function CatalunyaHotelsPage() {
           <div className="absolute inset-0 bg-black/60" />
           <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-md p-6" onClick={function(e) { e.stopPropagation(); }}>
             <button onClick={function() { setQuoteHotel(null); }} className="absolute top-4 right-4 text-stone-400 hover:text-stone-600 text-lg">&times;</button>
-            <h3 className="font-heading text-xl text-stone-900 mb-1">Request a Quote</h3>
-            <p className="text-stone-400 text-sm mb-5">Golf & Stay Package — {quoteHotel}</p>
-            <form onSubmit={function(e) {
-              e.preventDefault();
-              var fd = new FormData(e.target);
-              axios.post(API + '/api/contact', { name: fd.get('name'), email: fd.get('email'), dates: fd.get('dates'), message: 'Hotel quote request: ' + quoteHotel + '. ' + (fd.get('message') || '') })
-                .then(function() { setQuoteHotel(null); alert('Quote request sent! We will get back to you within 24 hours.'); })
-                .catch(function() { alert('Something went wrong. Please email us at contact@golfgatecatalunya.es'); });
-            }} className="space-y-3">
-              <input name="name" type="text" required placeholder="Name" className="w-full px-3 py-2.5 rounded-lg border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#CCFF00]" />
-              <input name="email" type="email" required placeholder="Email" className="w-full px-3 py-2.5 rounded-lg border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#CCFF00]" />
-              <input name="dates" type="text" placeholder="Travel dates" className="w-full px-3 py-2.5 rounded-lg border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#CCFF00]" />
-              <textarea name="message" placeholder="Any special requests?" rows="3" className="w-full px-3 py-2.5 rounded-lg border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#CCFF00]" />
-              <button type="submit" className="w-full py-2.5 rounded-full text-sm font-bold text-white" style={{ backgroundColor: '#f6416c' }}>Send Quote Request</button>
-            </form>
+            <QuoteForm hotelName={quoteHotel} onClose={function() { setQuoteHotel(null); }} />
           </div>
         </div>
       )}
+    </div>
+  );
+}
+
+
+function QuoteForm(props) {
+  var statusState = useState('form');
+  var status = statusState[0];
+  var setStatus = statusState[1];
+
+  if (status === 'sent') {
+    return (
+      <div className="text-center py-6">
+        <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{ backgroundColor: '#CCFF00' }}>
+          <svg className="w-8 h-8 text-black" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M20 6L9 17l-5-5" /></svg>
+        </div>
+        <h4 className="font-heading text-xl text-stone-900 mb-2">Quote Request Sent!</h4>
+        <p className="text-stone-500 text-sm mb-1">Thank you for your interest in</p>
+        <p className="font-heading text-lg text-stone-800 mb-4">{props.hotelName}</p>
+        <p className="text-stone-400 text-sm mb-6">We will get back to you within 24 hours with a personalized golf & stay package.</p>
+        <button onClick={props.onClose} className="px-6 py-2.5 rounded-full text-sm font-medium text-stone-600 border border-stone-200 hover:bg-stone-50 transition-colors">Close</button>
+      </div>
+    );
+  }
+
+  if (status === 'error') {
+    return (
+      <div className="text-center py-6">
+        <div className="w-16 h-16 rounded-full bg-red-50 flex items-center justify-center mx-auto mb-4">
+          <svg className="w-8 h-8 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+        </div>
+        <h4 className="font-heading text-xl text-stone-900 mb-2">Something went wrong</h4>
+        <p className="text-stone-500 text-sm mb-4">Please email us directly at <a href="mailto:contact@golfgatecatalunya.es" className="underline" style={{ color: '#f6416c' }}>contact@golfgatecatalunya.es</a></p>
+        <button onClick={props.onClose} className="px-6 py-2.5 rounded-full text-sm font-medium text-stone-600 border border-stone-200 hover:bg-stone-50 transition-colors">Close</button>
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      <h3 className="font-heading text-xl text-stone-900 mb-1">Request a Quote</h3>
+      <p className="text-stone-400 text-sm mb-5">Golf & Stay Package — {props.hotelName}</p>
+      <form onSubmit={function(e) {
+        e.preventDefault();
+        setStatus('sending');
+        var fd = new FormData(e.target);
+        axios.post(API + '/api/contact', { name: fd.get('name'), email: fd.get('email'), dates: fd.get('dates'), message: 'Hotel quote request: ' + props.hotelName + '. ' + (fd.get('message') || '') })
+          .then(function() { setStatus('sent'); })
+          .catch(function() { setStatus('error'); });
+      }} className="space-y-3">
+        <input name="name" type="text" required placeholder="Name" className="w-full px-3 py-2.5 rounded-lg border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#CCFF00]" />
+        <input name="email" type="email" required placeholder="Email" className="w-full px-3 py-2.5 rounded-lg border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#CCFF00]" />
+        <input name="dates" type="text" placeholder="Travel dates" className="w-full px-3 py-2.5 rounded-lg border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#CCFF00]" />
+        <textarea name="message" placeholder="Any special requests?" rows="3" className="w-full px-3 py-2.5 rounded-lg border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#CCFF00]" />
+        <button type="submit" disabled={status === 'sending'} className="w-full py-2.5 rounded-full text-sm font-bold text-white disabled:opacity-50" style={{ backgroundColor: '#f6416c' }}>
+          {status === 'sending' ? 'Sending...' : 'Send Quote Request'}
+        </button>
+      </form>
     </div>
   );
 }
