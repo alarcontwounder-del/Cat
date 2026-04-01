@@ -112,10 +112,14 @@ export default function GolfgateCatalunyaPage() {
     // Handle scroll-to-contact from hotel "Request a Quote"
     if (sessionStorage.getItem('scrollToContact')) {
       sessionStorage.removeItem('scrollToContact');
-      setTimeout(function() {
+      var checkContact = setInterval(function() {
         var el = document.getElementById('contact');
-        if (el) el.scrollIntoView({ behavior: 'smooth' });
-      }, 800);
+        if (el) {
+          clearInterval(checkContact);
+          el.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 200);
+      setTimeout(function() { clearInterval(checkContact); }, 10000);
     }
 
     return function() {
