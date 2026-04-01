@@ -6,7 +6,7 @@ export function HotelCardFront(props) {
   return (
     <div className="flip-card-front bg-white border border-stone-100 shadow-sm rounded-2xl">
       {h.discount && <div className="absolute top-6 right-6 z-10 bg-[#1a1a1a] text-white text-xs font-bold px-3 py-1.5 rounded-full">{h.discount}</div>}
-      <div className="h-56 overflow-hidden rounded-t-2xl relative m-3 mb-0">
+      <div className="h-48 overflow-hidden rounded-t-2xl relative m-3 mb-0">
         <img loading="lazy" alt={h.name} className="w-full h-full object-cover object-center transition-transform duration-500 rounded-xl" src={h.image} />
         <button onClick={function(e) { e.stopPropagation(); props.onQuickView(h); }} className="absolute top-3 left-3 w-9 h-9 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center text-stone-600 hover:text-stone-900 hover:bg-white transition-all shadow-sm">
           <Eye className="w-4 h-4" />
@@ -58,7 +58,7 @@ export function HotelCardBack(props) {
       <a href={h.booking_url} target="_blank" rel="noopener noreferrer" className="w-full inline-flex items-center justify-center gap-2 bg-white text-stone-800 px-5 py-2.5 rounded-full text-sm font-medium hover:bg-white/90 transition-all mb-2">
         Book Now <ExternalLink className="w-3.5 h-3.5" />
       </a>
-      <a href="/" onClick={function(e) { e.preventDefault(); e.stopPropagation(); window.location.href = '/'; setTimeout(function() { var el = document.getElementById('contact'); if (el) el.scrollIntoView({behavior: 'smooth'}); }, 500); }} className="w-full inline-flex items-center justify-center gap-1.5 bg-white/15 text-white px-5 py-2 rounded-full text-xs font-medium hover:bg-white/25 transition-all border border-white/30">
+      <a href="/" onClick={function(e) { e.preventDefault(); e.stopPropagation(); sessionStorage.setItem('scrollToContact', 'true'); window.location.href = '/'; }} className="w-full inline-flex items-center justify-center gap-1.5 bg-white/15 text-white px-5 py-2 rounded-full text-xs font-medium hover:bg-white/25 transition-all border border-white/30">
         Request a Quote
       </a>
     </div>

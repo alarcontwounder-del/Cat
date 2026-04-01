@@ -109,6 +109,15 @@ export default function GolfgateCatalunyaPage() {
       .then(function(res) { setBlogPosts(res.data); })
       .catch(function() {});
 
+    // Handle scroll-to-contact from hotel "Request a Quote"
+    if (sessionStorage.getItem('scrollToContact')) {
+      sessionStorage.removeItem('scrollToContact');
+      setTimeout(function() {
+        var el = document.getElementById('contact');
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }, 800);
+    }
+
     return function() {
       var s = document.getElementById('golfgate-schema');
       if (s) s.remove();
