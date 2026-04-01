@@ -59,7 +59,7 @@ export function HotelCardBack(props) {
       <a href={h.booking_url} target="_blank" rel="noopener noreferrer" className="w-full inline-flex items-center justify-center gap-2 bg-white text-stone-800 px-5 py-2.5 rounded-full text-sm font-medium hover:bg-white/90 transition-all mb-2">
         Book Now <ExternalLink className="w-3.5 h-3.5" />
       </a>
-      <a href={'/#contact?hotel=' + encodeURIComponent(h.name)} className="w-full inline-flex items-center justify-center gap-1.5 bg-white/15 text-white px-5 py-2 rounded-full text-xs font-medium hover:bg-white/25 transition-all border border-white/30">
+      <a href="/#contact" onClick={function(e) { e.preventDefault(); e.stopPropagation(); window.location.href = '/#contact'; setTimeout(function() { document.getElementById('contact')?.scrollIntoView({behavior: 'smooth'}); }, 100); }} className="w-full inline-flex items-center justify-center gap-1.5 bg-white/15 text-white px-5 py-2 rounded-full text-xs font-medium hover:bg-white/25 transition-all border border-white/30">
         Request a Quote
       </a>
     </div>
