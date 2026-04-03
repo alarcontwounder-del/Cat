@@ -1147,11 +1147,16 @@ async def delete_golf_course(course_id: str):
 @api_router.post("/golf-courses/reorder", status_code=200)
 async def reorder_golf_courses(course_ids: List[str]):
     """Reorder golf courses by updating display_order (admin only)"""
-    for index, course_id in enumerate(course_ids):
-        await db.golf_courses.update_one(
+    from pymongo import UpdateOne
+    bulk_ops = [
+        UpdateOne(
             {"id": course_id},
             {"$set": {"display_order": index, "updated_at": datetime.now(timezone.utc)}}
         )
+        for index, course_id in enumerate(course_ids)
+    ]
+    if bulk_ops:
+        await db.golf_courses.bulk_write(bulk_ops)
     return {"message": "Courses reordered successfully"}
 
 @api_router.get("/partner-offers", response_model=List[dict])
