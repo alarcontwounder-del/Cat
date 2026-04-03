@@ -929,44 +929,45 @@ async def get_public_blog_posts():
 
 # SEO Sitemap endpoint - GIM structure
 @api_router.get("/sitemap.xml")
-async def get_sitemap():
+async def get_sitemap(request: Request):
     """Generate SEO sitemap matching GIM structure"""
     from datetime import datetime
     today = datetime.now().strftime("%Y-%m-%d")
+    base = os.environ.get("SITE_URL", "https://golfgatecatalunya.es")
     
     urls = []
     # Homepage
-    urls.append({"loc": "https://golfgatecatalunya.es/", "lastmod": today, "changefreq": "weekly", "priority": "1.0"})
+    urls.append({"loc": f"{base}/", "lastmod": today, "changefreq": "weekly", "priority": "1.0"})
     # Blog page
-    urls.append({"loc": "https://golfgatecatalunya.es/blog", "lastmod": today, "changefreq": "weekly", "priority": "0.9"})
+    urls.append({"loc": f"{base}/blog", "lastmod": today, "changefreq": "weekly", "priority": "0.9"})
     
     # Location pages (high SEO value)
     for region in ["barcelona", "costa-brava", "girona", "tarragona", "katalonien", "uk-holidays", "luxury", "stay-and-play"]:
-        urls.append({"loc": f"https://golfgatecatalunya.es/golf/{region}", "lastmod": today, "changefreq": "weekly", "priority": "0.9"})
+        urls.append({"loc": f"{base}/golf/{region}", "lastmod": today, "changefreq": "weekly", "priority": "0.9"})
     
     # Hotels page
-    urls.append({"loc": "https://golfgatecatalunya.es/hotels", "lastmod": today, "changefreq": "weekly", "priority": "0.8"})
+    urls.append({"loc": f"{base}/hotels", "lastmod": today, "changefreq": "weekly", "priority": "0.8"})
     
     # All courses listing
-    urls.append({"loc": "https://golfgatecatalunya.es/courses", "lastmod": today, "changefreq": "weekly", "priority": "0.8"})
+    urls.append({"loc": f"{base}/courses", "lastmod": today, "changefreq": "weekly", "priority": "0.8"})
     
     # Course pages
     from data.catalunya_courses import CATALUNYA_COURSES
     for course in CATALUNYA_COURSES:
-        urls.append({"loc": f"https://golfgatecatalunya.es/courses/{course['id']}", "lastmod": today, "changefreq": "monthly", "priority": "0.8"})
+        urls.append({"loc": f"{base}/courses/{course['id']}", "lastmod": today, "changefreq": "monthly", "priority": "0.8"})
     
     # Blog posts
     cursor = db.blog_posts.find({"published": True}, {"_id": 0, "id": 1, "updated_at": 1})
     blog_posts = await cursor.to_list(length=100)
     for post in blog_posts:
-        urls.append({"loc": f"https://golfgatecatalunya.es/blog/{post['id']}", "lastmod": post.get("updated_at", today)[:10], "changefreq": "monthly", "priority": "0.7"})
+        urls.append({"loc": f"{base}/blog/{post['id']}", "lastmod": post.get("updated_at", today)[:10], "changefreq": "monthly", "priority": "0.7"})
     
     # Best time to play guide
-    urls.append({"loc": "https://golfgatecatalunya.es/best-time-to-play", "lastmod": today, "changefreq": "monthly", "priority": "0.8"})
+    urls.append({"loc": f"{base}/best-time-to-play", "lastmod": today, "changefreq": "monthly", "priority": "0.8"})
     
     # Static pages
-    urls.append({"loc": "https://golfgatecatalunya.es/privacy", "lastmod": today, "changefreq": "yearly", "priority": "0.3"})
-    urls.append({"loc": "https://golfgatecatalunya.es/terms", "lastmod": today, "changefreq": "yearly", "priority": "0.3"})
+    urls.append({"loc": f"{base}/privacy", "lastmod": today, "changefreq": "yearly", "priority": "0.3"})
+    urls.append({"loc": f"{base}/terms", "lastmod": today, "changefreq": "yearly", "priority": "0.3"})
     
     xml = '<?xml version="1.0" encoding="UTF-8"?>\n'
     xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
