@@ -359,7 +359,7 @@ export default function GolfgateCatalunyaPage() {
       </section>
 
       {/* Play Golf Wherever You Are - Banner (exact GIM code) */}
-      <section className="max-w-6xl mx-auto px-6 md:px-12 py-10" data-testid="worldwide-banner">
+      <section className="max-w-6xl mx-auto px-6 md:px-12 py-6" data-testid="worldwide-banner">
         <div className="relative overflow-hidden rounded-3xl">
           <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: 'url(https://images.pexels.com/photos/3129262/pexels-photo-3129262.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940)' }} />
           <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(45,45,45,0.95), rgba(45,45,45,0.85), rgba(45,45,45,0.70))' }} />
@@ -385,7 +385,7 @@ export default function GolfgateCatalunyaPage() {
 
       {/* Blog Preview Section */}
       {blogPosts.length > 0 && (
-        <section id="blog" className="py-16 md:py-20" data-testid="golfgate-blog">
+        <section id="blog" className="py-10 md:py-12" data-testid="golfgate-blog">
           <div className="max-w-6xl mx-auto px-6 md:px-12">
             <div className="text-center mb-12 fade-in-up">
               <p className="text-stone-500 text-sm uppercase tracking-[0.2em] mb-4">{t.blog.subtitle}</p>
