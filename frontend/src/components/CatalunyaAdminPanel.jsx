@@ -479,9 +479,15 @@ function BlogTab() {
                 <input type="text" value={editingPost.title} onChange={function(e) { setEditingPost(Object.assign({}, editingPost, { title: e.target.value })); }} className="w-full px-3 py-2 rounded-lg border border-stone-300 text-sm" placeholder="Blog post title" />
               </div>
               <div>
-                <label className="block text-xs font-medium text-stone-600 mb-1">Image URL</label>
-                {editingPost.image && <img src={editingPost.image} alt="" className="w-full h-32 object-cover rounded-lg mb-2 border border-stone-200" />}
-                <input type="text" value={editingPost.image || ''} onChange={function(e) { setEditingPost(Object.assign({}, editingPost, { image: e.target.value })); }} className="w-full px-3 py-2 rounded-lg border border-stone-300 text-sm" placeholder="https://..." />
+                <label className="block text-xs font-medium text-stone-600 mb-1.5">Blog Image</label>
+                {editingPost.image && <img src={editingPost.image} alt="" className="w-full h-40 object-cover rounded-xl mb-2 border border-stone-200" />}
+                <div className="flex gap-2">
+                  <input type="text" value={editingPost.image || ''} onChange={function(e) { setEditingPost(Object.assign({}, editingPost, { image: e.target.value })); }} className="flex-1 px-3 py-2 rounded-lg border border-stone-300 text-sm" placeholder="Image URL or drop image here" />
+                  <label className="flex items-center gap-1.5 px-3 py-2 bg-stone-100 hover:bg-stone-200 rounded-lg cursor-pointer text-xs font-medium text-stone-600 transition-colors border border-stone-200">
+                    <Upload className="w-3.5 h-3.5" /> Upload
+                    <input type="file" accept="image/*" className="hidden" onChange={function(e) { var file = e.target.files[0]; if (file) { var reader = new FileReader(); reader.onloadend = function() { setEditingPost(Object.assign({}, editingPost, { image: reader.result })); }; reader.readAsDataURL(file); } }} />
+                  </label>
+                </div>
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div>
