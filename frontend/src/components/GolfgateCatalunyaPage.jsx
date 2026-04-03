@@ -519,6 +519,8 @@ export default function GolfgateCatalunyaPage() {
           Book a Tee Time Now! <ExternalLink className="w-4 h-4" />
         </a>
       </div>
+      {/* Spacer for mobile sticky CTA */}
+      <div className="md:hidden h-16" />
 
       {/* Cookie Consent - Glass effect */}
       <CookieConsent />
