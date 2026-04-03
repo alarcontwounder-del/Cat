@@ -883,11 +883,9 @@ async def send_contact_email(request: Request):
     <head><meta name="format-detection" content="telephone=no"><meta name="x-apple-disable-message-reformatting"></head>
     <body style="font-family: 'Helvetica Neue', Arial, sans-serif; padding: 0; margin: 0; background-color: #F5FFF0;">
         <div style="max-width: 600px; margin: 0 auto; padding: 40px 20px;">
-            <div style="background-color: #ffffff; padding: 30px 40px; border-radius: 16px 16px 0 0; text-align: center; border-bottom: 2px solid #E5E5E5;">
-                <img src="{logo_url}" alt="GOLFGATE Catalunya" style="width: 180px; height: auto; display: block; margin: 0 auto;" />
-            </div>
-            <div style="background: linear-gradient(135deg, #f6416c 0%, #d42a52 100%); padding: 14px 30px; text-align: center;">
-                <p style="color: rgba(255,255,255,0.95); margin: 0; font-size: 12px; letter-spacing: 2px;">NEW CONTACT INQUIRY</p>
+            <div style="background: linear-gradient(135deg, #f6416c 0%, #d42a52 100%); padding: 20px 30px; text-align: center;">
+                <p style="color: rgba(255,255,255,0.95); margin: 0 0 12px 0; font-size: 11px; letter-spacing: 2px;">NEW CONTACT INQUIRY</p>
+                <img src="{logo_url}" alt="GOLFGATE Catalunya" style="width: 140px; height: auto; display: block; margin: 0 auto;" />
             </div>
             <div style="background-color: white; padding: 40px 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
                 <table style="width: 100%; border-collapse: collapse;">
