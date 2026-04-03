@@ -60,11 +60,11 @@ export default function CatalunyaBlogPage() {
             <div className="grid md:grid-cols-2 gap-8">
               {posts.map(function(post) {
                 return (
-                  <article key={post.id} className="bg-white border border-stone-100 rounded-2xl overflow-hidden group hover:shadow-lg transition-shadow" data-testid={'blog-card-' + post.id}>
+                  <article key={post.id} className="bg-white rounded-2xl overflow-hidden group hover:shadow-lg transition-shadow" data-testid={'blog-card-' + post.id}>
                     {post.image && (
                       <Link to={'/blog/' + post.id} className="block">
-                        <div className="overflow-hidden aspect-[3/2]">
-                          <img alt={post.title} className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500" loading="lazy" src={post.image} />
+                        <div className="overflow-hidden aspect-[3/2] rounded-2xl m-3 mb-0">
+                          <img alt={post.title} className="w-full h-full object-cover object-center rounded-xl group-hover:scale-105 transition-transform duration-500" loading="lazy" src={post.image} />
                         </div>
                       </Link>
                     )}

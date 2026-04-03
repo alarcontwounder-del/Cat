@@ -317,9 +317,9 @@ export default function GolfgateCatalunyaPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {hotels.slice(0, 3).map(function(hotel) {
                 return (
-                  <Link to="/hotels" key={hotel.id} className="bg-white border border-stone-100 rounded-2xl overflow-hidden group hover:shadow-lg transition-shadow card-hover-lift">
-                    <div className="h-48 overflow-hidden">
-                      <img src={hotel.image} alt={hotel.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                  <Link to="/hotels" key={hotel.id} className="bg-white rounded-2xl overflow-hidden group hover:shadow-lg transition-shadow card-hover-lift">
+                    <div className="h-48 overflow-hidden rounded-2xl m-3 mb-0">
+                      <img src={hotel.image} alt={hotel.name} className="w-full h-full object-cover rounded-xl group-hover:scale-105 transition-transform duration-500" loading="lazy" />
                     </div>
                     <div className="p-5">
                       <h3 className="font-heading text-lg text-stone-900 mb-1">{hotel.name}</h3>
@@ -396,10 +396,10 @@ export default function GolfgateCatalunyaPage() {
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {blogPosts.slice(0, 3).map(function(post) {
                 return (
-                  <Link to={'/blog/' + post.id} key={post.id} className="bg-white border border-stone-100 rounded-2xl overflow-hidden group hover:shadow-lg transition-shadow card-hover-lift">
+                  <Link to={'/blog/' + post.id} key={post.id} className="bg-white rounded-2xl overflow-hidden group hover:shadow-lg transition-shadow card-hover-lift">
                     {post.image && (
-                      <div className="overflow-hidden aspect-[3/2]">
-                        <img src={post.image} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                      <div className="overflow-hidden aspect-[3/2] rounded-2xl m-3 mb-0">
+                        <img src={post.image} alt={post.title} className="w-full h-full object-cover object-center rounded-xl group-hover:scale-105 transition-transform duration-500" loading="lazy" />
                       </div>
                     )}
                     <div className="p-5">
