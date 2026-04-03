@@ -44,12 +44,21 @@ async def get_partners_from_server():
                 end_idx = start_idx + i + 1
                 break
     
-    # Execute the extracted code to get the data
+    # Execute the extracted code safely using ast.literal_eval
+    import ast
+    import json
     partner_code = content[start_idx:end_idx]
-    local_vars = {}
-    exec(partner_code, {}, local_vars)
+    # Extract just the list portion after "PARTNER_OFFERS = "
+    list_str = partner_code[len('PARTNER_OFFERS = '):]
+    try:
+        # Try ast.literal_eval first (safe)
+        data = ast.literal_eval(list_str)
+    except (ValueError, SyntaxError):
+        # Fallback: parse as JSON after replacing Python-specific syntax
+        list_str = list_str.replace("True", "true").replace("False", "false").replace("None", "null")
+        data = json.loads(list_str)
     
-    return local_vars['PARTNER_OFFERS']
+    return data
 
 
 async def seed_all_partners():

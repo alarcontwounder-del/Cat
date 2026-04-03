@@ -778,7 +778,7 @@ function InquiriesTab() {
         <div className="space-y-3">
           {inquiries.map(function(inq, i) {
             return (
-              <div key={i} className="bg-white rounded-xl border border-stone-100 p-5 hover:shadow-sm transition-shadow">
+              <div key={inq.created_at + '-' + inq.email} className="bg-white rounded-xl border border-stone-100 p-5 hover:shadow-sm transition-shadow">
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2">

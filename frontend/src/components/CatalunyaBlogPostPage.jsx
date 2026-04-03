@@ -99,9 +99,9 @@ export default function CatalunyaBlogPostPage() {
             if (!paragraph.trim()) return null;
             var isHeading = paragraph.match(/^\d+\.\s/) || paragraph.length < 80 && !paragraph.includes('.');
             if (isHeading && paragraph.match(/^\d+\./)) {
-              return <h3 key={i} className="font-heading text-xl md:text-2xl text-stone-900 mt-8 mb-3">{paragraph}</h3>;
+              return <h3 key={'h-' + paragraph.substring(0, 20)} className="font-heading text-xl md:text-2xl text-stone-900 mt-8 mb-3">{paragraph}</h3>;
             }
-            return <p key={i} className="text-stone-600 text-base md:text-lg leading-relaxed mb-5">{paragraph}</p>;
+            return <p key={'p-' + i + '-' + paragraph.substring(0, 15)} className="text-stone-600 text-base md:text-lg leading-relaxed mb-5">{paragraph}</p>;
           })}
         </div>
 
