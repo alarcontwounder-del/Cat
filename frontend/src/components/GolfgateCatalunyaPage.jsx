@@ -489,6 +489,22 @@ export default function GolfgateCatalunyaPage() {
             </div>
           </div>
 
+          {/* Other Destinations - GIM exact clone */}
+          <div className="mb-8">
+            <h4 className="font-heading text-white text-base mb-4">Other Destinations</h4>
+            <ul className="space-y-2.5">
+              <li><a href="https://golfinmallorca.com" target="_blank" rel="noopener noreferrer" className="text-white/50 text-sm hover:text-white transition-colors">golfinmallorca.com</a></li>
+              <li>
+                <span className="text-white/30 text-sm">teetimescancun.net</span>
+                <span className="text-white/20 text-[10px] uppercase tracking-wider ml-2">Coming Soon</span>
+              </li>
+              <li>
+                <span className="text-white/30 text-sm">teetimespuntacana.com</span>
+                <span className="text-white/20 text-[10px] uppercase tracking-wider ml-2">Coming Soon</span>
+              </li>
+            </ul>
+          </div>
+
           {/* Contact Info section */}
           <div className="mb-8">
             <h4 className="font-heading text-white text-base mb-4">{t.footer.contactInfo}</h4>
