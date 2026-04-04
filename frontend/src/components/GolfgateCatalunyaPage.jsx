@@ -515,7 +515,7 @@ export default function GolfgateCatalunyaPage() {
 
       {/* Mobile bottom sticky CTA */}
       <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 px-4 py-3 safe-area-bottom" style={{ background: 'rgba(26,26,26,0.95)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)' }}>
-        <a href="https://golfinmallorca.greenfee365.com/" target="_blank" rel="noopener noreferrer" className="w-full flex items-center justify-center gap-2 py-3 rounded-full text-sm font-bold text-white" style={{ backgroundColor: '#f6416c' }} data-testid="mobile-sticky-cta">
+        <a href="https://golfinmallorca.greenfee365.com/search?area=Catalonia" target="_blank" rel="noopener noreferrer" className="w-full flex items-center justify-center gap-2 py-3 rounded-full text-sm font-bold text-white" style={{ backgroundColor: '#f6416c' }} data-testid="mobile-sticky-cta">
           Book a Tee Time Now! <ExternalLink className="w-4 h-4" />
         </a>
       </div>
