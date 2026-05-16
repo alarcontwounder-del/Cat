@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import '@/App.css';
 import { ScrollIndicator } from './components/ScrollIndicator';
+import PWAInstallBanner from './components/PWAInstallBanner';
 
 var GolfgateCatalunyaPage = React.lazy(function() { return import('./components/GolfgateCatalunyaPage'); });
 var CatalunyaCoursePage = React.lazy(function() { return import('./components/CatalunyaCoursePage'); });
@@ -36,6 +37,7 @@ function App() {
   return (
     <BrowserRouter>
       <ScrollIndicator />
+      <PWAInstallBanner />
       <Routes>
         <Route path="/" element={<Wrap><GolfgateCatalunyaPage /></Wrap>} />
         <Route path="/courses" element={<Wrap><CatalunyaCoursesListPage /></Wrap>} />
