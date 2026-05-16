@@ -1,6 +1,6 @@
 """Email templates for GOLFGATE Catalunya"""
 
-LOGO_URL = "https://golfgate-cat.preview.emergentagent.com/golfgate-logo-nav.png"
+LOGO_URL = "https://golfcat-booking.preview.emergentagent.com/golfgate-logo-nav.png"
 
 FOOTER_HTML = """
 <div style="background-color: #1a1a1a; padding: 24px 30px; border-radius: 0 0 16px 16px; text-align: center;">
