@@ -191,7 +191,7 @@ function FeatsSection(props) {
       <h2 className="font-heading text-2xl text-stone-900 mb-6">Facilities</h2>
       <div className="flex flex-wrap gap-3">
         {items.map(function(f, i) {
-          return <span key={i} className="px-4 py-2 bg-white border border-stone-200 rounded-full text-stone-700 text-sm font-medium shadow-sm">{f}</span>;
+          return <span key={'facility-' + f} className="px-4 py-2 bg-white border border-stone-200 rounded-full text-stone-700 text-sm font-medium shadow-sm">{f}</span>;
         })}
       </div>
     </section>

@@ -67,7 +67,7 @@ function FeatureTags(props) {
   return (
     <div className="flex flex-wrap gap-1.5 mb-4">
       {feats.map(function(f, i) {
-        return <span key={i} className="text-xs px-2.5 py-1 bg-stone-100 text-stone-600 rounded-full">{f}</span>;
+        return <span key={'feat-' + f} className="text-xs px-2.5 py-1 bg-stone-100 text-stone-600 rounded-full">{f}</span>;
       })}
     </div>
   );

@@ -71,6 +71,7 @@ function detectLanguage() {
     const nav = (navigator.language || 'en').slice(0, 2).toLowerCase();
     if (COPY[nav]) return nav;
   } catch (e) {
+    console.warn('[PWA] localStorage read failed for language detection:', e);
     /* ignore */
   }
   return 'en';
@@ -101,6 +102,7 @@ function wasRecentlyDismissed() {
     if (Number.isNaN(ts)) return false;
     return Date.now() - ts < DISMISS_DURATION_MS;
   } catch (e) {
+    console.warn('[PWA] localStorage read failed for dismissal check:', e);
     return false;
   }
 }
@@ -158,7 +160,7 @@ export default function PWAInstallBanner() {
     try {
       window.localStorage.setItem(STORAGE_KEY, String(Date.now()));
     } catch (e) {
-      /* ignore */
+      console.warn('[PWA] localStorage write failed on dismiss:', e);
     }
   };
 
@@ -174,10 +176,11 @@ export default function PWAInstallBanner() {
         try {
           window.localStorage.setItem(STORAGE_KEY, String(Date.now()));
         } catch (e) {
-          /* ignore */
+          console.warn('[PWA] localStorage write failed after prompt dismissal:', e);
         }
       }
     } catch (e) {
+      console.warn('[PWA] Install prompt failed:', e);
       setVisible(false);
     }
   };
