@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Download, X, Share, Plus } from 'lucide-react';
 import { trackEvent } from '../lib/analytics';
 
-const STORAGE_KEY = 'golfgate_pwa_install_dismissed_at';
-const DISMISS_DURATION_MS = 30 * 24 * 60 * 60 * 1000; // 30 days
+const STORAGE_KEY = 'golfgate_pwa_install_dismissed_session';
 
 const COPY = {
   en: {
@@ -97,13 +96,11 @@ function isStandalone() {
 
 function wasRecentlyDismissed() {
   try {
-    const v = window.localStorage.getItem(STORAGE_KEY);
-    if (!v) return false;
-    const ts = parseInt(v, 10);
-    if (Number.isNaN(ts)) return false;
-    return Date.now() - ts < DISMISS_DURATION_MS;
+    // sessionStorage is wiped when the user closes the tab/browser,
+    // so the banner reappears on the next session as requested.
+    return window.sessionStorage.getItem(STORAGE_KEY) === '1';
   } catch (e) {
-    console.warn('[PWA] localStorage read failed for dismissal check:', e);
+    console.warn('[PWA] sessionStorage read failed for dismissal check:', e);
     return false;
   }
 }
@@ -165,9 +162,9 @@ export default function PWAInstallBanner() {
     setVisible(false);
     trackEvent('pwa_install_dismissed', { platform: isIos() ? 'ios_safari' : 'android_chrome' });
     try {
-      window.localStorage.setItem(STORAGE_KEY, String(Date.now()));
+      window.sessionStorage.setItem(STORAGE_KEY, '1');
     } catch (e) {
-      console.warn('[PWA] localStorage write failed on dismiss:', e);
+      console.warn('[PWA] sessionStorage write failed on dismiss:', e);
     }
   };
 
@@ -183,9 +180,9 @@ export default function PWAInstallBanner() {
         // user dismissed prompt at OS level
         trackEvent('pwa_install_os_dismissed', { platform: 'android_chrome' });
         try {
-          window.localStorage.setItem(STORAGE_KEY, String(Date.now()));
+          window.sessionStorage.setItem(STORAGE_KEY, '1');
         } catch (e) {
-          console.warn('[PWA] localStorage write failed after prompt dismissal:', e);
+          console.warn('[PWA] sessionStorage write failed after prompt dismissal:', e);
         }
       }
     } catch (e) {
