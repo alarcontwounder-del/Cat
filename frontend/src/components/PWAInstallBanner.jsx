@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Download, X, Share, Plus } from 'lucide-react';
+import { trackEvent } from '../lib/analytics';
 
 const STORAGE_KEY = 'golfgate_pwa_install_dismissed_at';
 const DISMISS_DURATION_MS = 30 * 24 * 60 * 60 * 1000; // 30 days
@@ -126,7 +127,10 @@ export default function PWAInstallBanner() {
       e.preventDefault();
       setDeferredPrompt(e);
       // Show after a small delay so it's not jarring on first paint
-      setTimeout(() => setVisible(true), 4000);
+      setTimeout(() => {
+        setVisible(true);
+        trackEvent('pwa_install_banner_shown', { platform: 'android_chrome' });
+      }, 4000);
     };
 
     window.addEventListener('beforeinstallprompt', onBeforeInstallPrompt);
@@ -136,6 +140,7 @@ export default function PWAInstallBanner() {
       const t = setTimeout(() => {
         setShowIosHint(true);
         setVisible(true);
+        trackEvent('pwa_install_banner_shown', { platform: 'ios_safari' });
       }, 6000);
       return () => {
         clearTimeout(t);
@@ -146,6 +151,7 @@ export default function PWAInstallBanner() {
     const onInstalled = () => {
       setVisible(false);
       setDeferredPrompt(null);
+      trackEvent('pwa_install_completed', { platform: 'android_chrome' });
     };
     window.addEventListener('appinstalled', onInstalled);
 
@@ -157,6 +163,7 @@ export default function PWAInstallBanner() {
 
   const dismiss = () => {
     setVisible(false);
+    trackEvent('pwa_install_dismissed', { platform: isIos() ? 'ios_safari' : 'android_chrome' });
     try {
       window.localStorage.setItem(STORAGE_KEY, String(Date.now()));
     } catch (e) {
@@ -166,13 +173,15 @@ export default function PWAInstallBanner() {
 
   const install = async () => {
     if (!deferredPrompt) return;
+    trackEvent('pwa_install_accepted', { platform: 'android_chrome' });
     try {
       deferredPrompt.prompt();
       const choice = await deferredPrompt.userChoice;
       setDeferredPrompt(null);
       setVisible(false);
       if (choice && choice.outcome !== 'accepted') {
-        // user dismissed prompt
+        // user dismissed prompt at OS level
+        trackEvent('pwa_install_os_dismissed', { platform: 'android_chrome' });
         try {
           window.localStorage.setItem(STORAGE_KEY, String(Date.now()));
         } catch (e) {

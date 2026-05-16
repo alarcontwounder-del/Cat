@@ -6,6 +6,7 @@ import { CatalunyaCourseCard } from './CatalunyaCourseCard';
 import { CatalunyaQuickView } from './CatalunyaQuickView';
 import { CatalunyaWeather } from './CatalunyaWeather';
 import TRANSLATIONS from './translations';
+import { trackEvent } from '../lib/analytics';
 
 var API = process.env.REACT_APP_BACKEND_URL;
 var LOGO = '/golfgate-logo-transparent.png';
@@ -80,7 +81,7 @@ export default function GolfgateCatalunyaPage() {
     setMeta('property', 'og:description', 'Book tee times online at 20 golf courses across Catalunya, Spain. Golf near Barcelona, Costa Brava, Girona. Green fees from EUR35.');
     setMeta('property', 'og:type', 'website');
     setMeta('property', 'og:site_name', 'GOLFGATE Catalunya');
-    setMeta('property', 'og:image', 'https://res.cloudinary.com/greenfee365/image/upload/w_1200,h_630,c_fill/courses/camiral-golf-wellness-stadium/camiral-golf-wellness-stadium');
+    setMeta('property', 'og:image', 'https://golfgatecatalunya.es/golfgate-logo-transparent.png');
     setMeta('name', 'robots', 'index, follow');
     setMeta('name', 'geo.region', 'ES-CT');
     setMeta('name', 'geo.placename', 'Catalunya');
@@ -230,7 +231,7 @@ export default function GolfgateCatalunyaPage() {
             {t.hero.subtitle}
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <a href="https://golfinmallorca.greenfee365.com/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-semibold rounded-full text-white hover:opacity-90 transition-all duration-300 shadow-lg hover:shadow-xl" style={{ backgroundColor: '#f6416c' }}>
+            <a href="https://golfinmallorca.greenfee365.com/" target="_blank" rel="noopener noreferrer" onClick={function() { trackEvent('book_tee_time_click', { location: 'hero', destination: 'greenfee365' }); }} className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-semibold rounded-full text-white hover:opacity-90 transition-all duration-300 shadow-lg hover:shadow-xl" style={{ backgroundColor: '#f6416c' }} data-testid="hero-book-cta">
               {t.nav.bookCta} <ExternalLink className="w-4 h-4" />
             </a>
             <a href="#courses" onClick={function(e) { e.preventDefault(); document.getElementById('courses')?.scrollIntoView({behavior: 'smooth'}); }} className="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-semibold rounded-full bg-white/15 backdrop-blur-md text-white border border-white/30 hover:bg-white/25 transition-all duration-300 shadow-lg">
@@ -531,7 +532,7 @@ export default function GolfgateCatalunyaPage() {
 
       {/* Mobile bottom sticky CTA */}
       <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 px-4 py-3 safe-area-bottom" style={{ background: 'rgba(26,26,26,0.95)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)' }}>
-        <a href="https://golfinmallorca.greenfee365.com/search?area=Catalonia" target="_blank" rel="noopener noreferrer" className="w-full flex items-center justify-center gap-2 py-3 rounded-full text-sm font-bold text-white" style={{ backgroundColor: '#f6416c' }} data-testid="mobile-sticky-cta">
+        <a href="https://golfinmallorca.greenfee365.com/search?area=Catalonia" target="_blank" rel="noopener noreferrer" onClick={function() { trackEvent('book_tee_time_click', { location: 'mobile_sticky', destination: 'greenfee365' }); }} className="w-full flex items-center justify-center gap-2 py-3 rounded-full text-sm font-bold text-white" style={{ backgroundColor: '#f6416c' }} data-testid="mobile-sticky-cta">
           Book a Tee Time Now! <ExternalLink className="w-4 h-4" />
         </a>
       </div>
