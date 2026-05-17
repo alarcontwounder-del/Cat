@@ -19,12 +19,6 @@
       "type": "image/png",
       "sizes": "512x512",
       "purpose": "any maskable"
-    },
-    {
-      "src": "golfgate-logo-transparent.png",
-      "type": "image/png",
-      "sizes": "1408x360",
-      "purpose": "any"
     }
   ],
   "start_url": ".",

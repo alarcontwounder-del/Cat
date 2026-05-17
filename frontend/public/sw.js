@@ -7,7 +7,7 @@
  *
  * Bump CACHE_VERSION when you want to force-invalidate the static cache.
  */
-const CACHE_VERSION = 'v1';
+const CACHE_VERSION = 'v2';
 const STATIC_CACHE = `golfgate-static-${CACHE_VERSION}`;
 
 self.addEventListener('install', (event) => {
