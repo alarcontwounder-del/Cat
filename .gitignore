@@ -212,3 +212,9 @@ frontend/node_modules/.cache/default-development/5.pack
 # Environment files
 -e 
 # Environment files
+.env
+.env.*
+*.env
+credentials.json
+*.key
+.credentials
