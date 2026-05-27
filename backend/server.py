@@ -1,5 +1,5 @@
 from fastapi import FastAPI, APIRouter, HTTPException, Request, Response, UploadFile, File
-from fastapi.responses import JSONResponse, PlainTextResponse
+from fastapi.responses import JSONResponse, PlainTextResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
@@ -75,6 +75,28 @@ db = client[os.environ['DB_NAME']]
 
 # Create the main app without a prefix
 app = FastAPI()
+
+# ---------------------------------------------------------------------------
+# 301 Redirect middleware: golfgatecatalunya.es -> golfgatecatalunya.com
+# ---------------------------------------------------------------------------
+# Path-preserving permanent redirect from the legacy .es domain to the new
+# .com domain. Triggered at app level because the registrar's web forwarding
+# is intercepted by Cloudflare while .es is still linked to the deployment.
+REDIRECT_SOURCE_HOSTS = {
+    "golfgatecatalunya.es",
+    "www.golfgatecatalunya.es",
+}
+REDIRECT_TARGET_HOST = "golfgatecatalunya.com"
+
+@app.middleware("http")
+async def es_to_com_redirect(request: Request, call_next):
+    host_header = (request.headers.get("host") or "").lower().split(":")[0]
+    if host_header in REDIRECT_SOURCE_HOSTS:
+        target_url = f"https://{REDIRECT_TARGET_HOST}{request.url.path}"
+        if request.url.query:
+            target_url = f"{target_url}?{request.url.query}"
+        return RedirectResponse(url=target_url, status_code=301)
+    return await call_next(request)
 
 # Mount static files
 app.mount("/api/static", StaticFiles(directory=str(ROOT_DIR / "static")), name="static")

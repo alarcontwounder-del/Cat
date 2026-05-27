@@ -3,6 +3,17 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <!-- 301-equivalent client-side redirect: legacy .es domain -> .com -->
+        <script>
+          (function () {
+            var host = window.location.hostname.toLowerCase();
+            if (host === "golfgatecatalunya.es" || host === "www.golfgatecatalunya.es") {
+              var target = "https://golfgatecatalunya.com" + window.location.pathname + window.location.search + window.location.hash;
+              window.location.replace(target);
+            }
+          })();
+        </script>
         <link rel="icon" type="image/x-icon" href="%PUBLIC_URL%/favicon.ico?v=4" />
         <link rel="icon" type="image/png" href="%PUBLIC_URL%/favicon.png?v=4" sizes="512x512" />
         <link rel="apple-touch-icon" href="%PUBLIC_URL%/apple-touch-icon.png?v=4" />
