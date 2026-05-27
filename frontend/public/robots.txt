@@ -4,4 +4,4 @@ Allow: /
 Disallow: /admin
 Disallow: /api/
 
-Sitemap: https://golfgatecatalunya.es/api/sitemap.xml
+Sitemap: https://golfgatecatalunya.com/api/sitemap.xml

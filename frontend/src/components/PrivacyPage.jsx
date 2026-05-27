@@ -28,12 +28,12 @@ export default function PrivacyPage() {
         <p className="text-stone-400 text-sm mb-10">Last updated: March 2026</p>
 
         <div className="prose prose-stone max-w-none">
-          <p>golfgatecatalunya.es ("we", "us", "our") is committed to protecting your personal data. This Privacy Policy explains how we collect, use, store, and share your information when you visit our website or use our services, in compliance with the General Data Protection Regulation (GDPR - EU 2016/679) and the Spanish Organic Law 3/2018 on Data Protection (LOPDGDD).</p>
+          <p>golfgatecatalunya.com ("we", "us", "our") is committed to protecting your personal data. This Privacy Policy explains how we collect, use, store, and share your information when you visit our website or use our services, in compliance with the General Data Protection Regulation (GDPR - EU 2016/679) and the Spanish Organic Law 3/2018 on Data Protection (LOPDGDD).</p>
 
           <h2 className="font-heading text-2xl text-stone-900 mt-10 mb-4">1. Data Controller</h2>
           <div className="bg-stone-50 rounded-xl p-5 border border-stone-100 mb-6">
-            <p className="font-semibold mb-1">golfgatecatalunya.es</p>
-            <p>Email: <a href="mailto:contact@golfgatecatalunya.es" className="text-[#f6416c] hover:underline">contact@golfgatecatalunya.es</a></p>
+            <p className="font-semibold mb-1">golfgatecatalunya.com</p>
+            <p>Email: <a href="mailto:contact@golfgatecatalunya.com" className="text-[#f6416c] hover:underline">contact@golfgatecatalunya.com</a></p>
             <p>Phone: <a href="tel:+34620987575" className="text-[#f6416c] hover:underline">+34 620 987 575</a></p>
             <p>Location: Barcelona, Catalunya, Spain</p>
           </div>
@@ -88,7 +88,7 @@ export default function PrivacyPage() {
             <li><strong>Right to object:</strong> Object to processing based on legitimate interest</li>
             <li><strong>Right to withdraw consent:</strong> Withdraw consent for newsletter or marketing at any time</li>
           </ul>
-          <p className="mt-4">To exercise any of these rights, contact us at <a href="mailto:contact@golfgatecatalunya.es" className="text-[#f6416c] hover:underline">contact@golfgatecatalunya.es</a>. We will respond within 30 days.</p>
+          <p className="mt-4">To exercise any of these rights, contact us at <a href="mailto:contact@golfgatecatalunya.com" className="text-[#f6416c] hover:underline">contact@golfgatecatalunya.com</a>. We will respond within 30 days.</p>
           <p>You also have the right to lodge a complaint with the Spanish Data Protection Agency (AEPD) at <a href="https://www.aepd.es" target="_blank" rel="noopener noreferrer" className="text-[#f6416c] hover:underline">www.aepd.es</a>.</p>
 
           <h2 className="font-heading text-2xl text-stone-900 mt-10 mb-4">7. Cookies</h2>
@@ -106,7 +106,7 @@ export default function PrivacyPage() {
           <p>We may update this Privacy Policy from time to time. Significant changes will be communicated through our website.</p>
 
           <h2 className="font-heading text-2xl text-stone-900 mt-10 mb-4">10. Contact</h2>
-          <p>For any questions regarding this Privacy Policy, please contact us at <a href="mailto:contact@golfgatecatalunya.es" className="text-[#f6416c] hover:underline">contact@golfgatecatalunya.es</a> or call <a href="tel:+34620987575" className="text-[#f6416c] hover:underline">+34 620 987 575</a>.</p>
+          <p>For any questions regarding this Privacy Policy, please contact us at <a href="mailto:contact@golfgatecatalunya.com" className="text-[#f6416c] hover:underline">contact@golfgatecatalunya.com</a> or call <a href="tel:+34620987575" className="text-[#f6416c] hover:underline">+34 620 987 575</a>.</p>
         </div>
       </div>
     </div>

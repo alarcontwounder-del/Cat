@@ -132,7 +132,7 @@ function QuoteForm(props) {
           <svg className="w-8 h-8 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
         </div>
         <h4 className="font-heading text-xl text-stone-900 mb-2">Something went wrong</h4>
-        <p className="text-stone-500 text-sm mb-4">Please email us directly at <a href="mailto:contact@golfgatecatalunya.es" className="underline" style={{ color: '#f6416c' }}>contact@golfgatecatalunya.es</a></p>
+        <p className="text-stone-500 text-sm mb-4">Please email us directly at <a href="mailto:contact@golfgatecatalunya.com" className="underline" style={{ color: '#f6416c' }}>contact@golfgatecatalunya.com</a></p>
         <button onClick={props.onClose} className="px-6 py-2.5 rounded-full text-sm font-medium text-stone-600 border border-stone-200 hover:bg-stone-50 transition-colors">Close</button>
       </div>
     );

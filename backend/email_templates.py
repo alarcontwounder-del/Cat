@@ -4,8 +4,8 @@ LOGO_URL = "https://golfcat-booking.preview.emergentagent.com/golfgate-logo-nav.
 
 FOOTER_HTML = """
 <div style="background-color: #1a1a1a; padding: 24px 30px; border-radius: 0 0 16px 16px; text-align: center;">
-    <p style="color: rgba(255,255,255,0.7); font-size: 13px; margin: 0 0 4px 0;"><a href="https://golfgatecatalunya.es" style="color: rgba(255,255,255,0.7) !important; text-decoration: none !important;">golfgatecatalunya.es</a></p>
-    <p style="color: rgba(255,255,255,0.4); font-size: 11px; margin: 8px 0 0 0;"><a href="mailto:contact@golfgatecatalunya.es" style="color: rgba(255,255,255,0.4) !important; text-decoration: none !important;">contact@golfgatecatalunya.es</a> | <a href="tel:+34620987575" style="color: rgba(255,255,255,0.4) !important; text-decoration: none !important;">+34 620 987 575</a></p>
+    <p style="color: rgba(255,255,255,0.7); font-size: 13px; margin: 0 0 4px 0;"><a href="https://golfgatecatalunya.com" style="color: rgba(255,255,255,0.7) !important; text-decoration: none !important;">golfgatecatalunya.com</a></p>
+    <p style="color: rgba(255,255,255,0.4); font-size: 11px; margin: 8px 0 0 0;"><a href="mailto:contact@golfgatecatalunya.com" style="color: rgba(255,255,255,0.4) !important; text-decoration: none !important;">contact@golfgatecatalunya.com</a> | <a href="tel:+34620987575" style="color: rgba(255,255,255,0.4) !important; text-decoration: none !important;">+34 620 987 575</a></p>
 </div>
 """
 
@@ -77,13 +77,13 @@ def build_client_email(name, message):
                     </table>
                 </div>
                 <div style="text-align: center; margin: 32px 0;">
-                    <a href="https://golfgatecatalunya.es" style="display: inline-block; background-color: #f6416c; color: white; padding: 16px 40px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 14px;">Explore Golf Courses</a>
+                    <a href="https://golfgatecatalunya.com" style="display: inline-block; background-color: #f6416c; color: white; padding: 16px 40px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 14px;">Explore Golf Courses</a>
                 </div>
             </div>
             <div style="background-color: #1a1a1a; padding: 24px 30px; border-radius: 0 0 16px 16px; text-align: center;">
                 <p style="color: rgba(255,255,255,0.7); font-size: 13px; margin: 0 0 4px 0;">Questions? Contact us at</p>
-                <a href="mailto:contact@golfgatecatalunya.es" style="color: #ffffff !important; font-size: 13px; text-decoration: none !important;">contact@golfgatecatalunya.es</a>
-                <p style="color: rgba(255,255,255,0.4); font-size: 11px; margin: 16px 0 0 0;"><a href="https://golfgatecatalunya.es" style="color: rgba(255,255,255,0.4) !important; text-decoration: none !important;">golfgatecatalunya.es</a> &mdash; Your Gateway to Golf in Catalunya</p>
+                <a href="mailto:contact@golfgatecatalunya.com" style="color: #ffffff !important; font-size: 13px; text-decoration: none !important;">contact@golfgatecatalunya.com</a>
+                <p style="color: rgba(255,255,255,0.4); font-size: 11px; margin: 16px 0 0 0;"><a href="https://golfgatecatalunya.com" style="color: rgba(255,255,255,0.4) !important; text-decoration: none !important;">golfgatecatalunya.com</a> &mdash; Your Gateway to Golf in Catalunya</p>
             </div>
         </div>
     </body>

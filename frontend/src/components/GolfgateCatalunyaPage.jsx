@@ -81,7 +81,7 @@ export default function GolfgateCatalunyaPage() {
     setMeta('property', 'og:description', 'Book tee times online at 20 golf courses across Catalunya, Spain. Golf near Barcelona, Costa Brava, Girona. Green fees from EUR35.');
     setMeta('property', 'og:type', 'website');
     setMeta('property', 'og:site_name', 'GOLFGATE Catalunya');
-    setMeta('property', 'og:image', 'https://golfgatecatalunya.es/golfgate-logo-transparent.png');
+    setMeta('property', 'og:image', 'https://golfgatecatalunya.com/golfgate-logo-transparent.png');
     setMeta('name', 'robots', 'index, follow');
     setMeta('name', 'geo.region', 'ES-CT');
     setMeta('name', 'geo.placename', 'Catalunya');
@@ -428,7 +428,7 @@ export default function GolfgateCatalunyaPage() {
           <div className="h-1 mx-auto rounded-full mb-6 accent-line" style={{ background: 'linear-gradient(90deg, #CCFF00, #FFFF00, #DFFF00)' }} />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto mb-12">
-          <ContactBox icon={<Mail className="w-6 h-6" />} title={t.contact.email} value="contact@golfgatecatalunya.es" href="mailto:contact@golfgatecatalunya.es" color="#CCFF00" />
+          <ContactBox icon={<Mail className="w-6 h-6" />} title={t.contact.email} value="contact@golfgatecatalunya.com" href="mailto:contact@golfgatecatalunya.com" color="#CCFF00" />
           <ContactBox icon={<Phone className="w-6 h-6" />} title={t.contact.phone} value="+34 620 987 575" href="tel:+34620987575" color="#DFFF00" />
           <ContactBox icon={<MapPin className="w-6 h-6" />} title={t.contact.location} value="Barcelona, Catalunya, Spain" color="#FFFF00" />
         </div>
@@ -511,15 +511,15 @@ export default function GolfgateCatalunyaPage() {
             <h4 className="font-heading text-white text-base mb-4">{t.footer.contactInfo}</h4>
             <div className="space-y-2">
               <p className="text-white/50 text-sm">+34 620 987 575</p>
-              <a href="mailto:contact@golfgatecatalunya.es" className="text-white/50 text-sm hover:text-white transition-colors block">contact@golfgatecatalunya.es</a>
+              <a href="mailto:contact@golfgatecatalunya.com" className="text-white/50 text-sm hover:text-white transition-colors block">contact@golfgatecatalunya.com</a>
               <p className="text-white/50 text-sm">Barcelona, CT, Spain</p>
-              <p className="text-sm">Website: <a href="https://golfgatecatalunya.es" target="_blank" rel="noopener noreferrer" className="text-[#CCFF00] hover:text-[#DFFF00] transition-colors">golfgatecatalunya.es</a></p>
+              <p className="text-sm">Website: <a href="https://golfgatecatalunya.com" target="_blank" rel="noopener noreferrer" className="text-[#CCFF00] hover:text-[#DFFF00] transition-colors">golfgatecatalunya.com</a></p>
             </div>
           </div>
 
           {/* Divider + Copyright */}
           <div className="border-t border-white/10 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-white/30 text-xs">&copy; {new Date().getFullYear()} Golfgatecatalunya.es&reg;. {t.footer.copyright}</p>
+            <p className="text-white/30 text-xs">&copy; {new Date().getFullYear()} Golfgatecatalunya.com&reg;. {t.footer.copyright}</p>
             <div className="flex items-center gap-6 text-xs text-white/30">
               <Link to="/privacy" className="hover:text-white/60 transition-colors">{t.footer.privacy}</Link>
               <Link to="/terms" className="hover:text-white/60 transition-colors">{t.footer.terms}</Link>

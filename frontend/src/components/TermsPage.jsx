@@ -28,12 +28,12 @@ export default function TermsPage() {
         <p className="text-stone-400 text-sm mb-10">Last updated: March 2026</p>
 
         <div className="prose prose-stone max-w-none">
-          <p>These terms and conditions apply to all services provided directly or indirectly by golfgatecatalunya.es, including those made available online, through any mobile device, by email, or by telephone. By accessing, browsing, and using our website and/or by completing a booking or inquiry, you acknowledge and agree to have read, understood, and agreed to the terms and conditions set out below, including our Privacy Policy.</p>
-          <p>golfgatecatalunya.es operates as a golf travel consultancy and booking service based in Catalunya, Spain. Our website and services are provided for your personal, non-commercial use only.</p>
+          <p>These terms and conditions apply to all services provided directly or indirectly by golfgatecatalunya.com, including those made available online, through any mobile device, by email, or by telephone. By accessing, browsing, and using our website and/or by completing a booking or inquiry, you acknowledge and agree to have read, understood, and agreed to the terms and conditions set out below, including our Privacy Policy.</p>
+          <p>golfgatecatalunya.com operates as a golf travel consultancy and booking service based in Catalunya, Spain. Our website and services are provided for your personal, non-commercial use only.</p>
 
           <h2 className="font-heading text-2xl text-stone-900 mt-10 mb-4">1. Scope of Our Service</h2>
           <p>Through our platform, we provide a golf travel consultancy service through which golf courses, hotels, and related service providers ("Suppliers") can offer their products and services, and through which visitors can make inquiries, request quotes, and complete bookings.</p>
-          <p>When you make a booking through golfgatecatalunya.es, you may enter into a direct contractual relationship with the Supplier. In such cases, we act as an intermediary, facilitating the connection between you and the Supplier.</p>
+          <p>When you make a booking through golfgatecatalunya.com, you may enter into a direct contractual relationship with the Supplier. In such cases, we act as an intermediary, facilitating the connection between you and the Supplier.</p>
 
           <h2 className="font-heading text-2xl text-stone-900 mt-10 mb-4">2. Bookings and Payments</h2>
           <p>Bookings can be made through our website, by contacting us directly via email or phone, or through our booking partners. All prices are displayed in Euros (EUR) unless otherwise stated.</p>
@@ -47,13 +47,13 @@ export default function TermsPage() {
             <li>Cancellations made within 72 hours may be subject to partial or no refund, depending on the Supplier's policy</li>
             <li>No-shows are not eligible for refunds</li>
           </ul>
-          <p className="mt-4">If you wish to cancel or modify a booking, please contact us at <a href="mailto:contact@golfgatecatalunya.es" className="text-[#f6416c] hover:underline">contact@golfgatecatalunya.es</a> or call <a href="tel:+34620987575" className="text-[#f6416c] hover:underline">+34 620 987 575</a>.</p>
+          <p className="mt-4">If you wish to cancel or modify a booking, please contact us at <a href="mailto:contact@golfgatecatalunya.com" className="text-[#f6416c] hover:underline">contact@golfgatecatalunya.com</a> or call <a href="tel:+34620987575" className="text-[#f6416c] hover:underline">+34 620 987 575</a>.</p>
 
           <h2 className="font-heading text-2xl text-stone-900 mt-10 mb-4">4. Third-Party Suppliers</h2>
-          <p>golfgatecatalunya.es partners with golf courses, hotels, and other providers in Catalunya. While we carefully select our partners, each Supplier is independently responsible for the quality and delivery of their services.</p>
+          <p>golfgatecatalunya.com partners with golf courses, hotels, and other providers in Catalunya. While we carefully select our partners, each Supplier is independently responsible for the quality and delivery of their services.</p>
 
           <h2 className="font-heading text-2xl text-stone-900 mt-10 mb-4">5. Limitation of Liability</h2>
-          <p>To the extent permitted by law, golfgatecatalunya.es shall only be liable for direct damages actually suffered due to a proven shortcoming in our services, up to the total amount paid for the relevant booking.</p>
+          <p>To the extent permitted by law, golfgatecatalunya.com shall only be liable for direct damages actually suffered due to a proven shortcoming in our services, up to the total amount paid for the relevant booking.</p>
           <p>We shall not be liable for:</p>
           <ul className="list-disc pl-6 space-y-2">
             <li>Services rendered directly by Suppliers (golf courses, hotels)</li>
@@ -63,13 +63,13 @@ export default function TermsPage() {
           </ul>
 
           <h2 className="font-heading text-2xl text-stone-900 mt-10 mb-4">6. Intellectual Property</h2>
-          <p>All content on golfgatecatalunya.es, including text, images, logos, design, and software, is protected by intellectual property rights. You may not reproduce, distribute, or use any content without our prior written consent.</p>
+          <p>All content on golfgatecatalunya.com, including text, images, logos, design, and software, is protected by intellectual property rights. You may not reproduce, distribute, or use any content without our prior written consent.</p>
 
           <h2 className="font-heading text-2xl text-stone-900 mt-10 mb-4">7. Applicable Law</h2>
           <p>These Terms of Service are governed by and construed in accordance with the laws of Spain. Any disputes arising from these terms shall be subject to the exclusive jurisdiction of the courts of Barcelona, Spain.</p>
 
           <h2 className="font-heading text-2xl text-stone-900 mt-10 mb-4">8. Contact</h2>
-          <p>For any questions regarding these Terms of Service, please contact us at <a href="mailto:contact@golfgatecatalunya.es" className="text-[#f6416c] hover:underline">contact@golfgatecatalunya.es</a> or call <a href="tel:+34620987575" className="text-[#f6416c] hover:underline">+34 620 987 575</a>.</p>
+          <p>For any questions regarding these Terms of Service, please contact us at <a href="mailto:contact@golfgatecatalunya.com" className="text-[#f6416c] hover:underline">contact@golfgatecatalunya.com</a> or call <a href="tel:+34620987575" className="text-[#f6416c] hover:underline">+34 620 987 575</a>.</p>
         </div>
       </div>
     </div>

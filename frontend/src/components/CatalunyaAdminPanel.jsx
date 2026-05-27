@@ -72,13 +72,13 @@ export default function CatalunyaAdminPanel() {
           </div>
           <div>
             <h1 className="text-white font-bold text-xl" style={{ fontFamily: "'Playfair Display', Georgia, serif", fontStyle: 'italic' }}>Admin Dashboard</h1>
-            <p className="text-stone-400 text-xs">Golfgatecatalunya.es</p>
+            <p className="text-stone-400 text-xs">Golfgatecatalunya.com</p>
           </div>
         </div>
         <div className="flex items-center gap-4">
           <div className="text-right hidden sm:block">
             <p className="text-white text-sm font-medium">{user ? user.name : 'Admin'}</p>
-            <p className="text-stone-400 text-xs">{user ? user.email : 'golfgatecatalunya.es'}</p>
+            <p className="text-stone-400 text-xs">{user ? user.email : 'golfgatecatalunya.com'}</p>
           </div>
           <Link to="/" className="w-8 h-8 flex items-center justify-center text-stone-400 hover:text-white transition-colors">
             <ExternalLink className="w-4 h-4" />

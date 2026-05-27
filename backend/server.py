@@ -882,7 +882,7 @@ async def delete_blog_post(post_id: str):
 # ============ CONTACT FORM EMAIL (RESEND) ============
 resend.api_key = os.environ.get("RESEND_API_KEY", "")
 SENDER_EMAIL = os.environ.get("SENDER_EMAIL", "onboarding@resend.dev")
-CONTACT_EMAIL = "contact@golfgatecatalunya.es"
+CONTACT_EMAIL = "contact@golfgatecatalunya.com"
 
 @api_router.post("/contact")
 async def send_contact_email(request: Request):
@@ -955,7 +955,7 @@ async def get_sitemap(request: Request):
     """Generate SEO sitemap matching GIM structure"""
     from datetime import datetime
     today = datetime.now().strftime("%Y-%m-%d")
-    base = os.environ.get("SITE_URL", "https://golfgatecatalunya.es")
+    base = os.environ.get("SITE_URL", "https://golfgatecatalunya.com")
     
     urls = []
     # Homepage
