@@ -67,6 +67,24 @@ Frontend: React + Tailwind + Lucide | Backend: FastAPI + MongoDB | Weather: open
 - Resend Domains: verify `golfgatecatalunya.com` (add SPF/DKIM records in Arsys) → then update SENDER_EMAIL Secret from .es to .com
 - After both above done: edit SITE_URL Secret in Emergent → https://golfgatecatalunya.com → Redeploy → verify .es returns 301 via curl
 
+## DOMAIN MIGRATION COMPLETE (29 May 2026)
+- Emergent Support confirmed only 1 custom domain per deployment.
+- Executed swap: unlinked .es → linked .com (via Manual setup; auto failed; linking eventually succeeded after delay).
+- Redeploy applied .com code (canonical/og/schema/sitemap/footer all in .com).
+- DonDominio DNS Zone: pressed "Restaurar todo" → DNS now points to DonDominio hosting (hostingsrv121.dondominio.com / 31.214.179.10) which runs the 301 redirect.
+- Verified 301 redirects working:
+  - https://golfgatecatalunya.es → 301 → https://golfgatecatalunya.com (HSTS 1y)
+  - https://golfgatecatalunya.es/golf/barcelona → 301 → https://golfgatecatalunya.com/golf/barcelona (path-preserving ✅)
+  - https://www.golfgatecatalunya.es → 301 → https://golfgatecatalunya.com
+- Emails (MX/SPF/DKIM) intact, still functional via DonDominio mail.
+- Backend FastAPI middleware + frontend JS redirect remain as defense-in-depth.
+
+## Post-Migration TODO (user actions)
+- GSC: add property https://golfgatecatalunya.com, verify, submit sitemap, use "Change of Address" tool in old .es property pointing to .com.
+- GA: add new data stream for .com.
+- Resend: add and verify golfgatecatalunya.com domain → update SENDER_EMAIL Secret to contact@golfgatecatalunya.com → Redeploy.
+- Edit SITE_URL Secret to https://golfgatecatalunya.com (user reported UI difficulty editing — retry on fresh page).
+
 ## Future Backlog (P2)
 - Replace hero image once user provides a specific one
 - Prune unused legacy GIM endpoints in server.py (get_restaurants, send_trip_planner_email)
