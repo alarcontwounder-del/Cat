@@ -575,10 +575,35 @@ function ContactBox(props) {
 }
 
 
+function KiwiCookieIcon(props) {
+  var size = props.size || 32;
+  var maskId = props.maskId || 'cookieBite';
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <defs>
+        <mask id={maskId}>
+          <rect width="24" height="24" fill="white" />
+          <circle cx="20.5" cy="4" r="3.6" fill="black" />
+          <circle cx="17.8" cy="2.2" r="1.3" fill="black" />
+          <circle cx="22.2" cy="9.5" r="1.5" fill="black" />
+        </mask>
+      </defs>
+      <circle cx="12" cy="12" r="10" fill="#CCFF00" mask={"url(#" + maskId + ")"} />
+      <circle cx="7" cy="8.8" r="1.6" fill="#1a1a1a" />
+      <circle cx="14.2" cy="14.5" r="1.7" fill="#1a1a1a" />
+      <circle cx="9" cy="15.8" r="1.3" fill="#1a1a1a" />
+      <circle cx="11.5" cy="11" r="0.65" fill="#1a1a1a" />
+    </svg>
+  );
+}
+
 function CookieConsent() {
   var showState = useState(false);
   var show = showState[0];
   var setShow = showState[1];
+  var expandedState = useState(false);
+  var expanded = expandedState[0];
+  var setExpanded = expandedState[1];
   var currentLang = localStorage.getItem('golfgate_lang') || 'en';
   var t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
 
@@ -592,26 +617,64 @@ function CookieConsent() {
 
   if (!show) return null;
 
-  return (
-    <div className="fixed bottom-6 left-6 z-[9999]" data-testid="cookie-consent">
-      <div className="w-[260px] bg-black/50 backdrop-blur-md rounded-2xl shadow-lg border border-white/15 p-5 text-center">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8 text-white mx-auto mb-3">
-          <path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5" />
-          <path d="M8.5 8.5v.01" /><path d="M16 15.5v.01" /><path d="M12 12v.01" /><path d="M11 17v.01" /><path d="M7 14v.01" />
-        </svg>
-        <p className="text-white/90 text-[13px] leading-relaxed mb-1">{t.cookie.text}</p>
-        <a href="/privacy" className="text-white/50 text-[11px] underline underline-offset-2 hover:text-white/80 transition-colors" data-testid="cookie-learn-more">{t.cookie.learn}</a>
-        <button
-          onClick={function() { localStorage.setItem('golfgate_cookies', 'true'); setShow(false); }}
-          className="w-full mt-4 border border-white/40 text-white hover:bg-white/15 text-sm font-semibold py-2.5 rounded-lg transition-all duration-200"
-          data-testid="cookie-accept-btn"
-        >{t.cookie.accept}</button>
-        <button
-          onClick={function() { localStorage.setItem('golfgate_cookies', 'declined'); setShow(false); }}
-          className="w-full mt-2 text-white/50 hover:text-white/80 text-xs font-medium py-1.5 transition-colors"
-        >{t.cookie.prefs}</button>
-      </div>
+  function handleAccept() {
+    localStorage.setItem('golfgate_cookies', 'true');
+    setShow(false);
+  }
+
+  function handleDecline() {
+    localStorage.setItem('golfgate_cookies', 'declined');
+    setShow(false);
+  }
+
+  var cookieBox = (
+    <div className="w-[260px] max-w-full bg-black/50 backdrop-blur-md rounded-2xl shadow-lg border border-[#CCFF00]/35 p-5 text-center">
+      <div className="mx-auto mb-3 w-8 h-8"><KiwiCookieIcon size={32} maskId="cookieBoxBite" /></div>
+      <p className="text-[#CCFF00] text-[13px] font-medium leading-relaxed mb-1">{t.cookie.text}</p>
+      <a href="/privacy" className="text-[#CCFF00]/70 text-[11px] underline underline-offset-2 hover:text-[#CCFF00] transition-colors" data-testid="cookie-learn-more">{t.cookie.learn}</a>
+      <button
+        onClick={handleAccept}
+        className="w-full mt-4 border border-[#CCFF00]/55 text-[#CCFF00] hover:bg-[#CCFF00]/10 text-sm font-bold py-2.5 rounded-lg transition-all duration-200"
+        data-testid="cookie-accept-btn"
+      >{t.cookie.accept}</button>
+      <button
+        onClick={handleDecline}
+        className="w-full mt-2 text-[#CCFF00]/65 hover:text-[#CCFF00] text-xs font-medium py-1.5 transition-colors"
+      >{t.cookie.prefs}</button>
     </div>
+  );
+
+  return (
+    <>
+      {/* Mobile pill — only visible when not expanded */}
+      {!expanded && (
+        <button
+          onClick={function() { setExpanded(true); }}
+          aria-label="Cookie consent"
+          data-testid="cookie-pill"
+          className="md:hidden fixed bottom-20 right-4 z-[9999] w-12 h-12 flex items-center justify-center bg-transparent border-none p-0 cursor-pointer hover:scale-110 active:scale-95 transition-transform"
+          style={{ filter: 'drop-shadow(0 4px 10px rgba(0,0,0,.55)) drop-shadow(0 2px 4px rgba(0,0,0,.4))' }}
+        >
+          <KiwiCookieIcon size={48} maskId="cookiePillBite" />
+        </button>
+      )}
+
+      {/* Desktop — always visible at bottom-left */}
+      <div className="hidden md:block fixed bottom-6 left-6 z-[9999]" data-testid="cookie-consent">
+        {cookieBox}
+      </div>
+
+      {/* Mobile expanded — centered modal with backdrop */}
+      {expanded && (
+        <div
+          className="md:hidden fixed inset-0 z-[9999] bg-black/45 backdrop-blur-sm flex items-center justify-center p-4"
+          onClick={function(e) { if (e.target === e.currentTarget) setExpanded(false); }}
+          data-testid="cookie-consent-mobile"
+        >
+          {cookieBox}
+        </div>
+      )}
+    </>
   );
 }
 
