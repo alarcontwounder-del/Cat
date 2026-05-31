@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <title>Cookie Pill Mockup — GOLFGATE Catalunya</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --kiwi: #CCFF00;
+        --pink: #f6416c;
+        --dark: #1a1a1a;
+      }
+      * { box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+      html, body { margin: 0; padding: 0; font-family: 'Inter', system-ui, sans-serif; background: #ECECEC; color: #222; }
+      body { display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 24px 12px 60px; }
+
+      h1 { font-size: 20px; margin: 0 0 6px; }
+      .lead { color: #555; font-size: 14px; margin: 0 0 22px; text-align: center; }
+      .controls { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-bottom: 22px; }
+      .ctrl-btn { background: #1a1a1a; color: #fff; border: none; padding: 8px 14px; border-radius: 999px; font-size: 12px; font-weight: 600; cursor: pointer; transition: opacity .2s; }
+      .ctrl-btn:hover { opacity: .85; }
+      .ctrl-btn.active { background: var(--pink); }
+
+      /* Phone frame */
+      .phone {
+        width: 390px;
+        max-width: 100%;
+        height: 740px;
+        background: #000;
+        border-radius: 44px;
+        padding: 12px;
+        box-shadow: 0 30px 60px -20px rgba(0,0,0,.35), 0 0 0 1px rgba(0,0,0,.08);
+        position: relative;
+      }
+      .screen {
+        width: 100%; height: 100%;
+        border-radius: 32px;
+        overflow: hidden;
+        position: relative;
+        background: #2c3a32;
+      }
+      .notch {
+        position: absolute; top: 8px; left: 50%; transform: translateX(-50%);
+        width: 110px; height: 28px; background: #000; border-radius: 999px; z-index: 50;
+      }
+
+      /* Fake navbar */
+      .navbar {
+        position: absolute; top: 0; left: 0; right: 0; height: 56px;
+        background: var(--kiwi); display: flex; align-items: center; justify-content: space-between;
+        padding: 0 14px; z-index: 30;
+      }
+      .logo { font-family: 'Inter', sans-serif; font-weight: 900; font-size: 18px; color: var(--pink); letter-spacing: -0.5px; }
+      .logo small { display: block; font-size: 8px; font-weight: 700; letter-spacing: 2px; margin-top: -2px; }
+      .lang { background: rgba(255,255,255,.25); border-radius: 999px; padding: 4px 10px; font-size: 11px; color: var(--pink); font-weight: 700; }
+      .burger { width: 22px; height: 16px; display: flex; flex-direction: column; justify-content: space-between; }
+      .burger span { display: block; height: 2px; background: var(--pink); border-radius: 2px; }
+
+      /* Fake hero */
+      .hero {
+        position: absolute; top: 56px; left: 0; right: 0; bottom: 0;
+        background: linear-gradient(180deg, #4a6b50 0%, #2a3d2e 60%, #1f2e22 100%);
+        display: flex; align-items: flex-start; justify-content: center; padding: 60px 16px 0;
+      }
+      .hero::before {
+        content: ''; position: absolute; inset: 0;
+        background:
+          radial-gradient(circle at 30% 20%, rgba(255,255,255,.15) 0%, transparent 40%),
+          radial-gradient(circle at 70% 60%, rgba(0,0,0,.3) 0%, transparent 50%);
+      }
+      .hero-title { font-family: 'Inter', serif; font-weight: 700; color: white; font-size: 38px; line-height: 1.05; text-align: center; max-width: 280px; position: relative; z-index: 1; text-shadow: 0 4px 20px rgba(0,0,0,.4); }
+
+      /* Sticky CTA */
+      .sticky-cta {
+        position: absolute; bottom: 0; left: 0; right: 0;
+        background: rgba(26,26,26,.95); backdrop-filter: blur(12px);
+        padding: 12px 16px; z-index: 40;
+      }
+      .sticky-btn {
+        width: 100%; padding: 12px; border-radius: 999px;
+        background: var(--pink); color: white; font-weight: 700; font-size: 13px;
+        border: none; display: flex; align-items: center; justify-content: center; gap: 6px;
+      }
+
+      /* ========================
+         COOKIE PILL (the magic)
+         ======================== */
+      .cookie-pill {
+        position: absolute;
+        bottom: 78px; right: 14px;
+        z-index: 45;
+        width: 44px; height: 44px;
+        display: flex; align-items: center; justify-content: center;
+        background: transparent; border: none; padding: 0; cursor: pointer;
+        animation: pill-in .5s cubic-bezier(.34,1.56,.64,1) .8s both;
+        filter: drop-shadow(0 4px 8px rgba(0,0,0,.45));
+        transition: transform .15s ease;
+      }
+      .cookie-pill:hover { transform: scale(1.08); }
+      .cookie-pill:active { transform: scale(.93); }
+      .cookie-pill.kiwi svg { color: var(--kiwi); }
+      .cookie-pill.pink svg { color: var(--pink); }
+      .cookie-pill.white svg { color: #fff; }
+      @keyframes pill-in {
+        from { opacity: 0; transform: scale(.5) translateY(8px); }
+        to { opacity: 1; transform: scale(1) translateY(0); }
+      }
+
+      /* Expanded cookie modal */
+      .cookie-modal-overlay {
+        position: absolute; inset: 0;
+        background: rgba(0,0,0,.45);
+        backdrop-filter: blur(2px);
+        z-index: 60;
+        display: flex; align-items: center; justify-content: center;
+        opacity: 0; pointer-events: none;
+        transition: opacity .25s ease;
+        padding: 0 18px;
+      }
+      .cookie-modal-overlay.show { opacity: 1; pointer-events: auto; }
+
+      .cookie-box {
+        width: 260px; max-width: 100%;
+        background: rgba(0,0,0,.5); backdrop-filter: blur(12px);
+        border-radius: 18px; border: 1px solid rgba(255,255,255,.15);
+        padding: 22px 20px; text-align: center; color: white;
+        box-shadow: 0 25px 50px -12px rgba(0,0,0,.45);
+        position: relative;
+        transform: scale(.96); transition: transform .25s ease;
+      }
+      .cookie-modal-overlay.show .cookie-box { transform: scale(1); }
+      .cookie-box-icon { width: 32px; height: 32px; margin: 0 auto 12px; color: #fff; }
+      .cookie-box p { font-size: 13px; color: rgba(255,255,255,.9); line-height: 1.45; margin: 0 0 6px; }
+      .cookie-box a { font-size: 11px; color: rgba(255,255,255,.55); text-decoration: underline; }
+      .cookie-box .accept {
+        width: 100%; margin-top: 16px; padding: 10px;
+        border: 1px solid rgba(255,255,255,.4); background: transparent; color: white;
+        font-weight: 600; font-size: 13px; border-radius: 10px; cursor: pointer;
+      }
+      .cookie-box .accept:hover { background: rgba(255,255,255,.12); }
+      .cookie-box .prefs {
+        width: 100%; margin-top: 6px; padding: 6px;
+        background: transparent; border: none; color: rgba(255,255,255,.55);
+        font-size: 12px; cursor: pointer;
+      }
+      .cookie-close {
+        position: absolute; top: 8px; right: 10px;
+        background: none; border: none; color: rgba(255,255,255,.6);
+        font-size: 20px; cursor: pointer; line-height: 1; padding: 4px;
+      }
+
+      .footnote { color: #666; font-size: 12px; margin-top: 18px; text-align: center; max-width: 420px; }
+
+      /* Desktop preview (siempre cuadro completo, no cambia) */
+      .desktop-note {
+        margin-top: 30px; padding: 16px 20px; background: white; border-radius: 14px;
+        max-width: 420px; font-size: 13px; color: #444; line-height: 1.5;
+        box-shadow: 0 2px 10px rgba(0,0,0,.05);
+      }
+      .desktop-note strong { color: #1a1a1a; }
+    </style>
+  </head>
+  <body>
+    <h1>🍪 Cookie Pill — Mockup</h1>
+    <p class="lead">Vista previa de cómo quedaría en móvil. Pulsa la galleta flotante para ver la expansión.</p>
+
+    <div class="controls">
+      <span style="font-size:12px;color:#555;align-self:center;">Color del icono:</span>
+      <button class="ctrl-btn active" data-color="kiwi">Kiwi (recomendado)</button>
+      <button class="ctrl-btn" data-color="pink">Pink</button>
+      <button class="ctrl-btn" data-color="white">Blanco</button>
+      <button class="ctrl-btn" data-action="reset">↻ Resetear</button>
+    </div>
+
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="screen">
+        <div class="navbar">
+          <div class="logo">GOLFGATE<small>CATALUNYA</small></div>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <span class="lang">EN ⌄</span>
+            <div class="burger"><span></span><span></span><span></span></div>
+          </div>
+        </div>
+        <div class="hero">
+          <div class="hero-title">Book Golf Tee Times in Catalunya</div>
+        </div>
+
+        <!-- THE COOKIE PILL -->
+        <button class="cookie-pill kiwi" id="pill" aria-label="Cookie consent">
+          <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M21.598 11.064a1.006 1.006 0 0 0-.854-.172A2.938 2.938 0 0 1 20 11c-1.654 0-3-1.346-3.003-2.937.01-.434.06-.668.06-.668a.984.984 0 0 0-.057-.589 1.014 1.014 0 0 0-.581-.587 4.992 4.992 0 0 1-2.624-2.624.987.987 0 0 0-.583-.586 1.043 1.043 0 0 0-.583-.06 3.83 3.83 0 0 1-.66.061C9.341 3.01 8 1.665 8 0a.999.999 0 0 0-1.685-.726C2.561 2.751 0 7.18 0 12c0 6.617 5.383 12 12 12s12-5.383 12-12c0-.247-.013-.493-.026-.738-.018-.343-.224-.652-.376-.198z M6.5 17a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zM8 9a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm3 8a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm2-5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 4a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+          </svg>
+        </button>
+
+        <div class="sticky-cta">
+          <button class="sticky-btn">Book a Tee Time Now! →</button>
+        </div>
+
+        <!-- Expanded modal -->
+        <div class="cookie-modal-overlay" id="modal">
+          <div class="cookie-box">
+            <button class="cookie-close" id="close">×</button>
+            <svg class="cookie-box-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"/>
+              <path d="M8.5 8.5v.01"/><path d="M16 15.5v.01"/><path d="M12 12v.01"/><path d="M11 17v.01"/><path d="M7 14v.01"/>
+            </svg>
+            <p>This website uses cookies to ensure you get the best experience.</p>
+            <a href="#">Learn more</a>
+            <button class="accept" id="acceptBtn">Accept</button>
+            <button class="prefs">Preferences</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="desktop-note">
+      <strong>💻 Desktop:</strong> NO cambia. El cuadro completo seguirá saliendo abajo a la izquierda como ahora. Esta variante "pill" solo se aplica en móvil (&lt; 768px).
+    </div>
+
+    <p class="footnote">
+      Posición: <code>bottom-20 right-4</code> · Tamaño: 44×44px · Animación de entrada: scale + fade a 800ms · Drop-shadow: 0 4px 8px rgba(0,0,0,.45) para legibilidad sobre cualquier fondo del hero.
+    </p>
+
+    <script>
+      const pill = document.getElementById('pill');
+      const modal = document.getElementById('modal');
+      const closeBtn = document.getElementById('close');
+      const acceptBtn = document.getElementById('acceptBtn');
+
+      pill.addEventListener('click', () => {
+        modal.classList.add('show');
+      });
+      closeBtn.addEventListener('click', () => modal.classList.remove('show'));
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) modal.classList.remove('show');
+      });
+      acceptBtn.addEventListener('click', () => {
+        modal.classList.remove('show');
+        pill.style.display = 'none';
+      });
+
+      // Color switcher
+      document.querySelectorAll('.ctrl-btn[data-color]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.ctrl-btn[data-color]').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          pill.className = 'cookie-pill ' + btn.dataset.color;
+        });
+      });
+      document.querySelector('.ctrl-btn[data-action="reset"]').addEventListener('click', () => {
+        pill.style.display = 'flex';
+        modal.classList.remove('show');
+      });
+    </script>
+  </body>
+</html>
