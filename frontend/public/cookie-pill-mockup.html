@@ -94,14 +94,20 @@
         display: flex; align-items: center; justify-content: center;
         background: transparent; border: none; padding: 0; cursor: pointer;
         animation: pill-in .5s cubic-bezier(.34,1.56,.64,1) .8s both;
-        filter: drop-shadow(0 4px 10px rgba(0,0,0,.5)) drop-shadow(0 2px 4px rgba(0,0,0,.3));
+        filter: drop-shadow(0 4px 10px rgba(0,0,0,.55)) drop-shadow(0 2px 4px rgba(0,0,0,.4));
         transition: transform .15s ease;
       }
       .cookie-pill:hover { transform: scale(1.08); }
       .cookie-pill:active { transform: scale(.93); }
-      .cookie-pill.kiwi svg { color: var(--kiwi); }
-      .cookie-pill.pink svg { color: var(--pink); }
-      .cookie-pill.white svg { color: #fff; }
+      /* Glass style (recommended) - matches the expanded modal */
+      .cookie-pill.glass svg .cookie-body { fill: rgba(255,255,255,0.22); stroke: rgba(255,255,255,0.95); stroke-width: 0.8; }
+      .cookie-pill.glass svg .chip { fill: white; }
+      /* Solid kiwi style (alternative) */
+      .cookie-pill.kiwi svg .cookie-body { fill: #CCFF00; stroke: none; }
+      .cookie-pill.kiwi svg .chip { fill: #1a1a1a; }
+      /* White solid style (alternative) */
+      .cookie-pill.white svg .cookie-body { fill: white; stroke: none; }
+      .cookie-pill.white svg .chip { fill: #1a1a1a; }
       @keyframes pill-in {
         from { opacity: 0; transform: scale(.5) translateY(8px); }
         to { opacity: 1; transform: scale(1) translateY(0); }
@@ -166,10 +172,11 @@
     <p class="lead">Vista previa de cómo quedaría en móvil. Pulsa la galleta flotante para ver la expansión.</p>
 
     <div class="controls">
-      <span style="font-size:12px;color:#555;align-self:center;">Color del icono:</span>
-      <button class="ctrl-btn active" data-color="kiwi">Kiwi (recomendado)</button>
-      <button class="ctrl-btn" data-color="pink">Pink</button>
-      <button class="ctrl-btn" data-color="white">Blanco</button>
+      <span style="font-size:12px;color:#555;align-self:center;">Estilo de galleta:</span>
+      <button class="ctrl-btn active" data-color="glass">Glass (recomendado, coherente)</button>
+      <button class="ctrl-btn" data-color="kiwi">Kiwi sólido</button>
+      <button class="ctrl-btn" data-color="white">Blanco sólido</button>
+      <button class="ctrl-btn" data-action="open">▶ Abrir cuadro</button>
       <button class="ctrl-btn" data-action="reset">↻ Resetear</button>
     </div>
 
@@ -188,26 +195,21 @@
         </div>
 
         <!-- THE COOKIE PILL -->
-        <button class="cookie-pill kiwi" id="pill" aria-label="Cookie consent">
+        <button class="cookie-pill glass" id="pill" aria-label="Cookie consent">
           <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none">
             <defs>
               <mask id="cookieBite">
                 <rect width="24" height="24" fill="white"/>
-                <!-- Mordida principal en esquina superior derecha -->
                 <circle cx="20.5" cy="4" r="3.6" fill="black"/>
-                <!-- Diente / mordisquito superior -->
                 <circle cx="17.8" cy="2.2" r="1.3" fill="black"/>
-                <!-- Mordisco secundario lateral -->
                 <circle cx="22.2" cy="9.5" r="1.5" fill="black"/>
               </mask>
             </defs>
-            <!-- Cuerpo de la galleta con la mordida aplicada -->
-            <circle cx="12" cy="12" r="10" fill="currentColor" mask="url(#cookieBite)"/>
-            <!-- Chips blancos como tu imagen -->
-            <circle cx="7" cy="8.8" r="1.6" fill="white"/>
-            <circle cx="14.2" cy="14.5" r="1.7" fill="white"/>
-            <circle cx="9" cy="15.8" r="1.3" fill="white"/>
-            <circle cx="11.5" cy="11" r="0.65" fill="white"/>
+            <circle class="cookie-body" cx="12" cy="12" r="10" mask="url(#cookieBite)"/>
+            <circle class="chip" cx="7" cy="8.8" r="1.6"/>
+            <circle class="chip" cx="14.2" cy="14.5" r="1.7"/>
+            <circle class="chip" cx="9" cy="15.8" r="1.3"/>
+            <circle class="chip" cx="11.5" cy="11" r="0.65"/>
           </svg>
         </button>
 
@@ -265,6 +267,9 @@
           btn.classList.add('active');
           pill.className = 'cookie-pill ' + btn.dataset.color;
         });
+      });
+      document.querySelector('.ctrl-btn[data-action="open"]').addEventListener('click', () => {
+        modal.classList.add('show');
       });
       document.querySelector('.ctrl-btn[data-action="reset"]').addEventListener('click', () => {
         pill.style.display = 'flex';
