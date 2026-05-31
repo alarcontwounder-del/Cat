@@ -90,11 +90,11 @@
         position: absolute;
         bottom: 78px; right: 14px;
         z-index: 45;
-        width: 44px; height: 44px;
+        width: 48px; height: 48px;
         display: flex; align-items: center; justify-content: center;
         background: transparent; border: none; padding: 0; cursor: pointer;
         animation: pill-in .5s cubic-bezier(.34,1.56,.64,1) .8s both;
-        filter: drop-shadow(0 4px 8px rgba(0,0,0,.45));
+        filter: drop-shadow(0 4px 10px rgba(0,0,0,.5)) drop-shadow(0 2px 4px rgba(0,0,0,.3));
         transition: transform .15s ease;
       }
       .cookie-pill:hover { transform: scale(1.08); }
@@ -189,15 +189,25 @@
 
         <!-- THE COOKIE PILL -->
         <button class="cookie-pill kiwi" id="pill" aria-label="Cookie consent">
-          <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24" fill="none">
-            <!-- Galleta con mordida (esquina superior derecha) -->
-            <path d="M18 4.5 A 3.5 3.5 0 0 0 22 8 A 11 11 0 1 1 16 1.5 A 3.5 3.5 0 0 0 18 4.5 Z" fill="currentColor"/>
-            <!-- Chips de chocolate (negros sobre la galleta) -->
-            <circle cx="9" cy="8" r="1.4" fill="#1a1a1a"/>
-            <circle cx="14.5" cy="11" r="1.1" fill="#1a1a1a"/>
-            <circle cx="7.8" cy="13" r="0.9" fill="#1a1a1a"/>
-            <circle cx="13" cy="16.5" r="1.3" fill="#1a1a1a"/>
-            <circle cx="17" cy="14.5" r="0.8" fill="#1a1a1a"/>
+          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none">
+            <defs>
+              <mask id="cookieBite">
+                <rect width="24" height="24" fill="white"/>
+                <!-- Mordida principal en esquina superior derecha -->
+                <circle cx="20.5" cy="4" r="3.6" fill="black"/>
+                <!-- Diente / mordisquito superior -->
+                <circle cx="17.8" cy="2.2" r="1.3" fill="black"/>
+                <!-- Mordisco secundario lateral -->
+                <circle cx="22.2" cy="9.5" r="1.5" fill="black"/>
+              </mask>
+            </defs>
+            <!-- Cuerpo de la galleta con la mordida aplicada -->
+            <circle cx="12" cy="12" r="10" fill="currentColor" mask="url(#cookieBite)"/>
+            <!-- Chips blancos como tu imagen -->
+            <circle cx="7" cy="8.8" r="1.6" fill="white"/>
+            <circle cx="14.2" cy="14.5" r="1.7" fill="white"/>
+            <circle cx="9" cy="15.8" r="1.3" fill="white"/>
+            <circle cx="11.5" cy="11" r="0.65" fill="white"/>
           </svg>
         </button>
 
