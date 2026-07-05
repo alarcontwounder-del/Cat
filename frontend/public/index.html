@@ -23,8 +23,22 @@
         <meta name="author" content="GOLFGATE Catalunya" />
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
         
-        <!-- Canonical URL -->
-        <link rel="canonical" href="https://golfgatecatalunya.com/" />
+        <!-- Canonical URL (dynamically corrected below by inline script for SPA subpages) -->
+        <link rel="canonical" href="https://golfgatecatalunya.com/" id="canonical-tag" />
+
+        <!-- CRITICAL SEO: Fix canonical + og:url immediately based on URL (before React loads).
+             This ensures Googlebot sees the correct canonical even if it doesn't execute React. -->
+        <script>
+          (function () {
+            var path = window.location.pathname;
+            if (path && path !== '/') {
+              var correctUrl = 'https://golfgatecatalunya.com' + path;
+              var c = document.getElementById('canonical-tag');
+              if (c) c.setAttribute('href', correctUrl);
+              // og:url and twitter:url will be added by the SPA when it mounts, but we set canonical now.
+            }
+          })();
+        </script>
         
         <!-- Preload hero image for faster first paint -->
         <link rel="preload" as="image" href="https://res.cloudinary.com/greenfee365/image/upload/w_1920,h_900,c_fill/courses/camiral-golf-wellness-stadium/camiral-golf-wellness-stadium" />
