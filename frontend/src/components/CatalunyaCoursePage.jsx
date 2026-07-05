@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { MapPin, Flag, Trophy, ChevronRight, ExternalLink, Navigation, Star, ArrowLeft } from 'lucide-react';
 import axios from 'axios';
+import { setSEO } from '../lib/seo';
 
 var API = process.env.REACT_APP_BACKEND_URL;
 var LOGO = '/golfgate-logo-transparent.png';
@@ -34,7 +35,14 @@ export default function CatalunyaCoursePage() {
 
   useEffect(function() {
     if (!course) return;
-    document.title = course.name + ' | Book Tee Times | Golf Catalunya';
+    var pageTitle = course.name + ' | Book Tee Times | Golf Catalunya';
+    var pageDesc = 'Book tee times at ' + course.name + ' in ' + course.location + ', Catalunya. ' + course.holes + ' holes, Par ' + course.par + '. Green fees from EUR' + course.price_from + '. Instant confirmation.';
+    setSEO({
+      title: pageTitle,
+      description: pageDesc,
+      path: '/courses/' + course.id,
+      image: course.image
+    });
 
     var setMeta = function(attr, name, content) {
       var el = document.querySelector('meta[' + attr + '="' + name + '"]');
@@ -42,9 +50,6 @@ export default function CatalunyaCoursePage() {
       el.setAttribute('content', content);
     };
     var desc = getDesc(course);
-    setMeta('name', 'description', 'Book tee times at ' + course.name + ' in ' + course.location + ', Catalunya. ' + course.holes + ' holes, Par ' + course.par + '. Green fees from EUR' + course.price_from + '. Instant confirmation.');
-    setMeta('property', 'og:title', course.name + ' | Book Tee Times | Golf Catalunya');
-    setMeta('property', 'og:description', 'Book tee times at ' + course.name + '. ' + course.holes + ' holes, Par ' + course.par + '. From EUR' + course.price_from);
 
     // Schema.org GolfCourse structured data
     var schemaId = 'course-schema-' + course.id;

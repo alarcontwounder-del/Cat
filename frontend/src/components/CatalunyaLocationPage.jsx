@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { MapPin, ArrowLeft, ArrowRight, ExternalLink, ChevronRight } from 'lucide-react';
+import { setSEO } from '../lib/seo';
 
 var API = process.env.REACT_APP_BACKEND_URL;
 
@@ -119,17 +120,18 @@ export default function CatalunyaLocationPage() {
   useEffect(function() {
     window.scrollTo(0, 0);
     if (!region) return;
-    document.title = region.metaTitle;
+    setSEO({
+      title: region.metaTitle,
+      description: region.metaDesc,
+      path: '/golf/' + params.region
+    });
 
     var setMeta = function(attr, name, content) {
       var el = document.querySelector('meta[' + attr + '="' + name + '"]');
       if (!el) { el = document.createElement('meta'); el.setAttribute(attr, name); document.head.appendChild(el); }
       el.setAttribute('content', content);
     };
-    setMeta('name', 'description', region.metaDesc);
     setMeta('name', 'keywords', region.metaKeywords);
-    setMeta('property', 'og:title', region.metaTitle);
-    setMeta('property', 'og:description', region.metaDesc);
 
     // FAQ Schema.org
     if (region.faqs && region.faqs.length > 0) {

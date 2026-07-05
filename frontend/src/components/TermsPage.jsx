@@ -1,11 +1,16 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
+import { setSEO } from '../lib/seo';
 
 export default function TermsPage() {
   useEffect(function() {
     window.scrollTo(0, 0);
-    document.title = 'Terms of Service | GOLFGATE Catalunya';
+    setSEO({
+      title: 'Terms of Service | GOLFGATE Catalunya',
+      description: 'Terms of Service for GOLFGATE Catalunya golf tee time booking service.',
+      path: '/terms'
+    });
   }, []);
 
   return (

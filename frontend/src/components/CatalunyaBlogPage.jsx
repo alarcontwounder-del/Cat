@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Tag, Calendar, User, ArrowRight, ArrowLeft } from 'lucide-react';
+import { setSEO } from '../lib/seo';
 
 var API = process.env.REACT_APP_BACKEND_URL;
 
@@ -15,7 +16,11 @@ export default function CatalunyaBlogPage() {
 
   useEffect(function() {
     window.scrollTo(0, 0);
-    document.title = 'Blog | GOLFGATE Catalunya - Golf Tips, Course Guides & Travel Advice';
+    setSEO({
+      title: 'Blog | GOLFGATE Catalunya - Golf Tips, Course Guides & Travel Advice',
+      description: 'Golf tips, course guides and travel advice for Catalunya. Discover the best golf courses, hotels and cultural day trips in Catalonia.',
+      path: '/blog'
+    });
     axios.get(API + '/api/blog-posts')
       .then(function(res) { setPosts(res.data); })
       .catch(function() {})

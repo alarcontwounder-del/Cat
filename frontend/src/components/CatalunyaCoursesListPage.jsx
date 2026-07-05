@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { MapPin, ArrowLeft, ArrowRight } from 'lucide-react';
+import { setSEO } from '../lib/seo';
 
 var API = process.env.REACT_APP_BACKEND_URL;
 
@@ -15,7 +16,11 @@ export default function CatalunyaCoursesListPage() {
 
   useEffect(function() {
     window.scrollTo(0, 0);
-    document.title = 'All Golf Courses | GOLFGATE Catalunya';
+    setSEO({
+      title: 'All Golf Courses | GOLFGATE Catalunya',
+      description: 'Explore all 20 premier golf courses in Catalunya, Spain. Barcelona, Costa Brava, Girona, Tarragona. Green fees from EUR35. Instant booking confirmation.',
+      path: '/courses'
+    });
     axios.get(API + '/api/catalunya-courses')
       .then(function(res) { setCourses(res.data); })
       .catch(function() {})

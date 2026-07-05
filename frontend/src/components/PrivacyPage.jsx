@@ -1,11 +1,16 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
+import { setSEO } from '../lib/seo';
 
 export default function PrivacyPage() {
   useEffect(function() {
     window.scrollTo(0, 0);
-    document.title = 'Privacy Policy | GOLFGATE Catalunya';
+    setSEO({
+      title: 'Privacy Policy | GOLFGATE Catalunya',
+      description: 'Privacy Policy for GOLFGATE Catalunya. Learn how we protect your personal information.',
+      path: '/privacy'
+    });
   }, []);
 
   return (

@@ -4,6 +4,7 @@ import axios from 'axios';
 import { ArrowLeft } from 'lucide-react';
 import { HotelCardFront, HotelCardBack } from './HotelCardComponents';
 import { HotelQuickView } from './HotelQuickView';
+import { setSEO } from '../lib/seo';
 
 var API = process.env.REACT_APP_BACKEND_URL;
 
@@ -23,17 +24,18 @@ export default function CatalunyaHotelsPage() {
 
   useEffect(function() {
     window.scrollTo(0, 0);
-    document.title = 'Golf Hotels Catalunya | Luxury Golf Resorts & Stay and Play Packages';
+    setSEO({
+      title: 'Golf Hotels Catalunya | Luxury Golf Resorts & Stay and Play Packages',
+      description: 'Luxury golf hotels in Catalunya, Spain. 5-star golf resorts, stay and play packages, golf holidays with hotel. Camiral Resort, Peralada Wine Spa, Melia Sitges. Exclusive golf holiday packages.',
+      path: '/hotels'
+    });
 
     var setMeta = function(attr, name, content) {
       var el = document.querySelector('meta[' + attr + '="' + name + '"]');
       if (!el) { el = document.createElement('meta'); el.setAttribute(attr, name); document.head.appendChild(el); }
       el.setAttribute('content', content);
     };
-    setMeta('name', 'description', 'Luxury golf hotels in Catalunya, Spain. 5-star golf resorts, stay and play packages, golf holidays with hotel. Camiral Resort, Peralada Wine Spa, Melia Sitges. Exclusive golf holiday packages.');
     setMeta('name', 'keywords', 'golf hotels catalonia, luxury golf resorts catalonia, 5 star golf hotels catalonia, golf resorts catalonia, stay and play catalonia golf, golf holidays catalonia with hotel, golf hotels costa brava, golf hotels barcelona, golf resort packages catalonia');
-    setMeta('property', 'og:title', 'Golf Hotels Catalunya | Luxury Golf Resorts & Stay and Play');
-    setMeta('property', 'og:description', 'Luxury golf hotels in Catalunya. 5-star resorts, stay and play packages. Camiral Resort, Peralada, Melia Sitges.');
 
     axios.get(API + '/api/catalunya-hotels')
       .then(function(res) { setHotels(res.data); })

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Tag, Calendar, User, ArrowLeft } from 'lucide-react';
+import { setSEO } from '../lib/seo';
 
 var API = process.env.REACT_APP_BACKEND_URL;
 
@@ -21,7 +22,12 @@ export default function CatalunyaBlogPostPage() {
         var found = res.data.find(function(p) { return p.id === params.postId; });
         if (found) {
           setPost(found);
-          document.title = found.title + ' | GOLFGATE Catalunya Blog';
+          setSEO({
+            title: found.title + ' | GOLFGATE Catalunya Blog',
+            description: (found.excerpt || found.content || '').substring(0, 160),
+            path: '/blog/' + found.id,
+            image: found.image
+          });
         }
       })
       .catch(function() {})

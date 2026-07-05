@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { ArrowLeft, ExternalLink, MapPin, X, Plus, ChevronDown } from 'lucide-react';
+import { setSEO } from '../lib/seo';
 
 var API = process.env.REACT_APP_BACKEND_URL;
 
@@ -18,9 +19,11 @@ export default function CatalunyaComparePage() {
 
   useEffect(function() {
     window.scrollTo(0, 0);
-    document.title = 'Compare Golf Courses | GOLFGATE Catalunya';
-    var setMeta = function(a, n, c) { var el = document.querySelector('meta[' + a + '="' + n + '"]'); if (!el) { el = document.createElement('meta'); el.setAttribute(a, n); document.head.appendChild(el); } el.setAttribute('content', c); };
-    setMeta('name', 'description', 'Compare golf courses in Catalunya side by side. Compare green fees, holes, par, location and features. Find the best course for your game.');
+    setSEO({
+      title: 'Compare Golf Courses | GOLFGATE Catalunya',
+      description: 'Compare golf courses in Catalunya side by side. Compare green fees, holes, par, location and features. Find the best course for your game.',
+      path: '/compare'
+    });
     axios.get(API + '/api/catalunya-courses').then(function(res) { setCourses(res.data); }).catch(function() {});
   }, []);
 

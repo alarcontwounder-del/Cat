@@ -1,13 +1,16 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
+import { setSEO } from '../lib/seo';
 
 export default function BestTimePage() {
   useEffect(function() {
     window.scrollTo(0, 0);
-    document.title = 'Best Time to Play Golf in Catalunya | Season Guide';
-    var setMeta = function(a, n, c) { var el = document.querySelector('meta[' + a + '="' + n + '"]'); if (!el) { el = document.createElement('meta'); el.setAttribute(a, n); document.head.appendChild(el); } el.setAttribute('content', c); };
-    setMeta('name', 'description', 'When is the best time to play golf in Catalunya? Season-by-season guide with temperatures, rainfall, crowd levels, and green fee prices.');
+    setSEO({
+      title: 'Best Time to Play Golf in Catalunya | Season Guide',
+      description: 'When is the best time to play golf in Catalunya? Season-by-season guide with temperatures, rainfall, crowd levels, and green fee prices.',
+      path: '/best-time-to-play'
+    });
   }, []);
 
   return (
