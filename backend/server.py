@@ -883,6 +883,7 @@ async def delete_blog_post(post_id: str):
 resend.api_key = os.environ.get("RESEND_API_KEY", "")
 SENDER_EMAIL = os.environ.get("SENDER_EMAIL", "onboarding@resend.dev")
 CONTACT_EMAIL = "contact@golfgatecatalunya.com"
+ADMIN_NOTIFICATION_EMAILS = ["contact@golfgatecatalunya.com", "alarcon.twounder@gmail.com"]
 
 @api_router.post("/contact")
 async def send_contact_email(request: Request):
@@ -903,7 +904,7 @@ async def send_contact_email(request: Request):
     try:
         params = {
             "from": f"GOLFGATE Catalunya <{SENDER_EMAIL}>",
-            "to": [CONTACT_EMAIL],
+            "to": ADMIN_NOTIFICATION_EMAILS,
             "reply_to": email,
             "subject": f"New Golf Inquiry from {name}",
             "html": html_content
